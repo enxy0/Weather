@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    style="@style/CustomStyle.CardView"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/nextHoursTileColor"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    >
+
+    <TextView
+        android:id="@+id/timeTextView"
+        android:letterSpacing="0.08"
+        style="@style/CustomStyle.Text.Primary"
+        android:textColor="@android:color/white"
+        android:layout_gravity="center"
+        tools:text="23:00" />
+
+    <ImageView
+        android:id="@+id/descriptionImageView"
+        style="@style/CustomStyle.ImageView"
+        android:layout_gravity="center"
+        android:layout_marginTop="11dp"
+        tools:src="@drawable/weather_clear_day" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="11dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:letterSpacing="0.08"
+            android:id="@+id/temperatureTextView"
+            style="@style/CustomStyle.Text.Primary"
+            android:textColor="@android:color/white"
+            tools:text="-10" />
+
+        <TextView
+            android:id="@+id/degreeTextView"
+            style="@style/CustomStyle.Text.Primary"
+            android:textColor="@android:color/white"
+            android:text="°" />
+    </LinearLayout>
+</LinearLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/dayNameTextView"
+            style="@style/CustomStyle.Text.Primary"
+            android:text="@{dayDataModel.day}"
+            tools:text="Monday" />
+
+        <TextView
+            android:id="@+id/dateTextView"
+            style="@style/CustomStyle.Text.Secondary"
+            android:text="@{dayDataModel.date}"
+            android:textSize="14sp"
+            tools:text="03.09.2019" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/descriptionImageView"
+        style="@style/CustomStyle.ImageView"
+        android:layout_marginEnd="28dp"
+        android:layout_gravity="center_vertical"
+        tools:srcCompat="@drawable/weather_scattered_clouds" />
+
+    <TextView
+        android:id="@+id/highTemperatureTextView"
+        style="@style/CustomStyle.Text.Primary"
+        android:layout_gravity="end|center"
+        android:minWidth="30dp"
+        android:text="@{dayDataModel.temperatureHigh}"
+        android:textAlignment="textEnd"
+        tools:text="-10" />
+
+    <TextView
+        android:id="@+id/boldDegreeTextView"
+        style="@style/CustomStyle.Text.Primary"
+        android:layout_gravity="end|center"
+        android:layout_marginEnd="25dp"
+        tools:text="°" />
+
+    <TextView
+        android:id="@+id/lowTemperatureTextView"
+        style="@style/CustomStyle.Text.Secondary"
+        android:layout_gravity="end|center"
+        android:minWidth="30dp"
+        android:text="@{dayDataModel.temperatureLow}"
+        android:textAlignment="textEnd"
+        tools:text="-10" />
+
+    <TextView
+        android:id="@+id/degreeTextView"
+        style="@style/CustomStyle.Text.Secondary"
+        android:layout_gravity="end|center"
+        tools:text="°" />
+</LinearLayout>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--    <color name="colorPrimary">#FFFFFF</color>-->
+<!--    <color name="colorPrimaryDark">#FFFFFF</color>-->
+    <color name="colorPrimary">#4CAF50</color>
+    <color name="colorPrimaryDark">#4CAF50</color>
+    <color name="colorAccent">#4CAF50</color>
+    <color name="windowBackgroundColor">#FFFFFF</color>
+    <color name="windowBackgroundColorNight">#202020</color>
+    <color name="cardViewBackgroundColor">#EFEFEF</color>
+    <color name="cardViewBackgroundColorDark">#2B2B2B</color>
+    <color name="iconColorNight">#AEAEAE</color>
+    <color name="iconColor">#FFFFFF</color>
+    <color name="sectionDividerColorNight">#151515</color>
+    <color name="sectionDividerColor">#EEEEEE</color>
+    <color name="dividerColor">#555555</color>
+    <color name="dividerColorNight">#AEAEAE</color>
+
+<!-- Forecast tiles colors -->
+    <color name="humidityTileColor">#29B6F6</color>
+    <color name="windTileColor">#66BB6A</color>
+    <color name="pressureTileColor">#FFA726</color>
+    <color name="nextHoursTileColor">#7E57C2</color>
+</resources>
