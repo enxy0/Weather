@@ -1,14 +1,16 @@
 package com.enxy.weather.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.enxy.weather.R
 import com.enxy.weather.base.BaseFragment
-import com.enxy.weather.extension.getDrawableByName
+import com.enxy.weather.exception.Failure
+import com.enxy.weather.extension.failure
 import com.enxy.weather.extension.observe
-import com.enxy.weather.model.AllWeatherDataModel
-import com.enxy.weather.model.CurrentDataModel
+import com.enxy.weather.model.CurrentWeatherModel
+import com.enxy.weather.model.HourWeatherModel
 import com.enxy.weather.ui.main.adapter.DayAdapter
 import com.enxy.weather.ui.main.adapter.HourAdapter
 import kotlinx.android.synthetic.main.main_fragment.*
@@ -29,74 +31,55 @@ class MainFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         setUpRecyclerView()
-        with(viewModel) { observe(allWeatherDataModel, ::renderData) }
+        with(viewModel) {
+            observe(currentWeatherModel, ::renderCurrentWeather)
+            failure(currentWeatherFailure, ::handleFailure)
+            observe(hourWeatherModel, ::renderHourWeather)
+            failure(hourWeatherFailure, ::handleFailure)
+        }
     }
 
+    private fun handleFailure(failure: Failure?) {
+        failure?.let {
+            Log.d("MainFragment", "handleFailure: Failure=${failure.javaClass.name}")
+        }
+    }
+
+    private fun renderHourWeather(hourWeatherModelArrayList: ArrayList<HourWeatherModel>?) {
+        hourWeatherModelArrayList?.let {
+            hourAdapter.updateData(it)
+        }
+    }
+
+    private fun renderCurrentWeather(currentWeatherModel: CurrentWeatherModel?) {
+        currentWeatherModel?.let {
+            currentDescriptionTextView.text = currentWeatherModel.description
+            currentDescriptionImageView.setImageResource(currentWeatherModel.imageId)
+            currentTemperatureTextView.text = currentWeatherModel.temperature
+            currentFeelsLikeTextView.text = currentWeatherModel.feelsLikeTemperature
+            cityNameTextView.text = currentWeatherModel.cityName
+            setCurrentHumidity(currentWeatherModel.humidity)
+            setCurrentWind(currentWeatherModel.wind)
+            setCurrentPressure(currentWeatherModel.pressure)
+        }
+    }
+
+
     private fun setUpRecyclerView() {
-        dayRecyclerView.adapter = dayAdapter
         hourRecyclerView.adapter = hourAdapter
 
         hourRecyclerView.layoutManager = LinearLayoutManager(
             context, LinearLayoutManager.HORIZONTAL, false
         )
-        dayRecyclerView.layoutManager = LinearLayoutManager(
-            context, LinearLayoutManager.VERTICAL, false
-        )
-        dayRecyclerView.isNestedScrollingEnabled = false
         hourRecyclerView.isNestedScrollingEnabled = false
     }
 
-    private fun renderData(allWeatherDataModel: AllWeatherDataModel?) {
-        allWeatherDataModel?.let {
-            hourAdapter.updateData(allWeatherDataModel.hourDataModelArrayList)
-            dayAdapter.updateData(allWeatherDataModel.dayDataModelArrayList)
-            setCurrentWeatherData(allWeatherDataModel.currentDataModel)
-        }
+
+    private fun setCurrentTemperature(temperature: String) {
+        currentTemperatureTextView.text = temperature
     }
 
-    private fun setCurrentWeatherData(currentDataModel: CurrentDataModel) {
-        currentDescriptionTextView.text = currentDataModel.description
-        setCurrentDescriptionImage(currentDataModel.image)
-        setCurrentTemperature(currentDataModel.temperature)
-        setCurrentFeelsLike(currentDataModel.temperature, currentDataModel.wind)
-        setCurrentHumidity(currentDataModel.humidity)
-        setCurrentWind(currentDataModel.wind)
-        setCurrentPressure(currentDataModel.pressure)
-    }
-
-    private fun setCurrentDescriptionImage(imageName: String) {
-        currentDescriptionImageView.setImageDrawable(context!!.getDrawableByName(imageName))
-    }
-
-    private fun setCurrentFeelsLike(temperature: Int, wind: Int) {
-        val feelsLikeText: String = context!!.resources.getString(R.string.feels_like)
-        val degreeSign = '°'
-        // To imitate feels like work, which depends on many variables
-        // I'll use "pseudo" algorithm: temperature - wind (it's easy and almost the same value xd)
-        val calculatedFeelsLikeValue = temperature - wind
-        var feelsLike = "$feelsLikeText "
-        if (calculatedFeelsLikeValue > 0)
-            feelsLike += "+"
-        else if (calculatedFeelsLikeValue < 0)
-            feelsLike += "-"
-        feelsLike += calculatedFeelsLikeValue
-        feelsLike += degreeSign
-        currentFeelsLikeTextView.text = feelsLike
-    }
-
-    private fun setCurrentTemperature(temperature: Int) {
-        val degreeSign = '°'
-        var temperatureWithSign = ""
-        if (temperature > 0)
-            temperatureWithSign = "+"
-        else if (temperature < 0)
-            temperatureWithSign = "-"
-        temperatureWithSign += temperature
-        temperatureWithSign += degreeSign
-        currentTemperatureTextView.text = temperatureWithSign
-    }
-
-    private fun setCurrentPressure(pressure: Int) {
+    private fun setCurrentPressure(pressure: String) {
         val pressureValue = context!!
             .resources
             .getString(R.string.pressure_value_pascals)
@@ -104,7 +87,7 @@ class MainFragment : BaseFragment() {
         currentPressureTextView.text = currentPressure
     }
 
-    private fun setCurrentWind(wind: Int) {
+    private fun setCurrentWind(wind: String) {
         val windValue = context!!
             .resources
             .getString(R.string.wind_value_meters_per_second)
@@ -112,7 +95,7 @@ class MainFragment : BaseFragment() {
         currentWindTextView.text = currentWind
     }
 
-    private fun setCurrentHumidity(humidity: Int) {
+    private fun setCurrentHumidity(humidity: String) {
         val currentHumidity = "$humidity %"
         currentHumidityTextView.text = currentHumidity
     }

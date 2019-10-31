@@ -3,24 +3,17 @@ package com.enxy.weather.ui.main.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.RecyclerView
 import com.enxy.weather.R
-import com.enxy.weather.extension.getDrawableByName
-import com.enxy.weather.extension.px
-import com.enxy.weather.model.HourDataModel
+import com.enxy.weather.model.HourWeatherModel
 import kotlinx.android.synthetic.main.item_hour.view.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class HourAdapter : RecyclerView.Adapter<HourAdapter.HourHolder>() {
-    private val hourDataModelArrayList = ArrayList<HourDataModel>()
+    private val hourDataModelArrayList = ArrayList<HourWeatherModel>()
 
-    fun updateData(hourDataModelArrayList: ArrayList<HourDataModel>) {
+    fun updateData(hourWeatherModelArrayList: ArrayList<HourWeatherModel>) {
         this.hourDataModelArrayList.clear()
-        this.hourDataModelArrayList.addAll(hourDataModelArrayList)
+        this.hourDataModelArrayList.addAll(hourWeatherModelArrayList)
         notifyDataSetChanged()
     }
 
@@ -39,16 +32,11 @@ class HourAdapter : RecyclerView.Adapter<HourAdapter.HourHolder>() {
     }
 
     inner class HourHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(hourDataModel: HourDataModel) {
+        fun bind(hourWeatherModel: HourWeatherModel) {
             with(itemView) {
-                temperatureTextView.text = hourDataModel.temperature
-                timeTextView.text = hourDataModel.time
-                CoroutineScope(Dispatchers.IO).launch {
-                    val drawable = context!!.getDrawableByName(hourDataModel.image)
-                    withContext(Dispatchers.Main) {
-                        descriptionImageView.setImageDrawable(drawable)
-                    }
-                }
+                temperatureTextView.text = hourWeatherModel.temperature
+                timeTextView.text = hourWeatherModel.time
+                descriptionImageView.setImageResource(hourWeatherModel.imageId)
             }
         }
     }

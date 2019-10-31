@@ -16,13 +16,13 @@
         <TextView
             android:id="@+id/dayNameTextView"
             style="@style/CustomStyle.Text.Primary"
-            android:text="@{dayDataModel.day}"
+            android:text="@{dayWeatherModel.day}"
             tools:text="Monday" />
 
         <TextView
             android:id="@+id/dateTextView"
             style="@style/CustomStyle.Text.Secondary"
-            android:text="@{dayDataModel.date}"
+            android:text="@{dayWeatherModel.date}"
             android:textSize="14sp"
             tools:text="03.09.2019" />
     </LinearLayout>
@@ -39,7 +39,7 @@
         style="@style/CustomStyle.Text.Primary"
         android:layout_gravity="end|center"
         android:minWidth="30dp"
-        android:text="@{dayDataModel.temperatureHigh}"
+        android:text="@{dayWeatherModel.temperatureHigh}"
         android:textAlignment="textEnd"
         tools:text="-10" />
 
@@ -55,7 +55,7 @@
         style="@style/CustomStyle.Text.Secondary"
         android:layout_gravity="end|center"
         android:minWidth="30dp"
-        android:text="@{dayDataModel.temperatureLow}"
+        android:text="@{dayWeatherModel.temperatureLow}"
         android:textAlignment="textEnd"
         tools:text="-10" />
 

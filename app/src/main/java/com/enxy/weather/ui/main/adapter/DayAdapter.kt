@@ -4,25 +4,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.graphics.drawable.toBitmap
-import androidx.core.view.isInvisible
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.enxy.weather.R
-import com.enxy.weather.extension.dp
-import com.enxy.weather.extension.getDrawableByName
-import com.enxy.weather.extension.px
-import com.enxy.weather.model.DayDataModel
+import com.enxy.weather.model.DayWeatherModel
 import kotlinx.android.synthetic.main.item_day.view.*
-import kotlinx.android.synthetic.main.item_day.view.descriptionImageView
-import kotlinx.android.synthetic.main.item_hour.view.*
 
 class DayAdapter : RecyclerView.Adapter<DayAdapter.DayHolder>() {
-    private val dayDataModelArrayList = ArrayList<DayDataModel>()
+    private val dayDataModelArrayList = ArrayList<DayWeatherModel>()
 
-    fun updateData(dayDataModelArrayList: ArrayList<DayDataModel>) {
+    fun updateData(dayWeatherModelArrayList: ArrayList<DayWeatherModel>) {
         this.dayDataModelArrayList.clear()
-        this.dayDataModelArrayList.addAll(dayDataModelArrayList)
+        this.dayDataModelArrayList.addAll(dayWeatherModelArrayList)
         notifyDataSetChanged()
     }
 
@@ -41,14 +33,14 @@ class DayAdapter : RecyclerView.Adapter<DayAdapter.DayHolder>() {
     }
 
     inner class DayHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(dayDataModel: DayDataModel) {
+        fun bind(dayWeatherModel: DayWeatherModel) {
             with(itemView) {
-                Log.d("DayHolder", "bind: dayDataModel=$dayDataModel")
-                dayNameTextView.text = dayDataModel.day
-                dateTextView.text = dayDataModel.date
-                highTemperatureTextView.text = dayDataModel.temperatureHigh
-                lowTemperatureTextView.text = dayDataModel.temperatureLow
-                descriptionImageView.setImageDrawable(context.getDrawableByName(dayDataModel.image))
+                Log.d("DayHolder", "bind: dayWeatherModel=$dayWeatherModel")
+                dayNameTextView.text = dayWeatherModel.dayName
+                dateTextView.text = dayWeatherModel.date
+                highTemperatureTextView.text = dayWeatherModel.temperatureHigh
+                lowTemperatureTextView.text = dayWeatherModel.temperatureLow
+                descriptionImageView.setImageResource(dayWeatherModel.imageId)
             }
         }
     }

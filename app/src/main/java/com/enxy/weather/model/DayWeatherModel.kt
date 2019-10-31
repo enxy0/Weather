@@ -2,19 +2,15 @@ package com.enxy.weather.model
 
 import com.google.gson.annotations.SerializedName
 
-data class DayDataModel(
+data class DayWeatherModel(
     @SerializedName("day")
-    val day: String,
+    val dayName: String,
     @SerializedName("temperatureHigh")
     val temperatureHigh: String,
     @SerializedName("temperatureLow")
     val temperatureLow: String,
     @SerializedName("date")
     val date: String,
-    @SerializedName("image")
-    val image: String
-) {
-   companion object {
-       val EMPTY = "empty"
-   }
-}
+    @SerializedName("imageId")
+    val imageId: Int
+)

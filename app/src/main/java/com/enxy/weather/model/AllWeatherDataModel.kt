@@ -3,10 +3,10 @@ package com.enxy.weather.model
 import com.google.gson.annotations.SerializedName
 
 class AllWeatherDataModel(
-    @SerializedName("currentDataModel")
-    val currentDataModel: CurrentDataModel,
+    @SerializedName("currentWeatherModel")
+    val currentWeatherModel: CurrentWeatherModel,
     @SerializedName("hourDataModelList")
-    val hourDataModelArrayList: ArrayList<HourDataModel>,
+    val hourWeatherModelArrayList: ArrayList<HourWeatherModel>,
     @SerializedName("dayDataList")
-    val dayDataModelArrayList: ArrayList<DayDataModel>
+    val dayWeatherModelArrayList: ArrayList<DayWeatherModel>
 )
