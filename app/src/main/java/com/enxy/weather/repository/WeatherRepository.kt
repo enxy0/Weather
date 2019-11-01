@@ -115,7 +115,7 @@ class WeatherRepository : BaseRepository() {
             hourListItem.weather[0].icon.let {
                 dayPart = it[it.length - 1]
             }
-            val imageId = ImageChooser.OpenWeatherMap.getImagePairFromId(imageCode, dayPart)
+            val imageId = ImageChooser.OpenWeatherMap.getImageIdHourWeather(imageCode, dayPart)
             hourWeatherModelArrayList.add(
                 DayWeatherModel(
                     day,
@@ -146,7 +146,7 @@ class WeatherRepository : BaseRepository() {
             hourListItem.weather[0].icon.let {
                 dayPart = it[it.length - 1]
             }
-            val imageId = ImageChooser.OpenWeatherMap.getImagePairFromId(imageCode, dayPart)
+            val imageId = ImageChooser.OpenWeatherMap.getImageIdHourWeather(imageCode, dayPart)
             hourWeatherModelArrayList.add(HourWeatherModel(temperature, time, imageId))
         }
         return hourWeatherModelArrayList
@@ -172,7 +172,7 @@ class WeatherRepository : BaseRepository() {
         currentWeatherResponse.weather[0].icon.let {
             dayPart = it[it.length - 1]
         }
-        val imageId = ImageChooser.OpenWeatherMap.getImagePairFromId(imageCode, dayPart)
+        val imageId = ImageChooser.OpenWeatherMap.getImageIdCurrentWeather(imageCode, dayPart)
         val cityName = "${currentWeatherResponse.name}, ${currentWeatherResponse.sys.country}"
         return CurrentWeatherModel(
             temperature,

@@ -17,8 +17,12 @@
     <color name="dividerColorNight">#AEAEAE</color>
 
 <!-- Forecast tiles colors -->
-    <color name="humidityTileColor">#29B6F6</color>
-    <color name="windTileColor">#66BB6A</color>
-    <color name="pressureTileColor">#FFA726</color>
-    <color name="nextHoursTileColor">#7E57C2</color>
+    <color name="humidityTileColor">#4D29B6F6</color>
+    <color name="humidityTextColor">#1C7FAC</color>
+    <color name="windTileColor">#4D66BB6A</color>
+    <color name="windTextColor">#47824A</color>
+    <color name="pressureTileColor">#4DFFA726</color>
+    <color name="pressureTextColor">#B2741A</color>
+    <color name="nextHoursTileColor">#4D7E57C2</color>
+    <color name="nextHoursTextColor">#583c87</color>
 </resources>

@@ -1,59 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/CustomStyle.CardView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    style="@style/CustomStyle.CardView"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardBackgroundColor="@color/nextHoursTileColor"
     android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
-    >
-
-    <TextView
-        android:id="@+id/timeTextView"
-        android:letterSpacing="0.08"
-        style="@style/CustomStyle.Text.Primary"
-        android:textColor="@android:color/white"
-        android:layout_gravity="center"
-        tools:text="23:00" />
-
-    <ImageView
-        android:id="@+id/descriptionImageView"
-        style="@style/CustomStyle.ImageView"
-        android:layout_gravity="center"
-        android:layout_marginTop="11dp"
-        tools:src="@drawable/weather_clear_day" />
-
+    android:layout_marginEnd="8dp"
+    app:cardBackgroundColor="@color/nextHoursTileColor">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="11dp"
-        android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp">
 
         <TextView
+            android:id="@+id/timeTextView"
+            style="@style/CustomStyle.Text.Primary"
+            android:layout_gravity="center"
             android:letterSpacing="0.08"
-            android:id="@+id/temperatureTextView"
-            style="@style/CustomStyle.Text.Primary"
-            android:textColor="@android:color/white"
-            tools:text="-10" />
+            android:textColor="@color/nextHoursTextColor"
+            tools:text="23:00" />
 
-        <TextView
-            android:id="@+id/degreeTextView"
-            style="@style/CustomStyle.Text.Primary"
-            android:textColor="@android:color/white"
-            android:text="°" />
+        <ImageView
+            android:id="@+id/descriptionImageView"
+            style="@style/CustomStyle.ImageView"
+            android:layout_gravity="center"
+            android:layout_marginTop="11dp"
+            tools:src="@drawable/weather_clear_day" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="11dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/temperatureTextView"
+                style="@style/CustomStyle.Text.Primary"
+                android:textColor="@color/nextHoursTextColor"
+                tools:text="-10" />
+
+            <TextView
+                android:id="@+id/degreeTextView"
+                style="@style/CustomStyle.Text.Primary"
+                android:text="@string/degree"
+                android:textColor="@color/nextHoursTextColor" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
 </com.google.android.material.card.MaterialCardView>

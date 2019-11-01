@@ -34,7 +34,7 @@ class MainFragment : BaseFragment() {
         with(viewModel) {
             observe(currentWeatherModel, ::renderCurrentWeather)
             failure(currentWeatherFailure, ::handleFailure)
-            observe(hourWeatherModel, ::renderHourWeather)
+            observe(hourWeatherModelArrayList, ::renderHourWeather)
             failure(hourWeatherFailure, ::handleFailure)
         }
     }
@@ -64,7 +64,6 @@ class MainFragment : BaseFragment() {
         }
     }
 
-
     private fun setUpRecyclerView() {
         hourRecyclerView.adapter = hourAdapter
 
@@ -72,11 +71,6 @@ class MainFragment : BaseFragment() {
             context, LinearLayoutManager.HORIZONTAL, false
         )
         hourRecyclerView.isNestedScrollingEnabled = false
-    }
-
-
-    private fun setCurrentTemperature(temperature: String) {
-        currentTemperatureTextView.text = temperature
     }
 
     private fun setCurrentPressure(pressure: String) {

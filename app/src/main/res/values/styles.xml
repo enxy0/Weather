@@ -8,7 +8,8 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:fontFamily">@font/open_sans_bold</item>
+        <item name="android:fontFamily">@font/open_sans</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="CustomStyle.Text.Primary" parent="CustomStyle.Text">
@@ -20,16 +21,12 @@
         <item name="android:textColor">?android:textColorSecondary</item>
     </style>
 
-    <style name="CustomStyle.Text.Secondary.Bold" parent="CustomStyle.Text">
-        <item name="android:textStyle">bold</item>
-    </style>
-
     <style name="CustomStyle.Text.Light" parent="CustomStyle.Text.Secondary">
         <item name="android:fontFamily">@font/open_sans_light</item>
     </style>
 
     <style name="CustomStyle.Text.Header" parent="CustomStyle.Text.Primary">
-        <item name="android:textSize">22sp</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:fontFamily">@font/open_sans_bold</item>
     </style>
 
