@@ -51,7 +51,7 @@
             <TextView
                 android:id="@+id/degreeTextView"
                 style="@style/CustomStyle.Text.Primary"
-                android:text="@string/degree"
+                android:text="@string/sign_degree"
                 android:textColor="@color/nextHoursTextColor" />
         </LinearLayout>
     </LinearLayout>

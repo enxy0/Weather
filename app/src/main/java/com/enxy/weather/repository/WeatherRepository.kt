@@ -137,7 +137,7 @@ class WeatherRepository : BaseRepository() {
                 temperature = when {
                     it > 0 -> "+$it"
                     it < 0 -> "−${abs(it)}"
-                    else -> "$it"
+                    else -> it.toString()
                 }
             }
             val time = hourListItem.dtTxt.substring(11, 16)
@@ -156,9 +156,9 @@ class WeatherRepository : BaseRepository() {
         val temperature: String
         currentWeatherResponse.main.temp.roundToInt().let {
             temperature = when {
-                it > 0 -> "+$it°"
-                it < 0 -> "−$it°"
-                else -> "$it°"
+                it > 0 -> "+$it"
+                it < 0 -> "−${abs(it)}"
+                else -> it.toString()
             }
         }
         val feelsLikeTemperature =

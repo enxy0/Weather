@@ -32,9 +32,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application), C
 
     private fun getTestDataCurrentWeatherModel() {
         currentWeatherModel.value = CurrentWeatherModel(
-            "−1°",
+            "−1",
             "Overcast clouds",
-            "-4°",
+            "-4",
             "3",
             "1012",
             "91",

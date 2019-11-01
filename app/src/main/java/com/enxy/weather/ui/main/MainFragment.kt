@@ -58,9 +58,10 @@ class MainFragment : BaseFragment() {
             currentTemperatureTextView.text = currentWeatherModel.temperature
             currentFeelsLikeTextView.text = currentWeatherModel.feelsLikeTemperature
             cityNameTextView.text = currentWeatherModel.cityName
-            setCurrentHumidity(currentWeatherModel.humidity)
-            setCurrentWind(currentWeatherModel.wind)
-            setCurrentPressure(currentWeatherModel.pressure)
+            currentHumidityValueTextView.text = currentWeatherModel.humidity
+            currentWindValueTextView.text = currentWeatherModel.wind
+            currentPressureValueTextView.text = currentWeatherModel.pressure
+
         }
     }
 
@@ -71,26 +72,5 @@ class MainFragment : BaseFragment() {
             context, LinearLayoutManager.HORIZONTAL, false
         )
         hourRecyclerView.isNestedScrollingEnabled = false
-    }
-
-    private fun setCurrentPressure(pressure: String) {
-        val pressureValue = context!!
-            .resources
-            .getString(R.string.pressure_value_pascals)
-        val currentPressure = "$pressure $pressureValue"
-        currentPressureTextView.text = currentPressure
-    }
-
-    private fun setCurrentWind(wind: String) {
-        val windValue = context!!
-            .resources
-            .getString(R.string.wind_value_meters_per_second)
-        val currentWind = "$wind $windValue"
-        currentWindTextView.text = currentWind
-    }
-
-    private fun setCurrentHumidity(humidity: String) {
-        val currentHumidity = "$humidity %"
-        currentHumidityTextView.text = currentHumidity
     }
 }

@@ -37,19 +37,33 @@
                 android:scaleType="centerInside"
                 tools:src="@drawable/weather_clear_day" />
 
-            <TextView
-                android:id="@+id/currentTemperatureTextView"
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_weight="1"
-                android:fontFamily="@font/open_sans_bold"
-                android:textAlignment="center"
-                android:textColor="?android:attr/textColorPrimary"
-                android:textSize="45sp"
-                tools:text="+1°" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/currentTemperatureTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="45sp"
+                    tools:text="+1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:text="@string/sign_degree"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="45sp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -73,7 +87,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="3dp"
                     android:textSize="16sp"
-                    tools:text="+13°" />
+                    tools:text="+13" />
+
+                <TextView
+                    style="@style/CustomStyle.Text.Secondary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sign_degree"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <TextView
@@ -127,16 +148,31 @@
                             android:textAlignment="center"
                             android:textColor="@color/humidityTextColor" />
 
-                        <TextView
-                            android:id="@+id/currentHumidityTextView"
-                            style="@style/CustomStyle.Text.Primary"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="4dp"
-                            android:textAlignment="center"
-                            android:textColor="@color/humidityTextColor"
-                            tools:text="96%" />
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/currentHumidityValueTextView"
+                                style="@style/CustomStyle.Text.Primary"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/humidityTextColor"
+                                tools:text="96" />
+
+                            <TextView
+                                android:id="@+id/currentHumidityUnitTextView"
+                                style="@style/CustomStyle.Text.Primary"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="3dp"
+                                android:text="@string/sign_percent"
+                                android:textColor="@color/humidityTextColor" />
+                        </LinearLayout>
+
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -173,14 +209,26 @@
                             android:textAlignment="center"
                             android:textColor="@color/windTextColor" />
 
-                        <TextView
-                            android:id="@+id/currentWindTextView"
-                            style="@style/CustomStyle.Text.Primary"
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="4dp"
-                            android:textAlignment="center"
-                            android:textColor="@color/windTextColor"
-                            tools:text="2 m/s" />
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/currentWindValueTextView"
+                                style="@style/CustomStyle.Text.Primary"
+                                android:textColor="@color/windTextColor"
+                                tools:text="2" />
+
+                            <TextView
+                                android:id="@+id/currentWindUnitTextView"
+                                style="@style/CustomStyle.Text.Primary"
+                                android:layout_marginStart="3dp"
+                                android:text="@string/wind_value_meters_per_second"
+                                android:textColor="@color/windTextColor" />
+                        </LinearLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -221,14 +269,26 @@
                             android:textColor="@color/pressureTextColor"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/currentPressureTextView"
-                            style="@style/CustomStyle.Text.Primary"
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="4dp"
-                            android:textAlignment="center"
-                            android:textColor="@color/pressureTextColor"
-                            tools:text="1016 gPа" />
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/currentPressureValueTextView"
+                                style="@style/CustomStyle.Text.Primary"
+                                android:textColor="@color/pressureTextColor"
+                                tools:text="1016" />
+
+                            <TextView
+                                android:id="@+id/currentPressureUnitTextView"
+                                style="@style/CustomStyle.Text.Primary"
+                                android:layout_marginStart="3dp"
+                                android:text="@string/pressure_value_pascals"
+                                android:textColor="@color/pressureTextColor" />
+                        </LinearLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
