@@ -162,7 +162,7 @@ class WeatherRepository : BaseRepository() {
             }
         }
         val feelsLikeTemperature =
-            "${(currentWeatherResponse.main.temp - currentWeatherResponse.wind.speed).roundToInt()}°"
+            "${(currentWeatherResponse.main.temp - currentWeatherResponse.wind.speed).roundToInt()}"
         val wind = currentWeatherResponse.wind.speed.roundToInt().toString()
         val description = currentWeatherResponse.weather[0].description.capitalize()
         val pressure = currentWeatherResponse.main.pressure.toString()

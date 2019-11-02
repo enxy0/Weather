@@ -8,15 +8,13 @@ import com.enxy.weather.exception.Failure
 import com.enxy.weather.model.CurrentWeatherModel
 import com.enxy.weather.model.HourWeatherModel
 import com.enxy.weather.repository.WeatherRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancelChildren
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 
 class MainViewModel(application: Application) : AndroidViewModel(application), CoroutineScope {
-    override val coroutineContext: CoroutineContext = Dispatchers.Main
+    private val job = SupervisorJob()
+    override val coroutineContext: CoroutineContext = Dispatchers.Main + job
     private val weatherRepository = WeatherRepository()
     val currentWeatherModel = MutableLiveData<CurrentWeatherModel>()
     val currentWeatherFailure = MutableLiveData<Failure>()
@@ -24,10 +22,18 @@ class MainViewModel(application: Application) : AndroidViewModel(application), C
     val hourWeatherFailure = MutableLiveData<Failure>()
 
     init {
+//        loadTestData()
+        updateWeatherForecast()
+    }
+
+    fun loadTestData() {
         getTestDataCurrentWeatherModel()
         getTestDataHourWeatherModel()
-//        getCurrentWeatherModel()
-//        getHourWeatherModelArrayList()
+    }
+
+    fun updateWeatherForecast() {
+        loadCurrentWeatherForecast()
+        loadHourWeatherForecast()
     }
 
     private fun getTestDataCurrentWeatherModel() {
@@ -57,24 +63,24 @@ class MainViewModel(application: Application) : AndroidViewModel(application), C
         hourWeatherModelArrayList.value = arrayList
     }
 
-    fun getCurrentWeatherModel() = launch {
+    private fun loadCurrentWeatherForecast() = launch {
         weatherRepository.getCurrentWeatherForecast("498817")
             .handle(::handleCurrentWeatherFailure, ::handleCurrentWeather)
     }
 
-    fun getHourWeatherModel() = launch {
+    private fun loadHourWeatherForecast() = launch {
         weatherRepository.getHourWeatherForecast("498817")
             .handle(::handleHourWeatherFailure, ::handleHourWeather)
     }
 
-    fun handleHourWeatherFailure(failure: Failure?) {
+    private fun handleHourWeatherFailure(failure: Failure?) {
         failure?.let {
             this.hourWeatherModelArrayList.value = null
             this.hourWeatherFailure.value = it
         }
     }
 
-    fun handleHourWeather(hourWeatherModelArrayList: ArrayList<HourWeatherModel>?) {
+    private fun handleHourWeather(hourWeatherModelArrayList: ArrayList<HourWeatherModel>?) {
         hourWeatherModelArrayList?.let {
             this.hourWeatherModelArrayList.value = it
             this.hourWeatherFailure.value = null
@@ -82,14 +88,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application), C
     }
 
 
-    fun handleCurrentWeatherFailure(failure: Failure?) {
+    private fun handleCurrentWeatherFailure(failure: Failure?) {
         failure?.let {
             this.currentWeatherModel.value = null
             this.currentWeatherFailure.value = it
         }
     }
 
-    fun handleCurrentWeather(currentWeatherModel: CurrentWeatherModel?) {
+    private fun handleCurrentWeather(currentWeatherModel: CurrentWeatherModel?) {
         currentWeatherModel?.let {
             this.currentWeatherModel.value = it
             this.currentWeatherFailure.value = null
@@ -98,6 +104,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application), C
 
     override fun onCleared() {
         super.onCleared()
-        coroutineContext.cancelChildren()
+        job.cancelChildren()
     }
 }
