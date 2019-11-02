@@ -2,7 +2,6 @@ package com.enxy.weather.ui.main
 
 import android.os.Bundle
 import android.util.Log
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.enxy.weather.R
 import com.enxy.weather.base.BaseFragment
@@ -10,27 +9,28 @@ import com.enxy.weather.exception.Failure
 import com.enxy.weather.extension.dpToPixels
 import com.enxy.weather.extension.failure
 import com.enxy.weather.extension.observe
-import com.enxy.weather.model.CurrentWeatherModel
-import com.enxy.weather.model.HourWeatherModel
 import com.enxy.weather.ui.main.adapter.DayAdapter
 import com.enxy.weather.ui.main.adapter.HourAdapter
+import com.enxy.weather.ui.main.model.CurrentWeatherModel
+import com.enxy.weather.ui.main.model.HourWeatherModel
 import kotlinx.android.synthetic.main.main_fragment.*
+import javax.inject.Inject
 
 
 class MainFragment : BaseFragment() {
+    override val layoutId = R.layout.main_fragment
+    @Inject lateinit var viewModel: MainViewModel
+    @Inject lateinit var hourAdapter: HourAdapter
+    @Inject lateinit var dayAdapter: DayAdapter
+
     companion object {
         fun newInstance() = MainFragment()
     }
 
-    override val layoutId = R.layout.main_fragment
-    private lateinit var viewModel: MainViewModel
-    private val hourAdapter = HourAdapter()
-    private val dayAdapter = DayAdapter()
-    private fun mainActivity() = (activity as MainActivity)
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        Log.d("MainFragment", "onActivityCreated: called")
+        appComponent.inject(this)
         setUpRecyclerView()
         swipeRefreshLayout.setProgressViewOffset(true, 0, 55.dpToPixels)
         swipeRefreshLayout.setOnRefreshListener {
@@ -55,7 +55,6 @@ class MainFragment : BaseFragment() {
     private fun renderHourWeather(hourWeatherModelArrayList: ArrayList<HourWeatherModel>?) {
         hourWeatherModelArrayList?.let {
             hourAdapter.updateData(it)
-            Log.d("MainFragment", "renderHourWeather: hour weather updated!")
             Log.d("MainFragment", "renderHourWeather: hourWeatherModelArrayList=$it")
             swipeRefreshLayout.isRefreshing = false
         }
@@ -63,7 +62,6 @@ class MainFragment : BaseFragment() {
 
     private fun renderCurrentWeather(currentWeatherModel: CurrentWeatherModel?) {
         currentWeatherModel?.let {
-            Log.d("MainFragment", "renderCurrentWeather: current weather updated!")
             Log.d("MainFragment", "renderCurrentWeather: currentWeatherModel=$it")
             currentDescriptionTextView.text = currentWeatherModel.description
             currentDescriptionImageView.setImageResource(currentWeatherModel.imageId)

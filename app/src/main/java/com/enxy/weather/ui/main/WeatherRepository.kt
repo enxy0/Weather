@@ -1,23 +1,25 @@
-package com.enxy.weather.repository
+package com.enxy.weather.ui.main
 
 import com.enxy.weather.BuildConfig
 import com.enxy.weather.base.BaseRepository
 import com.enxy.weather.exception.Failure
 import com.enxy.weather.functional.Result
-import com.enxy.weather.model.CurrentWeatherModel
-import com.enxy.weather.model.DayWeatherModel
-import com.enxy.weather.model.HourWeatherModel
 import com.enxy.weather.network.ImageChooser
 import com.enxy.weather.network.NetworkService
 import com.enxy.weather.network.json.current.CurrentWeatherResponse
 import com.enxy.weather.network.json.hour.HourWeatherResponse
+import com.enxy.weather.ui.main.model.CurrentWeatherModel
+import com.enxy.weather.ui.main.model.DayWeatherModel
+import com.enxy.weather.ui.main.model.HourWeatherModel
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 import kotlin.collections.ArrayList
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
-class WeatherRepository : BaseRepository() {
+class WeatherRepository @Inject constructor(private val service: NetworkService) :
+    BaseRepository() {
     companion object {
         const val APPID = BuildConfig.API_KEY
         const val LANGUAGE = "ENG"
@@ -32,12 +34,10 @@ class WeatherRepository : BaseRepository() {
         const val DAY_WEATHER_COUNT = 40
     }
 
-    suspend fun getCurrentWeatherForecast(
-        id: String
-    ): Result<Failure, CurrentWeatherModel> {
+    suspend fun getCurrentWeatherForecast(id: String): Result<Failure, CurrentWeatherModel> {
         return safeApiCall(
             call = {
-                NetworkService.getApi().getCurrentWeatherAsync(
+                service.weatherApi().getCurrentWeatherAsync(
                     CURRENT_WEATHER_TYPE,
                     APPID,
                     id,
@@ -55,7 +55,7 @@ class WeatherRepository : BaseRepository() {
     ): Result<Failure, ArrayList<HourWeatherModel>> {
         return safeApiCall(
             call = {
-                NetworkService.getApi().getHourWeatherAsync(
+                service.weatherApi().getHourWeatherAsync(
                     THREE_HOUR_WEATHER_TYPE,
                     APPID,
                     id,
@@ -73,7 +73,7 @@ class WeatherRepository : BaseRepository() {
     ): Result<Failure, ArrayList<DayWeatherModel>> {
         return safeApiCall(
             call = {
-                NetworkService.getApi().getHourWeatherAsync(
+                service.weatherApi().getHourWeatherAsync(
                     DAY_WEATHER_TYPE,
                     APPID,
                     id,

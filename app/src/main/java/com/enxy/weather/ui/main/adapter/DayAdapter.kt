@@ -6,10 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.enxy.weather.R
-import com.enxy.weather.model.DayWeatherModel
+import com.enxy.weather.ui.main.model.DayWeatherModel
 import kotlinx.android.synthetic.main.item_day.view.*
+import javax.inject.Inject
 
-class DayAdapter : RecyclerView.Adapter<DayAdapter.DayHolder>() {
+class DayAdapter @Inject constructor() : RecyclerView.Adapter<DayAdapter.DayHolder>() {
     private val dayDataModelArrayList = ArrayList<DayWeatherModel>()
 
     fun updateData(dayWeatherModelArrayList: ArrayList<DayWeatherModel>) {

@@ -1,20 +1,14 @@
 package com.enxy.weather.network
 
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
+import javax.inject.Singleton
 
-object NetworkService {
-    private var retrofit: Retrofit
-    private const val BASE_URL = "https://api.openweathermap.org"
-
-    init {
-        retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
-            .build()
+@Singleton
+class NetworkService @Inject constructor(private val retrofit: Retrofit) {
+    companion object {
+        const val BASE_URL = "https://api.openweathermap.org"
     }
 
-    fun getApi(): Api = retrofit.create(Api::class.java)
+    fun weatherApi(): Api = retrofit.create(Api::class.java)
 }
