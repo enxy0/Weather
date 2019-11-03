@@ -9,32 +9,25 @@ import com.enxy.weather.network.NetworkService
 import com.enxy.weather.network.json.current.CurrentWeatherResponse
 import com.enxy.weather.network.json.hour.HourWeatherResponse
 import com.enxy.weather.ui.main.model.CurrentWeatherModel
-import com.enxy.weather.ui.main.model.DayWeatherModel
 import com.enxy.weather.ui.main.model.HourWeatherModel
-import java.text.SimpleDateFormat
-import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
-import kotlin.math.abs
 import kotlin.math.roundToInt
 
 class WeatherRepository @Inject constructor(private val service: NetworkService) :
     BaseRepository() {
     companion object {
+        // OpenWeatherMap API URL queries
         const val APPID = BuildConfig.API_KEY
         const val LANGUAGE = "ENG"
         const val UNITS = "metric"
         const val CURRENT_WEATHER_TYPE = "weather"
         const val CURRENT_WEATHER_COUNT = 0
-
         const val THREE_HOUR_WEATHER_TYPE = "forecast"
         const val THREE_HOUR_WEATHER_COUNT = 8
-
-        const val DAY_WEATHER_TYPE = "forecast"
-        const val DAY_WEATHER_COUNT = 40
     }
 
     suspend fun getCurrentWeatherForecast(id: String): Result<Failure, CurrentWeatherModel> {
+
         return safeApiCall(
             call = {
                 service.weatherApi().getCurrentWeatherAsync(
@@ -68,67 +61,6 @@ class WeatherRepository @Inject constructor(private val service: NetworkService)
         )
     }
 
-    suspend fun getDayWeatherForecast(
-        id: String
-    ): Result<Failure, ArrayList<DayWeatherModel>> {
-        return safeApiCall(
-            call = {
-                service.weatherApi().getHourWeatherAsync(
-                    DAY_WEATHER_TYPE,
-                    APPID,
-                    id,
-                    DAY_WEATHER_COUNT,
-                    LANGUAGE,
-                    UNITS
-                )
-            },
-            transform = ::transformDayWeatherResponse
-        )
-    }
-
-    private fun transformDayWeatherResponse(hourWeatherResponse: HourWeatherResponse): ArrayList<DayWeatherModel> {
-        // TODO: finish transform function
-        val hourWeatherModelArrayList = ArrayList<DayWeatherModel>()
-        val calendar = Calendar.getInstance()
-        for (hourListItem in hourWeatherResponse.list) {
-            val date = Date(hourListItem.dt)
-            val day = SimpleDateFormat("EEEE", Locale.ENGLISH).format(date.time)
-            val temperatureMax: String
-            hourListItem.main.tempMax.roundToInt().let {
-                temperatureMax = when {
-                    it > 0 -> "+$it"
-                    it < 0 -> "−${abs(it)}"
-                    else -> "$it"
-                }
-            }
-            val temperatureMin: String
-            hourListItem.main.tempMin.roundToInt().let {
-                temperatureMin = when {
-                    it > 0 -> "+$it"
-                    it < 0 -> "−${abs(it)}"
-                    else -> "$it"
-                }
-            }
-            val time = hourListItem.dtTxt.substring(11, 16)
-            val imageCode = hourListItem.weather[0].id
-            val dayPart: Char
-            hourListItem.weather[0].icon.let {
-                dayPart = it[it.length - 1]
-            }
-            val imageId = ImageChooser.OpenWeatherMap.getImageIdHourWeather(imageCode, dayPart)
-            hourWeatherModelArrayList.add(
-                DayWeatherModel(
-                    day,
-                    temperatureMax,
-                    temperatureMin,
-                    time,
-                    imageId
-                )
-            )
-        }
-        return hourWeatherModelArrayList
-    }
-
     private fun transformHourWeatherResponse(hourWeatherResponse: HourWeatherResponse): ArrayList<HourWeatherModel> {
         val hourWeatherModelArrayList = ArrayList<HourWeatherModel>()
         for (hourListItem in hourWeatherResponse.list) {
@@ -136,7 +68,6 @@ class WeatherRepository @Inject constructor(private val service: NetworkService)
             hourListItem.main.temp.roundToInt().let {
                 temperature = when {
                     it > 0 -> "+$it"
-                    it < 0 -> "−${abs(it)}"
                     else -> it.toString()
                 }
             }
@@ -157,7 +88,6 @@ class WeatherRepository @Inject constructor(private val service: NetworkService)
         currentWeatherResponse.main.temp.roundToInt().let {
             temperature = when {
                 it > 0 -> "+$it"
-                it < 0 -> "−${abs(it)}"
                 else -> it.toString()
             }
         }
@@ -185,5 +115,4 @@ class WeatherRepository @Inject constructor(private val service: NetworkService)
             cityName
         )
     }
-
 }
