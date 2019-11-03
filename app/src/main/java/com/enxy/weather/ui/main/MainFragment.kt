@@ -1,7 +1,11 @@
 package com.enxy.weather.ui.main
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
 import android.util.Log
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.enxy.weather.R
 import com.enxy.weather.base.BaseFragment
@@ -9,6 +13,7 @@ import com.enxy.weather.exception.Failure
 import com.enxy.weather.extension.dpToPixels
 import com.enxy.weather.extension.failure
 import com.enxy.weather.extension.observe
+import com.enxy.weather.extension.startCircularRevealAnimation
 import com.enxy.weather.ui.main.adapter.DayAdapter
 import com.enxy.weather.ui.main.adapter.HourAdapter
 import com.enxy.weather.ui.main.model.CurrentWeatherModel
@@ -22,6 +27,7 @@ class MainFragment : BaseFragment() {
     @Inject lateinit var viewModel: MainViewModel
     @Inject lateinit var hourAdapter: HourAdapter
     @Inject lateinit var dayAdapter: DayAdapter
+    private var isFirstTimeCreated: Boolean = true
 
     companion object {
         fun newInstance() = MainFragment()
@@ -29,18 +35,22 @@ class MainFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        Log.d("MainFragment", "onActivityCreated: called")
+        setUpSwipeRefreshLayout()
+        mainContentLinearLayout.isInvisible = true
         appComponent.inject(this)
         setUpRecyclerView()
-        swipeRefreshLayout.setProgressViewOffset(true, 0, 55.dpToPixels)
-        swipeRefreshLayout.setOnRefreshListener {
-            viewModel.updateWeatherForecast()
-        }
         with(viewModel) {
             observe(currentWeatherModel, ::renderCurrentWeather)
             failure(currentWeatherFailure, ::handleFailure)
             observe(hourWeatherModelArrayList, ::renderHourWeather)
             failure(hourWeatherFailure, ::handleFailure)
+        }
+    }
+
+    private fun setUpSwipeRefreshLayout() {
+        swipeRefreshLayout.setProgressViewOffset(true, 0, 55.dpToPixels)
+        swipeRefreshLayout.setOnRefreshListener {
+            viewModel.updateWeatherForecast()
         }
     }
 
@@ -56,6 +66,16 @@ class MainFragment : BaseFragment() {
         hourWeatherModelArrayList?.let {
             hourAdapter.updateData(it)
             Log.d("MainFragment", "renderHourWeather: hourWeatherModelArrayList=$it")
+            if (isFirstTimeCreated) {
+                val listener = object : AnimatorListenerAdapter() {
+                    override fun onAnimationStart(animation: Animator?) {
+                        super.onAnimationStart(animation)
+                        mainContentLinearLayout.isVisible = true
+                    }
+                }
+                mainContentLinearLayout.startCircularRevealAnimation(listener, 300, 180)
+                isFirstTimeCreated = false
+            }
             swipeRefreshLayout.isRefreshing = false
         }
     }
