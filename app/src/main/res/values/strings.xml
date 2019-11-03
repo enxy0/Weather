@@ -31,4 +31,6 @@
     <string name="section_next_hours">Next 24 hours</string>
     <string name="sign_degree">°</string>
     <string name="sign_percent">%</string>
+    <string name="menu_navigation_description">Menu</string>
+    <string name="menu_search_description">Search</string>
 </resources>
