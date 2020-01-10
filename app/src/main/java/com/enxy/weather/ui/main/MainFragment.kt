@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.enxy.weather.R
 import com.enxy.weather.base.BaseFragment
@@ -24,9 +25,13 @@ import javax.inject.Inject
 
 class MainFragment : BaseFragment() {
     override val layoutId = R.layout.main_fragment
-    @Inject lateinit var viewModel: MainViewModel
-    @Inject lateinit var hourAdapter: HourAdapter
-    @Inject lateinit var dayAdapter: DayAdapter
+    private lateinit var viewModel: MainViewModel
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
+    lateinit var hourAdapter: HourAdapter
+    @Inject
+    lateinit var dayAdapter: DayAdapter
     private var isFirstTimeCreated: Boolean = true
 
     companion object {
@@ -35,9 +40,10 @@ class MainFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        appComponent.inject(this)
+        viewModel = getMainViewModel(viewModelFactory)
         setUpSwipeRefreshLayout()
         mainContentLinearLayout.isInvisible = true
-        appComponent.inject(this)
         setUpRecyclerView()
         with(viewModel) {
             observe(currentWeatherModel, ::renderCurrentWeather)
@@ -49,9 +55,7 @@ class MainFragment : BaseFragment() {
 
     private fun setUpSwipeRefreshLayout() {
         swipeRefreshLayout.setProgressViewOffset(true, 0, 55.dpToPixels)
-        swipeRefreshLayout.setOnRefreshListener {
-            viewModel.updateWeatherForecast()
-        }
+        swipeRefreshLayout.setOnRefreshListener { viewModel.updateWeatherForecast() }
     }
 
 

@@ -5,8 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.enxy.weather.AndroidApplication
 import com.enxy.weather.di.ApplicationComponent
+import com.enxy.weather.ui.main.MainViewModel
 
 abstract class BaseFragment : Fragment() {
     abstract val layoutId: Int
@@ -20,4 +23,7 @@ abstract class BaseFragment : Fragment() {
     val appComponent: ApplicationComponent by lazy(mode = LazyThreadSafetyMode.NONE) {
         (activity?.application as AndroidApplication).appComponent
     }
+
+    fun getMainViewModel(viewModelFactory: ViewModelProvider.Factory) =
+        ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
 }

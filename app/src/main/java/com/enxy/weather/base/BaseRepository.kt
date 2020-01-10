@@ -19,15 +19,18 @@ open class BaseRepository {
             if (response.isSuccessful) {
                 val body = response.body()
                 if (body != null) {
-                    withContext(Dispatchers.IO) {
-                        val model = transform(body)
-                        withContext(Dispatchers.Main) {
-                            Result.Success(model)
-                        }
-                    }
+                    val model = withContext(Dispatchers.IO) { transform(body) }
+                    Result.Success(model)
                 } else
                     Result.Error(Failure.ServerError)
             } else {
+                Log.d(
+                    "BaseRepository",
+                    "safeApiCall: response.isSuccessful=${response.isSuccessful}"
+                )
+                Log.d("BaseRepository", "safeApiCall: response.message()=${response.message()}")
+                Log.d("BaseRepository", "safeApiCall: response.code()=${response.code()}")
+                Log.d("BaseRepository", "safeApiCall: response.body()=${response.body()}")
                 Result.Error(Failure.ServerResponseError)
             }
         } catch (e: Throwable) {

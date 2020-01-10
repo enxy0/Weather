@@ -26,17 +26,18 @@ android {
     buildTypes.each {
         Properties properties = new Properties()
         properties.load(project.rootProject.file("local.properties").newDataInputStream())
-        def apiKey = properties.getProperty("api_key", "")
+        def apiKeyOpenWeatherMap = properties.getProperty("api_key_open_weather_map", "")
+        def apiKeyOpenCage = properties.getProperty("api_key_open_cage", "")
+        it.buildConfigField 'String', "API_KEY_OPEN_CAGE", apiKeyOpenCage
+        it.resValue 'string', "api_key_open_cage", apiKeyOpenCage
 
-        it.buildConfigField 'String', "API_KEY", apiKey
-
-        it.resValue 'string', "api_key", apiKey
+        it.buildConfigField 'String', "API_KEY_OPEN_WEATHER_MAP", apiKeyOpenWeatherMap
+        it.resValue 'string', "api_key_open_weather_map", apiKeyOpenWeatherMap
 
     }
 }
 
 dependencies {
-    def materialVersion = "1.1.0-beta01"
     def retrofit2_version = "2.6.2"
     def retrofit2_converter_json_version = "2.6.1"
     def kotlinCoroutinesVersion = "1.3.2"
@@ -56,9 +57,9 @@ dependencies {
     testImplementation "junit:junit:4.12"
     androidTestImplementation "androidx.test:runner:1.2.0"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.2.0"
-    implementation "com.google.android.material:material:$materialVersion"
+    implementation 'com.google.android.material:material:1.1.0-rc01'
     implementation "androidx.legacy:legacy-support-core-utils:1.0.0"
-    implementation "androidx.recyclerview:recyclerview:1.0.0"
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
     implementation "com.google.code.gson:gson:$gsonVersion"
 
     // Retrofit handle handle network calls

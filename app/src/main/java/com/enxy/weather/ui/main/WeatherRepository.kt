@@ -17,7 +17,7 @@ class WeatherRepository @Inject constructor(private val service: NetworkService)
     BaseRepository() {
     companion object {
         // OpenWeatherMap API URL queries
-        const val APPID = BuildConfig.API_KEY
+        const val OPEN_WEATHER_MAP_APPID = BuildConfig.API_KEY_OPEN_WEATHER_MAP
         const val LANGUAGE = "ENG"
         const val UNITS = "metric"
         const val CURRENT_WEATHER_TYPE = "weather"
@@ -32,7 +32,7 @@ class WeatherRepository @Inject constructor(private val service: NetworkService)
             call = {
                 service.weatherApi().getCurrentWeatherAsync(
                     CURRENT_WEATHER_TYPE,
-                    APPID,
+                    OPEN_WEATHER_MAP_APPID,
                     id,
                     CURRENT_WEATHER_COUNT,
                     LANGUAGE,
@@ -50,7 +50,7 @@ class WeatherRepository @Inject constructor(private val service: NetworkService)
             call = {
                 service.weatherApi().getHourWeatherAsync(
                     THREE_HOUR_WEATHER_TYPE,
-                    APPID,
+                    OPEN_WEATHER_MAP_APPID,
                     id,
                     THREE_HOUR_WEATHER_COUNT,
                     LANGUAGE,
