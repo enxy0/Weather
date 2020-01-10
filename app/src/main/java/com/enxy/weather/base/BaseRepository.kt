@@ -15,22 +15,15 @@ open class BaseRepository {
         transform: (JSON) -> MODEL
     ): Result<Failure, MODEL> = withContext(Dispatchers.Main) {
         try {
-            val response = call().await()
+            val response = withContext(Dispatchers.IO) { call().await() }
             if (response.isSuccessful) {
                 val body = response.body()
                 if (body != null) {
-                    val model = withContext(Dispatchers.IO) { transform(body) }
+                    val model = withContext(Dispatchers.Default) { transform(body) }
                     Result.Success(model)
                 } else
                     Result.Error(Failure.ServerError)
             } else {
-                Log.d(
-                    "BaseRepository",
-                    "safeApiCall: response.isSuccessful=${response.isSuccessful}"
-                )
-                Log.d("BaseRepository", "safeApiCall: response.message()=${response.message()}")
-                Log.d("BaseRepository", "safeApiCall: response.code()=${response.code()}")
-                Log.d("BaseRepository", "safeApiCall: response.body()=${response.body()}")
                 Result.Error(Failure.ServerResponseError)
             }
         } catch (e: Throwable) {

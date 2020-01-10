@@ -6,8 +6,6 @@ import com.enxy.weather.network.NetworkService
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -23,6 +21,4 @@ class ApplicationModule(private val application: AndroidApplication) {
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
     }
-
-    @Provides @Singleton fun provideJob(): Job = SupervisorJob()
 }
