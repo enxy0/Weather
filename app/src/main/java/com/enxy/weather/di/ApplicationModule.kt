@@ -3,7 +3,6 @@ package com.enxy.weather.di
 import android.content.Context
 import com.enxy.weather.AndroidApplication
 import com.enxy.weather.network.NetworkService
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -18,7 +17,6 @@ class ApplicationModule(private val application: AndroidApplication) {
         return Retrofit.Builder()
             .baseUrl(NetworkService.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
     }
 }

@@ -27,7 +27,6 @@ class WeatherRepository @Inject constructor(private val service: NetworkService)
     }
 
     suspend fun getCurrentWeatherForecast(id: String): Result<Failure, CurrentWeatherModel> {
-
         return safeApiCall(
             call = {
                 service.weatherApi().getCurrentWeatherAsync(

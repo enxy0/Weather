@@ -1,6 +1,5 @@
 package com.enxy.weather.ui.main
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -21,7 +20,6 @@ class MainViewModel @Inject constructor(private val weatherRepository: WeatherRe
 
     init {
 //        loadTestData()
-        Log.d("MainViewModel", "initialized")
         updateWeatherForecast()
     }
 
@@ -31,7 +29,6 @@ class MainViewModel @Inject constructor(private val weatherRepository: WeatherRe
     }
 
     fun updateWeatherForecast() {
-        Log.d("MainViewModel", "updateWeatherForecast: called")
         loadCurrentWeatherForecast()
         loadHourWeatherForecast()
     }
@@ -64,15 +61,13 @@ class MainViewModel @Inject constructor(private val weatherRepository: WeatherRe
     }
 
     private fun loadCurrentWeatherForecast() = viewModelScope.launch {
-        Log.d("MainViewModel", "loadCurrentWeatherForecast: called")
         weatherRepository.getCurrentWeatherForecast("498817")
-            .handle(::handleCurrentWeatherFailure, ::handleCurrentWeather)
+            .handle(::handleCurrentWeatherFailure, ::handleCurrentWeatherSuccess)
     }
 
     private fun loadHourWeatherForecast() = viewModelScope.launch {
-        Log.d("MainViewModel", "loadHourWeatherForecast: called")
         weatherRepository.getHourWeatherForecast("498817")
-            .handle(::handleHourWeatherFailure, ::handleHourWeather)
+            .handle(::handleHourWeatherFailure, ::handleHourWeatherSuccess)
     }
 
     private fun handleHourWeatherFailure(failure: Failure?) {
@@ -82,7 +77,7 @@ class MainViewModel @Inject constructor(private val weatherRepository: WeatherRe
         }
     }
 
-    private fun handleHourWeather(hourWeatherModelArrayList: ArrayList<HourWeatherModel>?) {
+    private fun handleHourWeatherSuccess(hourWeatherModelArrayList: ArrayList<HourWeatherModel>?) {
         hourWeatherModelArrayList?.let {
             this.hourWeatherModelArrayList.value = it
             this.hourWeatherFailure.value = null
@@ -97,11 +92,10 @@ class MainViewModel @Inject constructor(private val weatherRepository: WeatherRe
         }
     }
 
-    private fun handleCurrentWeather(currentWeatherModel: CurrentWeatherModel?) {
+    private fun handleCurrentWeatherSuccess(currentWeatherModel: CurrentWeatherModel?) {
         currentWeatherModel?.let {
             this.currentWeatherModel.value = it
             this.currentWeatherFailure.value = null
         }
     }
-
 }
