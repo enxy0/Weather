@@ -7,6 +7,9 @@ data class CurrentMain(
     @SerializedName("temp")
     @Expose
     val temp: Double,
+    @SerializedName("feels_like")
+    @Expose
+    val feelsLike: Double,
     @SerializedName("pressure")
     @Expose
     val pressure: Int,

@@ -91,8 +91,7 @@ class WeatherRepository @Inject constructor(private val service: NetworkService)
                 else -> it.toString()
             }
         }
-        val feelsLikeTemperature =
-            "${(currentWeatherResponse.main.temp - currentWeatherResponse.wind.speed).roundToInt()}"
+        val feelsLikeTemperature = currentWeatherResponse.main.feelsLike.roundToInt().toString()
         val wind = currentWeatherResponse.wind.speed.roundToInt().toString()
         val description = currentWeatherResponse.weather[0].description.capitalize()
         val pressure = currentWeatherResponse.main.pressure.toString()
