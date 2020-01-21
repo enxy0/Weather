@@ -1,7 +1,5 @@
 package com.enxy.weather.ui.main
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
 import android.util.Log
 import androidx.core.view.isInvisible
@@ -14,7 +12,6 @@ import com.enxy.weather.exception.Failure
 import com.enxy.weather.extension.dpToPixels
 import com.enxy.weather.extension.failure
 import com.enxy.weather.extension.observe
-import com.enxy.weather.extension.startCircularRevealAnimation
 import com.enxy.weather.ui.main.adapter.DayAdapter
 import com.enxy.weather.ui.main.adapter.HourAdapter
 import com.enxy.weather.ui.main.model.CurrentWeatherModel
@@ -32,7 +29,6 @@ class MainFragment : BaseFragment() {
     lateinit var hourAdapter: HourAdapter
     @Inject
     lateinit var dayAdapter: DayAdapter
-    private var isFirstTimeCreated: Boolean = true
 
     companion object {
         fun newInstance() = MainFragment()
@@ -70,16 +66,7 @@ class MainFragment : BaseFragment() {
         hourWeatherModelArrayList?.let {
             hourAdapter.updateData(it)
             Log.d("MainFragment", "renderHourWeather: hourWeatherModelArrayList=$it")
-            if (isFirstTimeCreated) {
-                val listener = object : AnimatorListenerAdapter() {
-                    override fun onAnimationStart(animation: Animator?) {
-                        super.onAnimationStart(animation)
-                        mainContentLinearLayout.isVisible = true
-                    }
-                }
-                mainContentLinearLayout.startCircularRevealAnimation(listener, 300, 180)
-                isFirstTimeCreated = false
-            }
+            mainContentLinearLayout.isVisible = true
             swipeRefreshLayout.isRefreshing = false
         }
     }
