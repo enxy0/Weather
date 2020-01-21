@@ -6,8 +6,8 @@
     style="@style/CustomStyle.CardView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
+    android:layout_marginStart="@dimen/hour_weather_margin"
+    android:layout_marginEnd="@dimen/hour_weather_margin"
     app:cardBackgroundColor="@color/nextHoursTileColor">
 
     <LinearLayout

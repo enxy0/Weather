@@ -3,6 +3,11 @@
     <dimen name="activity_horizontal_margin">14dp</dimen>
     <dimen name="activity_vertical_margin">20dp</dimen>
     <dimen name="section_vertical_margin">20dp</dimen>
-    <dimen name="section_top_margin">14dp</dimen>
-    <dimen name="cardview_details_padding">16dp</dimen>
+    <dimen name="section_content_top_padding">14dp</dimen>
+    <dimen name="card_details_layout_padding">16dp</dimen>
+    <dimen name="details_layout_padding">6dp</dimen>
+    <dimen name="card_text_top_margin">6dp</dimen>
+    <dimen name="card_text_bottom_margin">4dp</dimen>
+    <dimen name="text_space_margin">3dp</dimen>
+    <dimen name="hour_weather_margin">8dp</dimen>
 </resources>

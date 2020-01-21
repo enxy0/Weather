@@ -30,8 +30,8 @@
     <ImageView
         android:id="@+id/descriptionImageView"
         style="@style/CustomStyle.ImageView"
-        android:layout_marginEnd="28dp"
         android:layout_gravity="center_vertical"
+        android:layout_marginEnd="28dp"
         tools:srcCompat="@drawable/weather_scattered_clouds" />
 
     <TextView

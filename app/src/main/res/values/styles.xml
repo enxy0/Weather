@@ -13,7 +13,6 @@
     </style>
 
     <style name="CustomStyle.Text.Primary" parent="CustomStyle.Text">
-        <item name="android:textSize">16sp</item>
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>
 
@@ -35,13 +34,15 @@
         <item name="android:layout_width">50dp</item>
     </style>
 
+    <style name="CustomStyle.ImageView.CurrentWeather" parent="CustomStyle.ImageView">
+        <item name="android:layout_height">220dp</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
     <style name="CustomStyle.Icon">
-        <item name="android:clickable">true</item>
-        <item name="android:focusable">true</item>
-        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
         <item name="android:tint">?attr/iconColor</item>
-        <item name="android:layout_height">32dp</item>
-        <item name="android:layout_width">32dp</item>
+        <item name="android:layout_height">25dp</item>
+        <item name="android:layout_width">25dp</item>
     </style>
 
     <style name="CustomStyle.ImageView.Precipitation">
