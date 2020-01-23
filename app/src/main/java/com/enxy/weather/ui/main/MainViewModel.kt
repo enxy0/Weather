@@ -47,12 +47,14 @@ class MainViewModel @Inject constructor(
     private fun handleFindLocationFailure(failure: Failure?) {
         failure?.let {
             this.locationFailure.value = it
+            this.locationInfoArrayList.value = null
         }
     }
 
     private fun handleFindLocationSuccess(locationInfoArrayList: ArrayList<LocationInfo>?) {
         locationInfoArrayList?.let {
             this.locationInfoArrayList.value = it
+            this.locationFailure.value = null
         }
     }
 
