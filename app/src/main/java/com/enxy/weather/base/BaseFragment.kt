@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.enxy.weather.AndroidApplication
 import com.enxy.weather.di.ApplicationComponent
 import com.enxy.weather.ui.main.MainViewModel
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.main_activity.*
 
 abstract class BaseFragment : Fragment() {
     abstract val layoutId: Int
@@ -26,4 +28,12 @@ abstract class BaseFragment : Fragment() {
 
     fun getMainViewModel(viewModelFactory: ViewModelProvider.Factory) =
         ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
+
+    fun notify(message: String) {
+        Snackbar.make(activity!!.mainContainer, message, Snackbar.LENGTH_LONG).show()
+    }
+
+    fun notify(message: Int) {
+        Snackbar.make(activity!!.mainContainer, message, Snackbar.LENGTH_LONG).show()
+    }
 }

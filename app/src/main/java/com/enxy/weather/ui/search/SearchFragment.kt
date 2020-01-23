@@ -13,7 +13,6 @@ import com.enxy.weather.extension.failure
 import com.enxy.weather.extension.observe
 import com.enxy.weather.network.NetworkService
 import com.enxy.weather.ui.main.MainViewModel
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.search_fragment.*
 import javax.inject.Inject
 
@@ -50,19 +49,11 @@ class SearchFragment : BaseFragment() {
     }
 
     private fun renderData(locationInfoArrayList: ArrayList<LocationInfo>?) {
-        locationInfoArrayList?.let {
-            locationAdapter.updateData(it)
-        }
+        locationInfoArrayList?.let { locationAdapter.updateData(it) }
     }
 
     private fun handleFailure(failure: Failure?) {
-        failure?.let {
-            Snackbar.make(
-                this@SearchFragment.view!!,
-                "Произошла ошибка ${it.javaClass.simpleName}",
-                Snackbar.LENGTH_LONG
-            ).show()
-        }
+        failure?.let { notify("Failure: ${it.javaClass.simpleName}") }
     }
 
     private fun setUpRecyclerView() {
