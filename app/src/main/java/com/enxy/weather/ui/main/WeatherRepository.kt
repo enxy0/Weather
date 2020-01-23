@@ -6,13 +6,15 @@ import com.enxy.weather.exception.Failure
 import com.enxy.weather.functional.Result
 import com.enxy.weather.network.ImageChooser
 import com.enxy.weather.network.NetworkService
-import com.enxy.weather.network.json.current.CurrentWeatherResponse
-import com.enxy.weather.network.json.hour.HourWeatherResponse
+import com.enxy.weather.network.json.openweathermap.current.CurrentWeatherResponse
+import com.enxy.weather.network.json.openweathermap.hour.HourWeatherResponse
 import com.enxy.weather.ui.main.model.CurrentWeatherModel
 import com.enxy.weather.ui.main.model.HourWeatherModel
 import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.math.roundToInt
 
+@Singleton
 class WeatherRepository @Inject constructor(private val service: NetworkService) :
     BaseRepository() {
     companion object {
@@ -42,9 +44,7 @@ class WeatherRepository @Inject constructor(private val service: NetworkService)
         )
     }
 
-    suspend fun getHourWeatherForecast(
-        id: String
-    ): Result<Failure, ArrayList<HourWeatherModel>> {
+    suspend fun getHourWeatherForecast(id: String): Result<Failure, ArrayList<HourWeatherModel>> {
         return safeApiCall(
             call = {
                 service.weatherApi().getHourWeatherAsync(

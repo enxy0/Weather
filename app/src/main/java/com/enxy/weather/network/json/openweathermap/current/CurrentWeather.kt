@@ -1,9 +1,10 @@
-package com.enxy.weather.network.json.hour
+package com.enxy.weather.network.json.openweathermap.current
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class HourWeather(
+
+data class CurrentWeather(
     @SerializedName("id")
     @Expose
     val id: Int,

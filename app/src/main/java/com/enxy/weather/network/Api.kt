@@ -1,7 +1,7 @@
 package com.enxy.weather.network
 
-import com.enxy.weather.network.json.current.CurrentWeatherResponse
-import com.enxy.weather.network.json.hour.HourWeatherResponse
+import com.enxy.weather.network.json.openweathermap.current.CurrentWeatherResponse
+import com.enxy.weather.network.json.openweathermap.hour.HourWeatherResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

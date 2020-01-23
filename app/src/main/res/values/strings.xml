@@ -33,4 +33,5 @@
     <string name="sign_percent">%</string>
     <string name="menu_navigation_description">Menu</string>
     <string name="menu_search_description">Search</string>
+    <string name="input_enter_city">Enter city…</string>
 </resources>

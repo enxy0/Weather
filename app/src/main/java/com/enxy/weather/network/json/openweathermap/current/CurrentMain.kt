@@ -1,4 +1,4 @@
-package com.enxy.weather.network.json.current
+package com.enxy.weather.network.json.openweathermap.current
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

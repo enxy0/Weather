@@ -1,11 +1,10 @@
 package com.enxy.weather.ui.main
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import com.enxy.weather.R
-import com.enxy.weather.ui.search.SearchActivity
+import com.enxy.weather.ui.search.SearchFragment
 import kotlinx.android.synthetic.main.main_activity.*
 
 class MainActivity : AppCompatActivity() {
@@ -17,7 +16,10 @@ class MainActivity : AppCompatActivity() {
         bottomAppBar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.menu_search_action -> {
-                    startActivity(Intent(this, SearchActivity::class.java))
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.mainContainer, SearchFragment.newInstance())
+                        .addToBackStack(SearchFragment.TAG)
+                        .commit()
                     true
                 }
                 else -> false
