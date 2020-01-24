@@ -17,10 +17,10 @@ class LocationRepository @Inject constructor(private val service: NetworkService
         const val language = "en"
     }
 
-    suspend fun getLocationByName(locationName: String): Result<Failure, ArrayList<LocationInfo>> {
+    suspend fun getLocationsByName(locationName: String): Result<Failure, ArrayList<LocationInfo>> {
         return safeApiCall(
             call = {
-                service.locationApi().getLocationByNameAsync(
+                service.locationApi().getLocationsByNameAsync(
                     locationName,
                     language,
                     OPEN_CAGE_API_KEY
@@ -37,7 +37,7 @@ class LocationRepository @Inject constructor(private val service: NetworkService
             val longitude = result.geometry.lng
             val formattedLocationName = result.formatted
             val confidence = result.confidence
-            val model = LocationInfo(latitude, longitude, formattedLocationName, confidence)
+            val model = LocationInfo(longitude, latitude, formattedLocationName, confidence)
             data.add(model)
         }
         return data

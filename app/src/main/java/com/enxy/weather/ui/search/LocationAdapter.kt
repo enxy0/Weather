@@ -5,10 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.enxy.weather.R
+import com.enxy.weather.ui.main.MainViewModel
 import com.enxy.weather.ui.search.LocationAdapter.LocationHolder
 import kotlinx.android.synthetic.main.item_location.view.*
 
-class LocationAdapter : RecyclerView.Adapter<LocationHolder>() {
+class LocationAdapter(private val fragment: SearchFragment, private val viewModel: MainViewModel) :
+    RecyclerView.Adapter<LocationHolder>() {
     private val data = ArrayList<LocationInfo>()
 
     fun updateData(data: ArrayList<LocationInfo>) {
@@ -20,6 +22,11 @@ class LocationAdapter : RecyclerView.Adapter<LocationHolder>() {
     inner class LocationHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(locationInfo: LocationInfo) {
             itemView.locationName.text = locationInfo.formattedLocationName
+            itemView.parentLinearLayout.setOnClickListener {
+                viewModel.updateWeatherLocation(locationInfo)
+                fragment.hideKeyboard()
+                fragment.parentFragmentManager.popBackStack()
+            }
         }
     }
 

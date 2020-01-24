@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface CityApi {
     @GET("/geocode/v1/json")
-    suspend fun getLocationByNameAsync(
+    suspend fun getLocationsByNameAsync(
         @Query("q", encoded = true) locationName: String,
         @Query("language") language: String,
         @Query("key") apiKey: String

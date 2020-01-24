@@ -12,7 +12,8 @@ interface Api {
     suspend fun getHourWeatherAsync(
         @Path("type") type: String,
         @Query("APPID") APPID: String,
-        @Query("id") id: String,
+        @Query("lon") longitude: Double,
+        @Query("lat") latitude: Double,
         @Query("cnt") count: Int,
         @Query("lang") language: String,
         @Query("units") units: String
@@ -22,7 +23,8 @@ interface Api {
     suspend fun getCurrentWeatherAsync(
         @Path("type") type: String,
         @Query("APPID") APPID: String,
-        @Query("id") id: String,
+        @Query("lon") longitude: Double,
+        @Query("lat") latitude: Double,
         @Query("cnt") count: Int,
         @Query("lang") language: String,
         @Query("units") units: String

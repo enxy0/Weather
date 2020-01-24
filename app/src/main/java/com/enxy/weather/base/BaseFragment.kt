@@ -27,7 +27,7 @@ abstract class BaseFragment : Fragment() {
     }
 
     fun getMainViewModel(viewModelFactory: ViewModelProvider.Factory) =
-        ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
+        ViewModelProviders.of(this.activity!!, viewModelFactory).get(MainViewModel::class.java)
 
     fun notify(message: String) {
         Snackbar.make(activity!!.mainContainer, message, Snackbar.LENGTH_LONG).show()

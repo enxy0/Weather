@@ -2,7 +2,7 @@ package com.enxy.weather.ui.main
 
 import android.os.Bundle
 import android.util.Log
-import androidx.core.view.isInvisible
+import android.view.View
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,12 +34,15 @@ class MainFragment : BaseFragment() {
         fun newInstance() = MainFragment()
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         appComponent.inject(this)
         viewModel = getMainViewModel(viewModelFactory)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setUpSwipeRefreshLayout()
-        mainContentLinearLayout.isInvisible = true
         setUpRecyclerView()
         with(viewModel) {
             observe(currentWeatherModel, ::renderCurrentWeather)
@@ -49,11 +52,26 @@ class MainFragment : BaseFragment() {
         }
     }
 
-    private fun setUpSwipeRefreshLayout() {
-        swipeRefreshLayout.setProgressViewOffset(true, 0, 55.dpToPixels)
-        swipeRefreshLayout.setOnRefreshListener { viewModel.updateWeatherForecast() }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.let {
+            it.currentWeatherModel.removeObservers(this)
+            it.currentWeatherFailure.removeObservers(this)
+            it.hourWeatherModelArrayList.removeObservers(this)
+            it.hourWeatherFailure.removeObservers(this)
+        }
     }
 
+    private fun setUpSwipeRefreshLayout() {
+        swipeRefreshLayout.setProgressViewOffset(true, 0, 55.dpToPixels)
+        swipeRefreshLayout.setOnRefreshListener(::onRefresh)
+    }
+
+    private fun onRefresh() {
+        if (!swipeRefreshLayout.isRefreshing)
+            swipeRefreshLayout.isRefreshing = true
+        viewModel.fetchWeatherForecast()
+    }
 
     private fun handleFailure(failure: Failure?) {
         failure?.let {

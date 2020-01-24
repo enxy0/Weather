@@ -28,13 +28,17 @@ class WeatherRepository @Inject constructor(private val service: NetworkService)
         const val THREE_HOUR_WEATHER_COUNT = 8
     }
 
-    suspend fun getCurrentWeatherForecast(id: String): Result<Failure, CurrentWeatherModel> {
+    suspend fun getCurrentWeatherForecast(
+        longitude: Double,
+        latitude: Double
+    ): Result<Failure, CurrentWeatherModel> {
         return safeApiCall(
             call = {
                 service.weatherApi().getCurrentWeatherAsync(
                     CURRENT_WEATHER_TYPE,
                     OPEN_WEATHER_MAP_APPID,
-                    id,
+                    longitude,
+                    latitude,
                     CURRENT_WEATHER_COUNT,
                     LANGUAGE,
                     UNITS
@@ -44,13 +48,17 @@ class WeatherRepository @Inject constructor(private val service: NetworkService)
         )
     }
 
-    suspend fun getHourWeatherForecast(id: String): Result<Failure, ArrayList<HourWeatherModel>> {
+    suspend fun getHourWeatherForecast(
+        longitude: Double,
+        latitude: Double
+    ): Result<Failure, ArrayList<HourWeatherModel>> {
         return safeApiCall(
             call = {
                 service.weatherApi().getHourWeatherAsync(
                     THREE_HOUR_WEATHER_TYPE,
                     OPEN_WEATHER_MAP_APPID,
-                    id,
+                    longitude,
+                    latitude,
                     THREE_HOUR_WEATHER_COUNT,
                     LANGUAGE,
                     UNITS

@@ -1,5 +1,6 @@
 package com.enxy.weather.ui.main
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,34 +13,38 @@ import com.enxy.weather.ui.search.LocationRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 class MainViewModel @Inject constructor(
     private val weatherRepository: WeatherRepository,
     private val locationRepository: LocationRepository
-) :
-    ViewModel() {
+) : ViewModel() {
     val currentWeatherModel = MutableLiveData<CurrentWeatherModel>()
     val currentWeatherFailure = MutableLiveData<Failure>()
     val hourWeatherModelArrayList = MutableLiveData<ArrayList<HourWeatherModel>>()
     val hourWeatherFailure = MutableLiveData<Failure>()
     val locationInfoArrayList = MutableLiveData<ArrayList<LocationInfo>>()
     val locationFailure = MutableLiveData<Failure>()
+    var currentLocation = LocationInfo(30.26, 59.89)
 
     init {
-//        loadTestData()
-        updateWeatherForecast()
+        fetchWeatherForecast(currentLocation)
     }
 
-    fun updateWeatherForecast() {
+    fun updateWeatherLocation(locationInfo: LocationInfo) {
+        currentLocation = locationInfo
+        fetchWeatherForecast(locationInfo)
+    }
+
+    fun fetchWeatherForecast(locationInfo: LocationInfo = currentLocation) {
         viewModelScope.launch {
-            loadCurrentWeatherForecast()
-            loadHourWeatherForecast()
+            loadCurrentWeatherForecast(locationInfo.longitude, locationInfo.latitude)
+            loadHourWeatherForecast(locationInfo.longitude, locationInfo.latitude)
         }
     }
 
     fun fetchListOfLocationsByName(locationName: String) {
+        Log.d("MainViewModel", "fetchListOfLocationsByName: called")
         viewModelScope.launch {
-            locationRepository.getLocationByName(locationName)
+            locationRepository.getLocationsByName(locationName)
                 .handle(::handleFindLocationFailure, ::handleFindLocationSuccess)
         }
     }
@@ -58,13 +63,12 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    private suspend fun loadCurrentWeatherForecast() =
-        weatherRepository.getCurrentWeatherForecast("498817")
+    private suspend fun loadCurrentWeatherForecast(longitude: Double, latitude: Double) =
+        weatherRepository.getCurrentWeatherForecast(longitude, latitude)
             .handle(::handleCurrentWeatherFailure, ::handleCurrentWeatherSuccess)
 
-
-    private suspend fun loadHourWeatherForecast() =
-        weatherRepository.getHourWeatherForecast("498817")
+    private suspend fun loadHourWeatherForecast(longitude: Double, latitude: Double) =
+        weatherRepository.getHourWeatherForecast(longitude, latitude)
             .handle(::handleHourWeatherFailure, ::handleHourWeatherSuccess)
 
     private fun handleHourWeatherFailure(failure: Failure?) {
