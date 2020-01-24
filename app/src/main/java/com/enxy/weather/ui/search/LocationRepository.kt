@@ -14,7 +14,6 @@ class LocationRepository @Inject constructor(private val service: NetworkService
     BaseRepository() {
     companion object {
         const val OPEN_CAGE_API_KEY = BuildConfig.API_KEY_OPEN_CAGE
-        const val language = "en"
     }
 
     suspend fun getLocationsByName(locationName: String): Result<Failure, ArrayList<LocationInfo>> {
@@ -22,7 +21,6 @@ class LocationRepository @Inject constructor(private val service: NetworkService
             call = {
                 service.locationApi().getLocationsByNameAsync(
                     locationName,
-                    language,
                     OPEN_CAGE_API_KEY
                 )
             },

@@ -5,11 +5,10 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface CityApi {
+interface LocationApi {
     @GET("/geocode/v1/json")
     suspend fun getLocationsByNameAsync(
         @Query("q", encoded = true) locationName: String,
-        @Query("language") language: String,
         @Query("key") apiKey: String
     ): Response<LocationResponse>
 }

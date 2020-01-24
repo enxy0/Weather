@@ -22,7 +22,7 @@ class NetworkService @Inject constructor() {
         const val OPEN_CAGE_URL = "https://api.opencagedata.com/"
     }
 
-    fun weatherApi(): Api = openWeatherMapRetrofit.create(Api::class.java)
+    fun weatherApi(): WeatherApi = openWeatherMapRetrofit.create(WeatherApi::class.java)
 
-    fun locationApi(): CityApi = openCageRetrofit.create(CityApi::class.java)
+    fun locationApi(): LocationApi = openCageRetrofit.create(LocationApi::class.java)
 }

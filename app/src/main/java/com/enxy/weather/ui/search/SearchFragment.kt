@@ -37,10 +37,6 @@ class SearchFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         appComponent.inject(this)
         viewModel = getMainViewModel(viewModelFactory)
-        with(viewModel) {
-            observe(locationInfoArrayList, ::renderData)
-            failure(locationFailure, ::handleFailure)
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,6 +46,10 @@ class SearchFragment : BaseFragment() {
         setFocusOnInput()
         searchCityEditText.doOnTextChanged { text, _, _, _ ->
             text?.let { if (it.length > 1) viewModel.fetchListOfLocationsByName(it.toString()) }
+        }
+        with(viewModel) {
+            observe(locationInfoArrayList, ::renderData)
+            failure(locationFailure, ::handleFailure)
         }
     }
 
