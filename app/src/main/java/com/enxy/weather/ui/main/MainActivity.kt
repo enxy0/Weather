@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.enxy.weather.AndroidApplication
 import com.enxy.weather.R
 import com.enxy.weather.ui.search.SearchFragment
@@ -21,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (application as AndroidApplication).appComponent.inject(this)
-        viewModel = ViewModelProviders.of(this, viewModelFactory)[MainViewModel::class.java]
+        viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
         setContentView(R.layout.main_activity)
         setSupportActionBar(bottomAppBar)
         bottomAppBar.setOnMenuItemClickListener {

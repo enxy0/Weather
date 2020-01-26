@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.enxy.weather.AndroidApplication
 import com.enxy.weather.di.ApplicationComponent
 import com.enxy.weather.ui.main.MainViewModel
@@ -27,7 +26,7 @@ abstract class BaseFragment : Fragment() {
     }
 
     fun getMainViewModel(viewModelFactory: ViewModelProvider.Factory) =
-        ViewModelProviders.of(this.activity!!, viewModelFactory).get(MainViewModel::class.java)
+        ViewModelProvider(this.activity!!, viewModelFactory).get(MainViewModel::class.java)
 
     fun notify(message: String) {
         Snackbar.make(activity!!.mainContainer, message, Snackbar.LENGTH_LONG).show()
