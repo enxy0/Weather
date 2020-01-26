@@ -11,5 +11,6 @@
     <dimen name="text_space_margin">3dp</dimen>
     <dimen name="hour_weather_margin">8dp</dimen>
     <dimen name="bottom_app_bar_height">56dp</dimen>
+    <dimen name="bottom_app_bar_elevation">3dp</dimen>
     <dimen name="item_location_padding">16dp</dimen>
 </resources>
