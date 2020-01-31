@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 
-data class HourWeatherResponse(
+data class HourForecastResponse(
     @SerializedName("cod")
     @Expose
     val cod: String,

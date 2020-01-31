@@ -1,32 +1,28 @@
 package com.enxy.weather.network
 
-import com.enxy.weather.network.json.openweathermap.current.CurrentWeatherResponse
-import com.enxy.weather.network.json.openweathermap.hour.HourWeatherResponse
+import com.enxy.weather.network.json.openweathermap.current.CurrentForecastResponse
+import com.enxy.weather.network.json.openweathermap.hour.HourForecastResponse
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface WeatherApi {
-    @GET("/data/2.5/{type}")
-    suspend fun getHourWeatherAsync(
-        @Path("type") type: String,
-        @Query("APPID") APPID: String,
+    @GET("/data/2.5/forecast")
+    suspend fun getHourForecastAsync(
         @Query("lon") longitude: Double,
         @Query("lat") latitude: Double,
+        @Query("APPID") APPID: String,
         @Query("cnt") count: Int,
         @Query("lang") language: String,
         @Query("units") units: String
-    ): Response<HourWeatherResponse>
+    ): Response<HourForecastResponse>
 
-    @GET("/data/2.5/{type}")
-    suspend fun getCurrentWeatherAsync(
-        @Path("type") type: String,
-        @Query("APPID") APPID: String,
+    @GET("/data/2.5/weather")
+    suspend fun getCurrentForecastAsync(
         @Query("lon") longitude: Double,
         @Query("lat") latitude: Double,
-        @Query("cnt") count: Int,
+        @Query("APPID") APPID: String,
         @Query("lang") language: String,
         @Query("units") units: String
-    ): Response<CurrentWeatherResponse>
+    ): Response<CurrentForecastResponse>
 }

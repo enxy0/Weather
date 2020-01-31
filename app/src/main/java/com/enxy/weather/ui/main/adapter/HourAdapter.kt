@@ -5,16 +5,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.enxy.weather.R
-import com.enxy.weather.ui.main.model.HourWeatherModel
+import com.enxy.weather.data.Hour
 import kotlinx.android.synthetic.main.item_hour.view.*
 import javax.inject.Inject
 
 class HourAdapter @Inject constructor() : RecyclerView.Adapter<HourAdapter.HourHolder>() {
-    private val hourDataModelArrayList = ArrayList<HourWeatherModel>()
+    private val hourDataModelArrayList = ArrayList<Hour>()
 
-    fun updateData(hourWeatherModelArrayList: ArrayList<HourWeatherModel>) {
+    fun updateData(hourForecastArrayList: ArrayList<Hour>) {
         this.hourDataModelArrayList.clear()
-        this.hourDataModelArrayList.addAll(hourWeatherModelArrayList)
+        this.hourDataModelArrayList.addAll(hourForecastArrayList)
         notifyDataSetChanged()
     }
 
@@ -33,11 +33,11 @@ class HourAdapter @Inject constructor() : RecyclerView.Adapter<HourAdapter.HourH
     }
 
     inner class HourHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(hourWeatherModel: HourWeatherModel) {
+        fun bind(hourForecast: Hour) {
             with(itemView) {
-                temperatureTextView.text = hourWeatherModel.temperature
-                timeTextView.text = hourWeatherModel.time
-                descriptionImageView.setImageResource(hourWeatherModel.imageId)
+                temperatureTextView.text = hourForecast.temperature
+                timeTextView.text = hourForecast.time
+                descriptionImageView.setImageResource(hourForecast.imageId)
             }
         }
     }

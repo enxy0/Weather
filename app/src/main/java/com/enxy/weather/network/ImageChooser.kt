@@ -11,7 +11,7 @@ class ImageChooser {
              * background. Therefore I have different images in drawables folder.
              */
 
-            fun getImageIdHourWeather(id: Int, dayPart: Char): Int {
+            fun getImageIdHourForecast(id: Int, dayPart: Char): Int {
                 /*
                  * dayPart - is always night or day: 'n' or 'd'
                  * id - codes you can find here https://openweathermap.org/weather-conditions
@@ -138,7 +138,7 @@ class ImageChooser {
                 }
             }
 
-            fun getImageIdCurrentWeather(id: Int, dayPart: Char): Int {
+            fun getImageIdCurrentForecast(id: Int, dayPart: Char): Int {
                 /*
                  * dayPart - is always night or day: 'n' or 'd'
                  * id - codes you can find here https://openweathermap.org/weather-conditions

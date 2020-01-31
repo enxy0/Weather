@@ -6,16 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.enxy.weather.R
-import com.enxy.weather.ui.main.model.DayWeatherModel
+import com.enxy.weather.data.DayWeather
 import kotlinx.android.synthetic.main.item_day.view.*
 import javax.inject.Inject
 
 class DayAdapter @Inject constructor() : RecyclerView.Adapter<DayAdapter.DayHolder>() {
-    private val dayDataModelArrayList = ArrayList<DayWeatherModel>()
+    private val dayDataModelArrayList = ArrayList<DayWeather>()
 
-    fun updateData(dayWeatherModelArrayList: ArrayList<DayWeatherModel>) {
+    fun updateData(dayWeatherArrayList: ArrayList<DayWeather>) {
         this.dayDataModelArrayList.clear()
-        this.dayDataModelArrayList.addAll(dayWeatherModelArrayList)
+        this.dayDataModelArrayList.addAll(dayWeatherArrayList)
         notifyDataSetChanged()
     }
 
@@ -34,14 +34,14 @@ class DayAdapter @Inject constructor() : RecyclerView.Adapter<DayAdapter.DayHold
     }
 
     inner class DayHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(dayWeatherModel: DayWeatherModel) {
+        fun bind(dayWeather: DayWeather) {
             with(itemView) {
-                Log.d("DayHolder", "bind: dayWeatherModel=$dayWeatherModel")
-                dayNameTextView.text = dayWeatherModel.dayName
-                dateTextView.text = dayWeatherModel.date
-                highTemperatureTextView.text = dayWeatherModel.temperatureHigh
-                lowTemperatureTextView.text = dayWeatherModel.temperatureLow
-                descriptionImageView.setImageResource(dayWeatherModel.imageId)
+                Log.d("DayHolder", "bind: dayWeatherModel=$dayWeather")
+                dayNameTextView.text = dayWeather.dayName
+                dateTextView.text = dayWeather.date
+                highTemperatureTextView.text = dayWeather.temperatureHigh
+                lowTemperatureTextView.text = dayWeather.temperatureLow
+                descriptionImageView.setImageResource(dayWeather.imageId)
             }
         }
     }

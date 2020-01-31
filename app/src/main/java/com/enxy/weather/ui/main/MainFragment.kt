@@ -8,14 +8,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.enxy.weather.R
 import com.enxy.weather.base.BaseFragment
+import com.enxy.weather.data.CurrentForecast
+import com.enxy.weather.data.HourForecast
 import com.enxy.weather.exception.Failure
 import com.enxy.weather.extension.dpToPixels
 import com.enxy.weather.extension.failure
 import com.enxy.weather.extension.observe
 import com.enxy.weather.ui.main.adapter.DayAdapter
 import com.enxy.weather.ui.main.adapter.HourAdapter
-import com.enxy.weather.ui.main.model.CurrentWeatherModel
-import com.enxy.weather.ui.main.model.HourWeatherModel
 import kotlinx.android.synthetic.main.main_fragment.*
 import javax.inject.Inject
 
@@ -45,20 +45,20 @@ class MainFragment : BaseFragment() {
         setUpSwipeRefreshLayout()
         setUpRecyclerView()
         with(viewModel) {
-            observe(currentWeatherModel, ::renderCurrentWeather)
+            observe(currentWeather, ::renderCurrentForecast)
             failure(currentWeatherFailure, ::handleFailure)
-            observe(hourWeatherModelArrayList, ::renderHourWeather)
-            failure(hourWeatherFailure, ::handleFailure)
+            observe(hourForecast, ::renderHourForecast)
+            failure(hourForecastFailure, ::handleFailure)
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         viewModel.let {
-            it.currentWeatherModel.removeObservers(this)
+            it.currentWeather.removeObservers(this)
             it.currentWeatherFailure.removeObservers(this)
-            it.hourWeatherModelArrayList.removeObservers(this)
-            it.hourWeatherFailure.removeObservers(this)
+            it.hourForecast.removeObservers(this)
+            it.hourForecastFailure.removeObservers(this)
         }
     }
 
@@ -80,26 +80,26 @@ class MainFragment : BaseFragment() {
         }
     }
 
-    private fun renderHourWeather(hourWeatherModelArrayList: ArrayList<HourWeatherModel>?) {
-        hourWeatherModelArrayList?.let {
-            hourAdapter.updateData(it)
-            Log.d("MainFragment", "renderHourWeather: hourWeatherModelArrayList=$it")
+    private fun renderHourForecast(hourForecast: HourForecast?) {
+        hourForecast?.let {
+            Log.d("MainFragment", "renderHourWeather: hourForecast=$it")
+            hourAdapter.updateData(it.hourArrayList)
             mainContentLinearLayout.isVisible = true
             swipeRefreshLayout.isRefreshing = false
         }
     }
 
-    private fun renderCurrentWeather(currentWeatherModel: CurrentWeatherModel?) {
-        currentWeatherModel?.let {
-            Log.d("MainFragment", "renderCurrentWeather: currentWeatherModel=$it")
-            currentDescriptionTextView.text = currentWeatherModel.description
-            currentDescriptionImageView.setImageResource(currentWeatherModel.imageId)
-            currentTemperatureTextView.text = currentWeatherModel.temperature
-            currentFeelsLikeTextView.text = currentWeatherModel.feelsLikeTemperature
-            cityNameTextView.text = currentWeatherModel.cityName
-            currentHumidityValueTextView.text = currentWeatherModel.humidity
-            currentWindValueTextView.text = currentWeatherModel.wind
-            currentPressureValueTextView.text = currentWeatherModel.pressure
+    private fun renderCurrentForecast(currentForecast: CurrentForecast?) {
+        currentForecast?.let {
+            Log.d("MainFragment", "renderCurrentWeather: currentForecast=$it")
+            currentDescriptionTextView.text = currentForecast.description
+            currentDescriptionImageView.setImageResource(currentForecast.imageId)
+            currentTemperatureTextView.text = currentForecast.temperature
+            currentFeelsLikeTextView.text = currentForecast.feelsLikeTemperature
+            cityNameTextView.text = currentForecast.cityName
+            currentHumidityValueTextView.text = currentForecast.humidity
+            currentWindValueTextView.text = currentForecast.wind
+            currentPressureValueTextView.text = currentForecast.pressure
             swipeRefreshLayout.isRefreshing = false
         }
     }

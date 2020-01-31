@@ -1,8 +1,8 @@
-package com.enxy.weather.ui.main.model
+package com.enxy.weather.data
 
 import com.google.gson.annotations.SerializedName
 
-data class DayWeatherModel(
+data class DayWeather(
     @SerializedName("day")
     val dayName: String,
     @SerializedName("temperatureHigh")
