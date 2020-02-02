@@ -22,7 +22,7 @@ class MainViewModel @Inject constructor(
     val hourForecastFailure = MutableLiveData<Failure>()
     val locationInfoArrayList = MutableLiveData<ArrayList<LocationInfo>>()
     val locationFailure = MutableLiveData<Failure>()
-    private var currentLocation = LocationInfo(30.2642, 59.8944)
+    private var currentLocation = WeatherRepository.DEFAULT_LOCATION
 
     init {
         fetchWeatherForecast(currentLocation)

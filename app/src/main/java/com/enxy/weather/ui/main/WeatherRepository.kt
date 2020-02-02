@@ -11,6 +11,7 @@ import com.enxy.weather.network.ImageChooser
 import com.enxy.weather.network.NetworkService
 import com.enxy.weather.network.json.openweathermap.current.CurrentForecastResponse
 import com.enxy.weather.network.json.openweathermap.hour.HourForecastResponse
+import com.enxy.weather.ui.search.LocationInfo
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.math.roundToInt
@@ -24,6 +25,8 @@ class WeatherRepository @Inject constructor(private val service: NetworkService)
         const val DEFAULT_LANGUAGE = "ENG"
         const val DEFAULT_UNITS = "metric"
         const val THREE_HOUR_WEATHER_COUNT = 8 // 3 x 8 = 24 hour weather forecast
+        val DEFAULT_LOCATION =
+            LocationInfo(30.2642, 59.8944) // Temporary default location (Saint-Petersburg, RU)
     }
 
     suspend fun getCurrentWeatherForecast(
@@ -83,9 +86,14 @@ class WeatherRepository @Inject constructor(private val service: NetworkService)
                 dayPart = it[it.length - 1]
             }
             val imageId = ImageChooser.OpenWeatherMap.getImageIdHourForecast(imageCode, dayPart)
-            hourList.add(Hour(temperature, time, imageId))
+            hourList.add(Hour(temperature = temperature, time = time, imageId = imageId))
         }
-        return HourForecast(cityName, longitude, latitude, hourList)
+        return HourForecast(
+            cityName = cityName,
+            longitude = longitude,
+            latitude = latitude,
+            hourArrayList = hourList
+        )
     }
 
     private fun transformCurrentForecastResponse(currentForecastResponse: CurrentForecastResponse): CurrentForecast {
@@ -109,16 +117,16 @@ class WeatherRepository @Inject constructor(private val service: NetworkService)
         currentForecastResponse.weather[0].icon.let { dayPart = it[it.length - 1] }
         val imageId = ImageChooser.OpenWeatherMap.getImageIdCurrentForecast(imageCode, dayPart)
         return CurrentForecast(
-            cityName,
-            longitude,
-            latitude,
-            temperature,
-            description,
-            feelsLikeTemperature,
-            wind,
-            pressure,
-            humidity,
-            imageId
+            cityName = cityName,
+            longitude = longitude,
+            latitude = latitude,
+            temperature = temperature,
+            description = description,
+            feelsLikeTemperature = feelsLikeTemperature,
+            wind = wind,
+            pressure = pressure,
+            humidity = humidity,
+            imageId = imageId
         )
     }
 }
