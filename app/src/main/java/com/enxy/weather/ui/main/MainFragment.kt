@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.enxy.weather.R
 import com.enxy.weather.base.BaseFragment
 import com.enxy.weather.data.CurrentForecast
-import com.enxy.weather.data.HourForecast
+import com.enxy.weather.data.Forecast
 import com.enxy.weather.exception.Failure
 import com.enxy.weather.extension.dpToPixels
 import com.enxy.weather.extension.failure
@@ -45,20 +45,16 @@ class MainFragment : BaseFragment() {
         setUpSwipeRefreshLayout()
         setUpRecyclerView()
         with(viewModel) {
-            observe(currentWeather, ::renderCurrentForecast)
-            failure(currentWeatherFailure, ::handleFailure)
-            observe(hourForecast, ::renderHourForecast)
-            failure(hourForecastFailure, ::handleFailure)
+            observe(forecast, ::renderForecast)
+            failure(forecastFailure, ::handleFailure)
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         viewModel.let {
-            it.currentWeather.removeObservers(this)
-            it.currentWeatherFailure.removeObservers(this)
-            it.hourForecast.removeObservers(this)
-            it.hourForecastFailure.removeObservers(this)
+            it.forecast.removeObservers(this)
+            it.forecastFailure.removeObservers(this)
         }
     }
 
@@ -80,28 +76,27 @@ class MainFragment : BaseFragment() {
         }
     }
 
-    private fun renderHourForecast(hourForecast: HourForecast?) {
-        hourForecast?.let {
+    private fun renderForecast(forecast: Forecast?) {
+        forecast?.let {
             Log.d("MainFragment", "renderHourWeather: hourForecast=$it")
-            hourAdapter.updateData(it.hourArrayList)
+            renderCurrentForecast(it.currentForecast)
+            hourAdapter.updateData(it.hourForecast.hourArrayList)
             mainContentLinearLayout.isVisible = true
             swipeRefreshLayout.isRefreshing = false
         }
     }
 
-    private fun renderCurrentForecast(currentForecast: CurrentForecast?) {
-        currentForecast?.let {
-            Log.d("MainFragment", "renderCurrentWeather: currentForecast=$it")
-            currentDescriptionTextView.text = currentForecast.description
-            currentDescriptionImageView.setImageResource(currentForecast.imageId)
-            currentTemperatureTextView.text = currentForecast.temperature
-            currentFeelsLikeTextView.text = currentForecast.feelsLikeTemperature
-            cityNameTextView.text = currentForecast.cityName
-            currentHumidityValueTextView.text = currentForecast.humidity
-            currentWindValueTextView.text = currentForecast.wind
-            currentPressureValueTextView.text = currentForecast.pressure
-            swipeRefreshLayout.isRefreshing = false
-        }
+    private fun renderCurrentForecast(currentForecast: CurrentForecast) {
+        Log.d("MainFragment", "renderCurrentWeather: currentForecast=$currentForecast")
+        currentDescriptionTextView.text = currentForecast.description
+        currentDescriptionImageView.setImageResource(currentForecast.imageId)
+        currentTemperatureTextView.text = currentForecast.temperature
+        currentFeelsLikeTextView.text = currentForecast.feelsLikeTemperature
+        cityNameTextView.text = currentForecast.cityName
+        currentHumidityValueTextView.text = currentForecast.humidity
+        currentWindValueTextView.text = currentForecast.wind
+        currentPressureValueTextView.text = currentForecast.pressure
+        swipeRefreshLayout.isRefreshing = false
     }
 
     private fun setUpRecyclerView() {

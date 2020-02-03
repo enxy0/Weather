@@ -3,6 +3,7 @@ package com.enxy.weather.ui.main
 import com.enxy.weather.BuildConfig
 import com.enxy.weather.base.BaseRepository
 import com.enxy.weather.data.CurrentForecast
+import com.enxy.weather.data.Forecast
 import com.enxy.weather.data.Hour
 import com.enxy.weather.data.HourForecast
 import com.enxy.weather.exception.Failure
@@ -12,6 +13,8 @@ import com.enxy.weather.network.NetworkService
 import com.enxy.weather.network.json.openweathermap.current.CurrentForecastResponse
 import com.enxy.weather.network.json.openweathermap.hour.HourForecastResponse
 import com.enxy.weather.ui.search.LocationInfo
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.math.roundToInt
@@ -27,6 +30,42 @@ class WeatherRepository @Inject constructor(private val service: NetworkService)
         const val THREE_HOUR_WEATHER_COUNT = 8 // 3 x 8 = 24 hour weather forecast
         val DEFAULT_LOCATION =
             LocationInfo(30.2642, 59.8944) // Temporary default location (Saint-Petersburg, RU)
+    }
+
+    suspend fun getForecast(
+        longitude: Double,
+        latitude: Double
+    ): Result<Failure, Forecast> {
+        val currentForecast: Result<Failure, CurrentForecast> =
+            getCurrentWeatherForecast(longitude, latitude)
+        val hourForecast: Result<Failure, HourForecast> =
+            getHourWeatherForecast(longitude, latitude)
+        return when {
+            currentForecast is Result.Error -> Result.Error(currentForecast.error)
+            hourForecast is Result.Error -> Result.Error(hourForecast.error)
+            else -> transformToForecast(
+                (currentForecast as Result.Success).success,
+                (hourForecast as Result.Success).success
+            )
+        }
+    }
+
+    private suspend fun transformToForecast(
+        currentForecast: CurrentForecast,
+        hourForecast: HourForecast
+    ): Result<Failure, Forecast> = withContext(Dispatchers.Default) {
+        val cityName = currentForecast.cityName
+        val longitude = currentForecast.latitude
+        val latitude = currentForecast.latitude
+        Result.Success(
+            Forecast(
+                cityName = cityName,
+                longitude = longitude,
+                latitude = latitude,
+                currentForecast = currentForecast,
+                hourForecast = hourForecast
+            )
+        )
     }
 
     suspend fun getCurrentWeatherForecast(

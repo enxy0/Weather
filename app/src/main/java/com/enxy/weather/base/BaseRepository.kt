@@ -12,8 +12,8 @@ import java.io.IOException
 
 open class BaseRepository {
     suspend fun <JSON, MODEL> safeApiCall(
-            call: suspend () -> Response<JSON>,
-            transform: (JSON) -> MODEL
+        call: suspend () -> Response<JSON>,
+        transform: (JSON) -> MODEL
     ): Result<Failure, MODEL> = withContext(Dispatchers.Main) {
         try {
             val response = withContext(Dispatchers.IO) { call.invoke() }
@@ -24,19 +24,19 @@ open class BaseRepository {
                     Result.Success(model)
                 } else
                     Result.Error(
-                            Failure.ServerError(
-                                    "Response.body() is null",
-                                    "${response.raw().request().url()}",
-                                    response.code()
-                            )
+                        Failure.ServerError(
+                            "Response.body() is null",
+                            "${response.raw().request().url()}",
+                            response.code()
+                        )
                     )
             } else {
                 Result.Error(
-                        Failure.ServerResponseError(
-                                "Response was not successful",
-                                "${response.raw().request().url()}",
-                                response.code()
-                        )
+                    Failure.ServerResponseError(
+                        "Response was not successful",
+                        "${response.raw().request().url()}",
+                        response.code()
+                    )
                 )
             }
         } catch (e: IOException) {
