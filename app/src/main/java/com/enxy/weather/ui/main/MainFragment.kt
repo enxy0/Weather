@@ -90,7 +90,7 @@ class MainFragment : BaseFragment() {
         currentDescriptionImageView.setImageResource(currentForecast.imageId)
         currentTemperatureTextView.text = currentForecast.temperature
         currentFeelsLikeTextView.text = currentForecast.feelsLikeTemperature
-        cityNameTextView.text = currentForecast.locationName
+        locationNameTextView.text = currentForecast.locationName
         currentHumidityValueTextView.text = currentForecast.humidity
         currentWindValueTextView.text = currentForecast.wind
         currentPressureValueTextView.text = currentForecast.pressure
