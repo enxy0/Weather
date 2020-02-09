@@ -31,11 +31,10 @@ class LocationRepository @Inject constructor(private val service: NetworkService
     private fun transformLocationResponse(locationResponse: LocationResponse): ArrayList<LocationInfo> {
         val data = ArrayList<LocationInfo>()
         for (result in locationResponse.results) {
-            val latitude = result.geometry.lat
             val longitude = result.geometry.lng
-            val formattedLocationName = result.formatted
-            val confidence = result.confidence
-            val model = LocationInfo(longitude, latitude, formattedLocationName, confidence)
+            val latitude = result.geometry.lat
+            val locationName = result.formatted
+            val model = LocationInfo(locationName, longitude, latitude)
             data.add(model)
         }
         return data

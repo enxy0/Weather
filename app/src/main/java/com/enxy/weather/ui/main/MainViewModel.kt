@@ -19,46 +19,64 @@ class MainViewModel @Inject constructor(
     val forecastFailure = MutableLiveData<Failure>()
     val locationInfoArrayList = MutableLiveData<ArrayList<LocationInfo>>()
     val locationFailure = MutableLiveData<Failure>()
-    private var currentLocation = WeatherRepository.DEFAULT_LOCATION
 
     init {
-        fetchWeatherForecast(currentLocation)
+        fetchLastOpenedForecast()
     }
 
-    fun updateWeatherLocation(locationInfo: LocationInfo) {
-        currentLocation = locationInfo
-        fetchWeatherForecast(locationInfo)
-    }
-
-    fun fetchWeatherForecast(locationInfo: LocationInfo = currentLocation) {
+    private fun fetchLastOpenedForecast() {
         viewModelScope.launch {
-            // fetch forecast from repository
-            val result: Result<Failure, Forecast> =
-                weatherRepository.getForecast(locationInfo.longitude, locationInfo.latitude)
-            // It either Result.Success or Result.Failure
-            when (result) {
-                is Result.Success -> {
-                    forecast.value = result.success
-                    forecastFailure.value = null
+            when (val result = weatherRepository.getLastOpenedForecast()) {
+                is Result.Success -> with(result.success) {
+                    val locationInfo = LocationInfo(locationName, longitude, latitude)
+                    fetchWeatherForecast(locationInfo)
+                    handleForecastResultSuccess(this)
                 }
-                is Result.Error -> forecastFailure.value = result.error
+                is Result.Error -> handleForecastResultFailure(result.error)
+            }
+        }
+    }
+
+    fun fetchWeatherForecast(locationInfo: LocationInfo) {
+        viewModelScope.launch {
+            weatherRepository.getForecast(locationInfo)
+                .handle(::handleForecastResultFailure, ::handleForecastResultSuccess)
+        }
+    }
+
+    fun updateWeatherForecast() {
+        viewModelScope.launch {
+            forecast.value?.let {
+                weatherRepository.updateForecast(it)
+                    .handle(::handleForecastResultFailure, ::handleForecastResultSuccess)
             }
         }
     }
 
     fun fetchListOfLocationsByName(locationName: String) {
         viewModelScope.launch {
-            // fetch locations list form repository
-            val result: Result<Failure, ArrayList<LocationInfo>> =
-                locationRepository.getLocationsByName(locationName)
-            // It either Result.Success or Result.Failure
-            when (result) {
-                is Result.Success -> {
-                    locationInfoArrayList.value = result.success
-                    locationFailure.value = null
-                }
-                is Result.Error -> locationFailure.value = result.error
-            }
+            locationRepository.getLocationsByName(locationName)
+                .handle(::handleLocationResultFailure, ::handleLocationResultSuccess)
         }
+    }
+
+    suspend fun isAppFirstLaunched(): Boolean = !weatherRepository.hasCachedForecasts()
+
+    private fun handleForecastResultSuccess(forecast: Forecast) {
+        this.forecast.value = forecast
+        this.forecastFailure.value = null
+    }
+
+    private fun handleForecastResultFailure(failure: Failure) {
+        this.forecastFailure.value = failure
+    }
+
+    private fun handleLocationResultSuccess(locationList: ArrayList<LocationInfo>) {
+        locationInfoArrayList.value = locationList
+        locationFailure.value = null
+    }
+
+    private fun handleLocationResultFailure(failure: Failure) {
+        locationFailure.value = failure
     }
 }

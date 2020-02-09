@@ -1,6 +1,6 @@
 package com.enxy.weather.data
 
-import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
@@ -8,16 +8,17 @@ import java.util.*
 
 @Entity(tableName = "forecast")
 data class Forecast(
-    @ColumnInfo(name = "id")
     @PrimaryKey(autoGenerate = true)
     val forecastId: Int = 0,
-    val cityName: String,
+    val locationName: String,
     val longitude: Double,
     val latitude: Double,
     @TypeConverters(Converters::class)
     val timestamp: Calendar = Calendar.getInstance(),
-    var favourite: Boolean = false,
+    val wasOpenedLast: Boolean = true,
+    @Embedded
     val currentForecast: CurrentForecast,
+    @Embedded
     val hourForecast: HourForecast
 ) {
     /** Checks if data is valid to display to the user.

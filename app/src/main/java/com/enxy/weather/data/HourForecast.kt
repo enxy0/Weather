@@ -8,10 +8,12 @@ import androidx.room.TypeConverters
 @Entity(tableName = "hour_forecast")
 data class HourForecast(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
     var hourForecastId: Int = 0,
-    val cityName: String,
+    @ColumnInfo(name = "hourLocationName")
+    val locationName: String,
+    @ColumnInfo(name = "hourLongitude")
     val longitude: Double,
+    @ColumnInfo(name = "hourLatitude")
     val latitude: Double,
     @TypeConverters(Converters::class)
     val hourArrayList: ArrayList<Hour>

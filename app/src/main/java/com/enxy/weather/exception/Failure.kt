@@ -19,4 +19,6 @@ sealed class Failure {
             val url: String?,
             val responseCode: Int?
     ) : Failure()
+
+    object DataNotFoundInCache : Failure()
 }

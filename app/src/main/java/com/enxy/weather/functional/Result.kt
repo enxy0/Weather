@@ -7,4 +7,10 @@ package com.enxy.weather.functional
 sealed class Result<out E, out S> {
     data class Error<out E>(val error: E) : Result<E, Nothing>()
     data class Success<out S>(val success: S) : Result<Nothing, S>()
+
+    fun <R> handle(fnE: (E) -> R, fnS: (S) -> R): R =
+        when (this) {
+            is Error -> fnE(error)
+            is Success -> fnS(success)
+        }
 }

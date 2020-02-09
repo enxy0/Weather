@@ -7,10 +7,12 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "current_forecast")
 data class CurrentForecast(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
     var currentForecastId: Int = 0,
-    val cityName: String,
+    @ColumnInfo(name = "currentLocationName")
+    val locationName: String,
+    @ColumnInfo(name = "currentLongitude")
     val longitude: Double,
+    @ColumnInfo(name = "currentLatitude")
     val latitude: Double,
     val temperature: String,
     val description: String,

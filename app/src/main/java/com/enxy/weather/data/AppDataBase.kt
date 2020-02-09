@@ -6,11 +6,10 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [CurrentForecast::class, HourForecast::class], version = 1)
-@TypeConverters(HourListConverter::class)
+@Database(entities = [CurrentForecast::class, HourForecast::class, Forecast::class], version = 1)
+@TypeConverters(Converters::class)
 abstract class AppDataBase : RoomDatabase() {
-    abstract fun getHourForecastDao(): HourForecastDao
-    abstract fun getCurrentForecastDao(): CurrentForecastDao
+    abstract fun getForecastDao(): ForecastDao
 
     companion object {
         const val DATABASE_NAME = "weather-db"

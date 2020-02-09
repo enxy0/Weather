@@ -23,12 +23,9 @@ import javax.inject.Inject
 class MainFragment : BaseFragment() {
     override val layoutId = R.layout.main_fragment
     private lateinit var viewModel: MainViewModel
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    @Inject
-    lateinit var hourAdapter: HourAdapter
-    @Inject
-    lateinit var dayAdapter: DayAdapter
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject lateinit var hourAdapter: HourAdapter
+    @Inject lateinit var dayAdapter: DayAdapter
 
     companion object {
         fun newInstance() = MainFragment()
@@ -61,12 +58,13 @@ class MainFragment : BaseFragment() {
     private fun setUpSwipeRefreshLayout() {
         swipeRefreshLayout.setProgressViewOffset(true, 0, 55.dpToPixels)
         swipeRefreshLayout.setOnRefreshListener(::onRefresh)
+        swipeRefreshLayout.isRefreshing = true
     }
 
     private fun onRefresh() {
         if (!swipeRefreshLayout.isRefreshing)
             swipeRefreshLayout.isRefreshing = true
-        viewModel.fetchWeatherForecast()
+        viewModel.updateWeatherForecast()
     }
 
     private fun handleFailure(failure: Failure?) {
@@ -92,7 +90,7 @@ class MainFragment : BaseFragment() {
         currentDescriptionImageView.setImageResource(currentForecast.imageId)
         currentTemperatureTextView.text = currentForecast.temperature
         currentFeelsLikeTextView.text = currentForecast.feelsLikeTemperature
-        cityNameTextView.text = currentForecast.cityName
+        cityNameTextView.text = currentForecast.locationName
         currentHumidityValueTextView.text = currentForecast.humidity
         currentWindValueTextView.text = currentForecast.wind
         currentPressureValueTextView.text = currentForecast.pressure

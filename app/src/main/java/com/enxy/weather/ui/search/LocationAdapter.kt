@@ -21,11 +21,14 @@ class LocationAdapter(private val fragment: SearchFragment, private val viewMode
 
     inner class LocationHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(locationInfo: LocationInfo) {
-            itemView.locationName.text = locationInfo.formattedLocationName
+            itemView.locationName.text = locationInfo.locationName
             itemView.parentLinearLayout.setOnClickListener {
-                viewModel.updateWeatherLocation(locationInfo)
+                viewModel.fetchWeatherForecast(locationInfo)
                 fragment.hideKeyboard()
-                fragment.parentFragmentManager.popBackStack()
+                if (fragment.isOpenedFirst())
+                    fragment.openMainFragment()
+                else
+                    fragment.parentFragmentManager.popBackStack()
             }
         }
     }
