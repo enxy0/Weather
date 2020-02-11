@@ -1,4 +1,4 @@
-package com.enxy.weather.ui.main
+package com.enxy.weather.ui
 
 import android.os.Bundle
 import android.view.Menu
@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.enxy.weather.AndroidApplication
 import com.enxy.weather.R
+import com.enxy.weather.ui.main.MainFragment
 import com.enxy.weather.ui.search.SearchFragment
 import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.coroutines.launch
@@ -33,7 +34,10 @@ class MainActivity : AppCompatActivity() {
                     }
                 else
                     supportFragmentManager.commitNow {
-                        replace(R.id.mainContainer, MainFragment.newInstance())
+                        replace(
+                            R.id.mainContainer,
+                            MainFragment.newInstance()
+                        )
                     }
             }
         }

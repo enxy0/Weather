@@ -1,13 +1,14 @@
-package com.enxy.weather.ui.main
+package com.enxy.weather.ui
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.enxy.weather.data.Forecast
+import com.enxy.weather.data.model.Forecast
+import com.enxy.weather.data.model.LocationInfo
+import com.enxy.weather.data.repository.LocationRepository
+import com.enxy.weather.data.repository.WeatherRepository
 import com.enxy.weather.exception.Failure
 import com.enxy.weather.functional.Result
-import com.enxy.weather.ui.search.LocationInfo
-import com.enxy.weather.ui.search.LocationRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,7 +29,11 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             when (val result = weatherRepository.getLastOpenedForecast()) {
                 is Result.Success -> with(result.success) {
-                    val locationInfo = LocationInfo(locationName, longitude, latitude)
+                    val locationInfo = LocationInfo(
+                        locationName,
+                        longitude,
+                        latitude
+                    )
                     fetchWeatherForecast(locationInfo)
                     handleForecastResultSuccess(this)
                 }

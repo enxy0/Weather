@@ -10,12 +10,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.enxy.weather.R
 import com.enxy.weather.base.BaseFragment
+import com.enxy.weather.data.model.LocationInfo
 import com.enxy.weather.exception.Failure
 import com.enxy.weather.extension.failure
 import com.enxy.weather.extension.observe
 import com.enxy.weather.network.NetworkService
+import com.enxy.weather.ui.MainViewModel
 import com.enxy.weather.ui.main.MainFragment
-import com.enxy.weather.ui.main.MainViewModel
 import kotlinx.android.synthetic.main.search_fragment.*
 import javax.inject.Inject
 

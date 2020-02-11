@@ -1,7 +1,8 @@
-package com.enxy.weather.ui.search
+package com.enxy.weather.data.repository
 
 import com.enxy.weather.BuildConfig
 import com.enxy.weather.base.BaseRepository
+import com.enxy.weather.data.model.LocationInfo
 import com.enxy.weather.exception.Failure
 import com.enxy.weather.functional.Result
 import com.enxy.weather.network.NetworkService
@@ -34,7 +35,11 @@ class LocationRepository @Inject constructor(private val service: NetworkService
             val longitude = result.geometry.lng
             val latitude = result.geometry.lat
             val locationName = result.formatted
-            val model = LocationInfo(locationName, longitude, latitude)
+            val model = LocationInfo(
+                locationName,
+                longitude,
+                latitude
+            )
             data.add(model)
         }
         return data

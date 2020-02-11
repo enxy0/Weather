@@ -1,4 +1,4 @@
-package com.enxy.weather.ui.search
+package com.enxy.weather.data.model
 
 data class LocationInfo(
     val locationName: String,

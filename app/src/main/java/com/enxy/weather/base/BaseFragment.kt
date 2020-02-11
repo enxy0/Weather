@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.enxy.weather.AndroidApplication
 import com.enxy.weather.di.ApplicationComponent
-import com.enxy.weather.ui.main.MainViewModel
+import com.enxy.weather.ui.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.main_activity.*
 

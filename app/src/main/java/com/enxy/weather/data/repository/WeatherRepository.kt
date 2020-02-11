@@ -1,16 +1,16 @@
-package com.enxy.weather.ui.main
+package com.enxy.weather.data.repository
 
 import android.util.Log
 import com.enxy.weather.BuildConfig
 import com.enxy.weather.base.BaseRepository
-import com.enxy.weather.data.*
+import com.enxy.weather.data.AppDataBase
+import com.enxy.weather.data.model.*
 import com.enxy.weather.exception.Failure
 import com.enxy.weather.functional.Result
 import com.enxy.weather.network.ImageChooser
 import com.enxy.weather.network.NetworkService
 import com.enxy.weather.network.json.openweathermap.current.CurrentForecastResponse
 import com.enxy.weather.network.json.openweathermap.hour.HourForecastResponse
-import com.enxy.weather.ui.search.LocationInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -70,7 +70,11 @@ class WeatherRepository @Inject constructor(
 
     suspend fun updateForecast(forecast: Forecast): Result<Failure, Forecast> {
         val locationInfo =
-            LocationInfo(forecast.locationName, forecast.longitude, forecast.latitude)
+            LocationInfo(
+                forecast.locationName,
+                forecast.longitude,
+                forecast.latitude
+            )
         Log.d("WeatherRepository", "updateForecast: locationInfo=$locationInfo")
         val result: Result<Failure, Forecast> = requestForecast(locationInfo)
         if (result is Result.Success) {
@@ -229,7 +233,13 @@ class WeatherRepository @Inject constructor(
                 dayPart = it[it.length - 1]
             }
             val imageId = ImageChooser.OpenWeatherMap.getImageIdHourForecast(imageCode, dayPart)
-            hourList.add(Hour(temperature = temperature, time = time, imageId = imageId))
+            hourList.add(
+                Hour(
+                    temperature = temperature,
+                    time = time,
+                    imageId = imageId
+                )
+            )
         }
         return HourForecast(
             locationName = locationName,

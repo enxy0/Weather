@@ -1,9 +1,10 @@
-package com.enxy.weather.data
+package com.enxy.weather.data.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
+import com.enxy.weather.data.Converters
 
 @Entity(tableName = "hour_forecast")
 data class HourForecast(

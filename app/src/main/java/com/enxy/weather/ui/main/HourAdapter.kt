@@ -1,11 +1,11 @@
-package com.enxy.weather.ui.main.adapter
+package com.enxy.weather.ui.main
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.enxy.weather.R
-import com.enxy.weather.data.Hour
+import com.enxy.weather.data.model.Hour
 import kotlinx.android.synthetic.main.item_hour.view.*
 import javax.inject.Inject
 

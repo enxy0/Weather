@@ -1,4 +1,4 @@
-package com.enxy.weather.data
+package com.enxy.weather.data.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
