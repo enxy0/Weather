@@ -3,6 +3,7 @@ package com.enxy.weather.ui.main
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -76,10 +77,13 @@ class MainFragment : BaseFragment() {
     private fun renderForecast(forecast: Forecast?) {
         forecast?.let {
             Log.d("MainFragment", "renderHourWeather: hourForecast=$it")
+            swipeRefreshLayout.isRefreshing = false
             renderCurrentForecast(it.currentForecast)
             hourAdapter.updateData(it.hourForecast.hourArrayList)
-            mainContentLinearLayout.isVisible = true
-            swipeRefreshLayout.isRefreshing = false
+            // By default mainContentLinearLayout is invisible, so the user can see forecast
+            // only when it is ready to be displayed.
+            if (mainContentLinearLayout.isInvisible)
+                mainContentLinearLayout.isVisible = true
         }
     }
 
