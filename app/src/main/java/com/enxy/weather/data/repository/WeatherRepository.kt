@@ -50,7 +50,8 @@ class WeatherRepository @Inject constructor(
             } else {
                 val result: Result<Failure, Forecast> = requestForecast(locationInfo)
                 if (result is Result.Success) {
-                    database.getForecastDao().deleteForecast(forecast)
+                    database.getForecastDao()
+                        .deleteForecastByLocation(forecast.longitude, forecast.latitude)
                     database.getForecastDao().insertForecast(result.success)
                 }
                 return result
@@ -78,7 +79,8 @@ class WeatherRepository @Inject constructor(
         Log.d("WeatherRepository", "updateForecast: locationInfo=$locationInfo")
         val result: Result<Failure, Forecast> = requestForecast(locationInfo)
         if (result is Result.Success) {
-            database.getForecastDao().deleteForecast(forecast)
+            database.getForecastDao()
+                .deleteForecastByLocation(forecast.longitude, forecast.latitude)
             database.getForecastDao().insertForecast(result.success)
         }
         return result
