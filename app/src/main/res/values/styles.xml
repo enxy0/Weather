@@ -51,9 +51,27 @@
     </style>
 
     <style name="CustomStyle.Divider">
+        <item name="android:background">?attr/sectionDividerColor</item>
+    </style>
+
+    <style name="CustomStyle.Divider.Thick.Horizontal" parent="CustomStyle.Divider">
         <item name="android:layout_height">12dp</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:background">?attr/sectionDividerColor</item>
+    </style>
+
+    <style name="CustomStyle.Divider.Thick.Vertical" parent="CustomStyle.Divider">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">12dp</item>
+    </style>
+
+    <style name="CustomStyle.Divider.Thin.Horizontal" parent="CustomStyle.Divider">
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="CustomStyle.Divider.Thin.Vertical" parent="CustomStyle.Divider">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">1dp</item>
     </style>
 
     <style name="CustomStyle.CardView" parent="Widget.MaterialComponents.CardView">
