@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.enxy.weather.AndroidApplication
 import com.enxy.weather.R
+import com.enxy.weather.ui.favourite.FavouriteFragment
 import com.enxy.weather.ui.main.MainFragment
 import com.enxy.weather.ui.search.SearchFragment
 import kotlinx.android.synthetic.main.main_activity.*
@@ -44,6 +45,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpListeners() {
+        bottomAppBar.setNavigationOnClickListener {
+            val fragment = FavouriteFragment.newInstance()
+            fragment.show(supportFragmentManager, FavouriteFragment.TAG)
+        }
+
         bottomAppBar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.menu_search_action -> {

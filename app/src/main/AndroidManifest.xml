@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.settings.SettingsActivity"
+            android:name=".ui.favourite.SettingsActivity"
             android:label="@string/title_activity_settings" />
         <meta-data
             android:name="preloaded_fonts"

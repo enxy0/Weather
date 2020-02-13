@@ -1,0 +1,52 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/favourite_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/favourite_horizontal_margin">
+
+        <TextView
+            android:id="@+id/favouriteTextView"
+            style="@style/CustomStyle.Text.Header"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="Favourite" />
+
+        <ImageView
+            android:id="@+id/themeButton"
+            style="@style/CustomStyle.Icon.Clickable"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:src="@drawable/ic_moon" />
+
+        <ImageView
+            android:id="@+id/settingsButton"
+            style="@style/CustomStyle.Icon.Clickable"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_settings" />
+    </LinearLayout>
+
+    <View style="@style/CustomStyle.Divider.Thin.Horizontal" />
+
+    <include layout="@layout/item_favourite" />
+
+    <include layout="@layout/item_favourite" />
+
+    <include layout="@layout/item_favourite" />
+
+    <include layout="@layout/item_favourite" />
+
+
+    <!--    <androidx.recyclerview.widget.RecyclerView-->
+    <!--        android:id="@+id/favouriteRecyclerView"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:paddingTop="@dimen/list_padding"-->
+    <!--        android:paddingBottom="@dimen/list_padding"-->
+    <!--        android:layout_height="wrap_content" />-->
+</LinearLayout>
