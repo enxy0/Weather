@@ -16,6 +16,12 @@
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>
 
+    <style name="CustomStyle.Text.Primary.Clickable" parent="CustomStyle.Text.Primary">
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
     <style name="CustomStyle.Text.Secondary" parent="CustomStyle.Text">
         <item name="android:textColor">?android:textColorSecondary</item>
     </style>
@@ -40,9 +46,16 @@
     </style>
 
     <style name="CustomStyle.Icon">
-        <item name="android:tint">?attr/iconColor</item>
-        <item name="android:layout_height">25dp</item>
-        <item name="android:layout_width">25dp</item>
+        <item name="android:tint">?android:attr/textColorSecondary</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:layout_height">35dp</item>
+        <item name="android:layout_width">35dp</item>
+    </style>
+
+    <style name="CustomStyle.Icon.Clickable" parent="CustomStyle.Icon">
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
     </style>
 
     <style name="CustomStyle.ImageView.Precipitation">
