@@ -15,6 +15,7 @@
         <item name="android:windowBackground">@color/windowBackgroundColor</item>
         <item name="android:statusBarColor">@color/windowBackgroundColor</item>
         <item name="android:windowAnimationStyle">@null</item>
+        <item name="bottomSheetDialogTheme">@style/CustomStyle.BottomSheetDialog</item>
     </style>
 
     <!--    <style name="AppTheme.Dark" parent="Theme.MaterialComponents.DayNight.NoActionBar">-->

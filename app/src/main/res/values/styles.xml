@@ -113,4 +113,26 @@
         <item name="android:background">@android:color/transparent</item>
         <item name="android:singleLine">true</item>
     </style>
+
+    <style name="CustomStyle.BottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomStyle.BottomSheet</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="CustomStyle.BottomSheet" parent="Widget.MaterialComponents.BottomSheet">
+        <item name="shapeAppearanceOverlay">@style/CustomStyle.ShapeAppearanceBottomSheetDialog
+        </item>
+    </style>
+
+    <style name="CustomStyle.ShapeAppearanceBottomSheetDialog">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+
 </resources>
