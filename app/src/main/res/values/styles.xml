@@ -31,7 +31,7 @@
     </style>
 
     <style name="CustomStyle.Text.Header" parent="CustomStyle.Text.Primary">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:fontFamily">@font/open_sans_bold</item>
     </style>
 
@@ -46,10 +46,9 @@
     </style>
 
     <style name="CustomStyle.Icon">
-        <item name="android:tint">?android:attr/textColorSecondary</item>
         <item name="android:padding">5dp</item>
-        <item name="android:layout_height">35dp</item>
-        <item name="android:layout_width">35dp</item>
+        <item name="android:layout_height">34dp</item>
+        <item name="android:layout_width">34dp</item>
     </style>
 
     <style name="CustomStyle.Icon.Clickable" parent="CustomStyle.Icon">
@@ -134,5 +133,4 @@
         <item name="cornerSizeBottomRight">0dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
-
 </resources>
