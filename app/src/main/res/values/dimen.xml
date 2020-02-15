@@ -13,5 +13,6 @@
     <dimen name="bottom_app_bar_height">56dp</dimen>
     <dimen name="bottom_app_bar_elevation">3dp</dimen>
     <dimen name="list_padding">16dp</dimen>
-    <dimen name="favourite_horizontal_margin">10dp</dimen>
+    <dimen name="favourite_list_height">280dp</dimen>
+    <dimen name="favourite_horizontal_margin">15dp</dimen>
 </resources>

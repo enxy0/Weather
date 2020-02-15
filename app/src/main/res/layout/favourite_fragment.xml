@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -16,7 +17,7 @@
             style="@style/CustomStyle.Text.Header"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="Favourite" />
+            android:text="@string/header_favourite_locations" />
 
         <ImageView
             android:id="@+id/themeButton"
@@ -34,19 +35,12 @@
 
     <View style="@style/CustomStyle.Divider.Thin.Horizontal" />
 
-    <include layout="@layout/item_favourite" />
-
-    <include layout="@layout/item_favourite" />
-
-    <include layout="@layout/item_favourite" />
-
-    <include layout="@layout/item_favourite" />
-
-
-    <!--    <androidx.recyclerview.widget.RecyclerView-->
-    <!--        android:id="@+id/favouriteRecyclerView"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:paddingTop="@dimen/list_padding"-->
-    <!--        android:paddingBottom="@dimen/list_padding"-->
-    <!--        android:layout_height="wrap_content" />-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/favouriteRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="vertical"
+        tools:itemCount="5"
+        tools:listitem="@layout/item_favourite" />
 </LinearLayout>
