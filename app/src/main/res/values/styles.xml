@@ -18,6 +18,7 @@
 
     <style name="CustomStyle.Text.Primary.Clickable" parent="CustomStyle.Text.Primary">
         <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:textStyle">normal</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
     </style>
@@ -26,13 +27,8 @@
         <item name="android:textColor">?android:textColorSecondary</item>
     </style>
 
-    <style name="CustomStyle.Text.Light" parent="CustomStyle.Text.Secondary">
-        <item name="android:fontFamily">@font/open_sans_light</item>
-    </style>
-
     <style name="CustomStyle.Text.Header" parent="CustomStyle.Text.Primary">
         <item name="android:textSize">18sp</item>
-        <item name="android:fontFamily">@font/open_sans_bold</item>
     </style>
 
     <style name="CustomStyle.ImageView">
