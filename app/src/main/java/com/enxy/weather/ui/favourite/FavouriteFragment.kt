@@ -13,7 +13,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.favourite_fragment.*
 
 class FavouriteFragment : BottomSheetDialogFragment() {
-    private val favouriteAdapter = FavouriteAdpater()
+    private val favouriteAdapter = FavouriteAdapter()
 
     override fun getTheme(): Int = R.style.CustomStyle_BottomSheetDialog
 

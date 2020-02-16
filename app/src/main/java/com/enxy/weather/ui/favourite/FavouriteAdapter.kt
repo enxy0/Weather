@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.enxy.weather.R
 import com.enxy.weather.data.model.LocationInfo
-import com.enxy.weather.ui.favourite.FavouriteAdpater.FavouriteHolder
+import com.enxy.weather.ui.favourite.FavouriteAdapter.FavouriteHolder
 import kotlinx.android.synthetic.main.item_favourite.view.*
 
-class FavouriteAdpater : RecyclerView.Adapter<FavouriteHolder>() {
+class FavouriteAdapter : RecyclerView.Adapter<FavouriteHolder>() {
     private val locationInfoArrayList = ArrayList<LocationInfo>()
 
     fun updateData(locationInfoArrayList: ArrayList<LocationInfo>) {
