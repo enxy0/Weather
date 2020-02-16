@@ -42,5 +42,5 @@
         android:layout_weight="1"
         android:scrollbars="vertical"
         tools:itemCount="5"
-        tools:listitem="@layout/item_favourite" />
+        tools:listitem="@layout/item_location" />
 </LinearLayout>

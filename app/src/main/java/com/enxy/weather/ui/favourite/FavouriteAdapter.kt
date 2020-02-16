@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.enxy.weather.R
 import com.enxy.weather.data.model.LocationInfo
 import com.enxy.weather.ui.favourite.FavouriteAdapter.FavouriteHolder
-import kotlinx.android.synthetic.main.item_favourite.view.*
+import kotlinx.android.synthetic.main.item_location.view.*
 
 class FavouriteAdapter : RecyclerView.Adapter<FavouriteHolder>() {
     private val locationInfoArrayList = ArrayList<LocationInfo>()
@@ -32,7 +32,7 @@ class FavouriteAdapter : RecyclerView.Adapter<FavouriteHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavouriteHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_favourite, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_location, parent, false)
         return FavouriteHolder(view)
     }
 
