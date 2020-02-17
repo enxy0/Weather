@@ -5,15 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.commit
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.enxy.weather.AndroidApplication
 import com.enxy.weather.R
 import com.enxy.weather.data.model.LocationInfo
+import com.enxy.weather.exception.Failure
+import com.enxy.weather.extension.failure
+import com.enxy.weather.extension.observe
+import com.enxy.weather.ui.MainViewModel
 import com.enxy.weather.ui.settings.SettingsFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.favourite_fragment.*
+import javax.inject.Inject
 
-class FavouriteFragment : BottomSheetDialogFragment() {
-    private val favouriteAdapter = FavouriteAdapter()
+class FavouriteFragment : BottomSheetDialogFragment(), FavouriteAdapter.FavouriteLocationListener {
+    private lateinit var favouriteAdapter: FavouriteAdapter
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    private lateinit var viewModel: MainViewModel
 
     override fun getTheme(): Int = R.style.CustomStyle_BottomSheetDialog
 
@@ -32,21 +41,29 @@ class FavouriteFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        inject()
         setUpListeners()
+        viewModel = ViewModelProvider(activity!!, viewModelFactory).get(MainViewModel::class.java)
+        favouriteAdapter = FavouriteAdapter(this)
         with(favouriteRecyclerView) {
             adapter = favouriteAdapter
             layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
             setHasFixedSize(true)
         }
-        // Test Data
-        favouriteAdapter.updateData(
-            arrayListOf(
-                LocationInfo("Saint-Petersburg, Russia, 190000", 1.0, 1.0),
-                LocationInfo("Moscow, Central Administrative Okrug, Russia", 1.0, 1.0),
-                LocationInfo("Syktyvkar, Komi Republic, Russia, 167000", 1.0, 1.0),
-                LocationInfo("Los Angeles, CA, United States of America", 1.0, 1.0)
-            )
-        )
+        with(viewModel) {
+            observe(favouriteLocationsList, ::renderData)
+            failure(favouriteLocationsFailure, ::handleFailure)
+        }
+    }
+
+    private fun renderData(favouriteLocationList: ArrayList<LocationInfo>?) {
+        favouriteLocationList?.let { favouriteAdapter.updateData(it) }
+    }
+
+    private fun handleFailure(failure: Failure?) {
+        failure?.let {
+            // TODO: Add image for error or when there is no data
+        }
     }
 
     private fun setUpListeners() {
@@ -57,5 +74,14 @@ class FavouriteFragment : BottomSheetDialogFragment() {
                 addToBackStack(SettingsFragment.TAG)
             }
         }
+    }
+
+    override fun onLocationClick(locationInfo: LocationInfo) {
+        viewModel.fetchWeatherForecast(locationInfo)
+        this.dismiss()
+    }
+
+    private fun inject() {
+        (activity!!.application as AndroidApplication).appComponent.inject(this)
     }
 }

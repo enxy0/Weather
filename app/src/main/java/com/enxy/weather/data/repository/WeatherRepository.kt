@@ -79,8 +79,6 @@ class WeatherRepository @Inject constructor(
         Log.d("WeatherRepository", "updateForecast: locationInfo=$locationInfo")
         val result: Result<Failure, Forecast> = requestForecast(locationInfo)
         if (result is Result.Success) {
-            database.getForecastDao()
-                .deleteForecastByLocation(forecast.longitude, forecast.latitude)
             database.getForecastDao().insertForecast(result.success)
         }
         return result
@@ -98,6 +96,19 @@ class WeatherRepository @Inject constructor(
     }
 
     suspend fun hasCachedForecasts(): Boolean = database.getForecastDao().hasCachedForecasts()
+
+    suspend fun getFavouriteLocationsList(): Result<Failure, ArrayList<LocationInfo>> {
+        val favouriteForecasts = database.getForecastDao().getFavouriteForecastList()
+        return if (favouriteForecasts != null)
+            Result.Success(transformToLocationList(favouriteForecasts))
+        else
+            Result.Error(Failure.DataNotFoundInCache)
+    }
+
+    suspend fun changeForecastFavouriteStatus(forecast: Forecast, isFavourite: Boolean) {
+        database.getForecastDao()
+            .setForecastFavouriteStatus(forecast.longitude, forecast.latitude, isFavourite)
+    }
 
     private suspend fun requestForecast(locationInfo: LocationInfo): Result<Failure, Forecast> {
         val currentForecast: Result<Failure, CurrentForecast> =
@@ -151,6 +162,21 @@ class WeatherRepository @Inject constructor(
             transform = ::transformHourForecastResponse
         )
     }
+
+    private suspend fun transformToLocationList(forecastList: List<Forecast>): ArrayList<LocationInfo> =
+        withContext(Dispatchers.Default) {
+            val locationList = ArrayList<LocationInfo>()
+            forecastList.forEach {
+                locationList.add(
+                    LocationInfo(
+                        locationName = it.locationName,
+                        latitude = it.latitude,
+                        longitude = it.longitude
+                    )
+                )
+            }
+            locationList
+        }
 
     /* This transform function differs from others.
      * It transforms the result of two forecasts (not the response of them) */

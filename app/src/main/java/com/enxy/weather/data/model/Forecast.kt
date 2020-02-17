@@ -17,6 +17,7 @@ data class Forecast(
     @TypeConverters(Converters::class)
     val timestamp: Calendar = Calendar.getInstance(),
     val wasOpenedLast: Boolean = true,
+    val isFavourite: Boolean = false,
     @Embedded
     val currentForecast: CurrentForecast,
     @Embedded

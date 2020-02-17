@@ -8,26 +8,17 @@ import com.enxy.weather.R
 import com.enxy.weather.data.model.LocationInfo
 import com.enxy.weather.ui.favourite.FavouriteAdapter.FavouriteHolder
 import kotlinx.android.synthetic.main.item_location.view.*
+import java.util.*
+import kotlin.collections.ArrayList
 
-class FavouriteAdapter : RecyclerView.Adapter<FavouriteHolder>() {
-    private val locationInfoArrayList = ArrayList<LocationInfo>()
+class FavouriteAdapter(private val locationListener: FavouriteLocationListener) :
+    RecyclerView.Adapter<FavouriteHolder>() {
+    private val favouriteLocationsList = ArrayList<LocationInfo>()
 
-    fun updateData(locationInfoArrayList: ArrayList<LocationInfo>) {
-        this.locationInfoArrayList.clear()
-        this.locationInfoArrayList.addAll(locationInfoArrayList)
+    fun updateData(favouriteLocationsList: ArrayList<LocationInfo>) {
+        this.favouriteLocationsList.clear()
+        this.favouriteLocationsList.addAll(favouriteLocationsList)
         notifyDataSetChanged()
-    }
-
-    inner class FavouriteHolder(view: View) : RecyclerView.ViewHolder(view) {
-        init {
-            itemView.locationName.setOnClickListener {
-                TODO("Implement opening forecast for current location")
-            }
-        }
-
-        fun bind(locationInfo: LocationInfo) {
-            itemView.locationName.text = locationInfo.locationName
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavouriteHolder {
@@ -36,9 +27,22 @@ class FavouriteAdapter : RecyclerView.Adapter<FavouriteHolder>() {
         return FavouriteHolder(view)
     }
 
-    override fun getItemCount(): Int = locationInfoArrayList.size
+    override fun getItemCount(): Int = favouriteLocationsList.size
 
     override fun onBindViewHolder(holder: FavouriteHolder, position: Int) {
-        holder.bind(locationInfoArrayList[position])
+        holder.bind(favouriteLocationsList[position])
+    }
+
+    inner class FavouriteHolder(view: View) : RecyclerView.ViewHolder(view) {
+        fun bind(locationInfo: LocationInfo) {
+            itemView.locationName.text = locationInfo.locationName
+            itemView.locationName.setOnClickListener {
+                locationListener.onLocationClick(locationInfo)
+            }
+        }
+    }
+
+    interface FavouriteLocationListener : EventListener {
+        fun onLocationClick(locationInfo: LocationInfo)
     }
 }

@@ -41,6 +41,9 @@ class MainFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpSwipeRefreshLayout()
         setUpRecyclerView()
+        favouriteToggle.setOnClickListener {
+            viewModel.changeForecastFavouriteStatus(favouriteToggle.isChecked)
+        }
         with(viewModel) {
             observe(forecast, ::renderForecast)
             failure(forecastFailure, ::handleFailure)
@@ -84,6 +87,7 @@ class MainFragment : BaseFragment() {
             // only when it is ready to be displayed.
             if (mainContentLinearLayout.isInvisible)
                 mainContentLinearLayout.isVisible = true
+            favouriteToggle.isChecked = it.isFavourite
         }
     }
 

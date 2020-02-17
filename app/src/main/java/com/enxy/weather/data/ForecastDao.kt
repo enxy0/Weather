@@ -11,6 +11,9 @@ abstract class ForecastDao {
     @Query("SELECT EXISTS(SELECT 1 FROM forecast WHERE longitude = :longitude AND latitude = :latitude LIMIT 1)")
     abstract suspend fun isForecastCached(longitude: Double, latitude: Double): Boolean
 
+    @Query("SELECT * FROM forecast WHERE isFavourite = 1")
+    abstract suspend fun getFavouriteForecastList(): List<Forecast>?
+
     @Query("SELECT * FROM forecast WHERE wasOpenedLast = 1 LIMIT 1")
     abstract suspend fun getLastOpenedForecast(): Forecast
 
@@ -22,6 +25,13 @@ abstract class ForecastDao {
 
     @Query("UPDATE forecast SET wasOpenedLast = CASE WHEN longitude = :longitude AND latitude = :latitude THEN 1 ELSE 0 END")
     abstract suspend fun updateLastOpenedForecast(longitude: Double, latitude: Double)
+
+    @Query("UPDATE forecast SET isFavourite = :isFavourite WHERE longitude = :longitude AND latitude = :latitude")
+    abstract suspend fun setForecastFavouriteStatus(
+        longitude: Double,
+        latitude: Double,
+        isFavourite: Boolean
+    )
 
     @Delete
     abstract suspend fun deleteForecast(forecast: Forecast)
