@@ -33,14 +33,13 @@ class WeatherRepository @Inject constructor(
 
     suspend fun getForecast(locationInfo: LocationInfo): Result<Failure, Forecast> {
         Log.d("WeatherRepository", "getForecast: locationInfo=$locationInfo")
-        database.getForecastDao()
-            .updateLastOpenedForecast(locationInfo.longitude, locationInfo.latitude)
+        database.getForecastDao().updateLastOpenedForecast(locationInfo.locationName)
         val isForecastCached: Boolean = database.getForecastDao()
-            .isForecastCached(locationInfo.longitude, locationInfo.latitude)
+            .isForecastCached(locationInfo.locationName)
         Log.d("WeatherRepository", "getForecast: isForecastCached=$isForecastCached")
         if (isForecastCached) {
             val forecast: Forecast = database.getForecastDao()
-                .getForecastByLocationName(locationInfo.longitude, locationInfo.latitude)
+                .getForecastByLocationName(locationInfo.locationName)
             Log.d(
                 "WeatherRepository",
                 "getForecast: forecast.containsValidInfo()=${forecast.containsValidInfo()}"
@@ -50,9 +49,7 @@ class WeatherRepository @Inject constructor(
             } else {
                 val result: Result<Failure, Forecast> = requestForecast(locationInfo)
                 if (result is Result.Success) {
-                    database.getForecastDao()
-                        .deleteForecastByLocation(forecast.longitude, forecast.latitude)
-                    database.getForecastDao().insertForecast(result.success)
+                    database.getForecastDao().updateForecast(result.success)
                 }
                 return result
             }
@@ -71,15 +68,12 @@ class WeatherRepository @Inject constructor(
 
     suspend fun updateForecast(forecast: Forecast): Result<Failure, Forecast> {
         val locationInfo =
-            LocationInfo(
-                forecast.locationName,
-                forecast.longitude,
-                forecast.latitude
-            )
+            LocationInfo(forecast.locationName, forecast.longitude, forecast.latitude)
         Log.d("WeatherRepository", "updateForecast: locationInfo=$locationInfo")
         val result: Result<Failure, Forecast> = requestForecast(locationInfo)
         if (result is Result.Success) {
-            database.getForecastDao().insertForecast(result.success)
+            result.success.isFavourite = forecast.isFavourite
+            database.getForecastDao().updateForecast(result.success)
         }
         return result
     }
@@ -105,9 +99,9 @@ class WeatherRepository @Inject constructor(
             Result.Error(Failure.DataNotFoundInCache)
     }
 
-    suspend fun changeForecastFavouriteStatus(forecast: Forecast, isFavourite: Boolean) {
+    suspend fun changeForecastFavouriteStatus(forecast: Forecast) {
         database.getForecastDao()
-            .setForecastFavouriteStatus(forecast.longitude, forecast.latitude, isFavourite)
+            .setForecastFavouriteStatus(forecast.longitude, forecast.latitude, forecast.isFavourite)
     }
 
     private suspend fun requestForecast(locationInfo: LocationInfo): Result<Failure, Forecast> {

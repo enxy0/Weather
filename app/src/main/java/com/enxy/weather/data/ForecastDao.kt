@@ -8,8 +8,8 @@ abstract class ForecastDao {
     @Query("SELECT EXISTS(SELECT * FROM forecast)")
     abstract suspend fun hasCachedForecasts(): Boolean
 
-    @Query("SELECT EXISTS(SELECT 1 FROM forecast WHERE longitude = :longitude AND latitude = :latitude LIMIT 1)")
-    abstract suspend fun isForecastCached(longitude: Double, latitude: Double): Boolean
+    @Query("SELECT EXISTS(SELECT 1 FROM forecast WHERE locationName = :locationName LIMIT 1)")
+    abstract suspend fun isForecastCached(locationName: String): Boolean
 
     @Query("SELECT * FROM forecast WHERE isFavourite = 1")
     abstract suspend fun getFavouriteForecastList(): List<Forecast>?
@@ -17,14 +17,17 @@ abstract class ForecastDao {
     @Query("SELECT * FROM forecast WHERE wasOpenedLast = 1 LIMIT 1")
     abstract suspend fun getLastOpenedForecast(): Forecast
 
-    @Query("SELECT * FROM forecast WHERE longitude = :longitude AND latitude = :latitude LIMIT 1")
-    abstract suspend fun getForecastByLocationName(longitude: Double, latitude: Double): Forecast
+    @Query("SELECT * FROM forecast WHERE locationName = :locationName LIMIT 1")
+    abstract suspend fun getForecastByLocationName(locationName: String): Forecast
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insertForecast(forecast: Forecast)
 
-    @Query("UPDATE forecast SET wasOpenedLast = CASE WHEN longitude = :longitude AND latitude = :latitude THEN 1 ELSE 0 END")
-    abstract suspend fun updateLastOpenedForecast(longitude: Double, latitude: Double)
+    @Update
+    abstract suspend fun updateForecast(forecast: Forecast)
+
+    @Query("UPDATE forecast SET wasOpenedLast = CASE WHEN locationName = :locationName THEN 1 ELSE 0 END")
+    abstract suspend fun updateLastOpenedForecast(locationName: String)
 
     @Query("UPDATE forecast SET isFavourite = :isFavourite WHERE longitude = :longitude AND latitude = :latitude")
     abstract suspend fun setForecastFavouriteStatus(
@@ -35,10 +38,4 @@ abstract class ForecastDao {
 
     @Delete
     abstract suspend fun deleteForecast(forecast: Forecast)
-
-    @Query("DELETE FROM forecast WHERE longitude = :longitude AND latitude = :latitude")
-    abstract suspend fun deleteForecastByLocation(longitude: Double, latitude: Double)
-
-    @Query("DELETE FROM forecast")
-    abstract suspend fun deleteAllForecasts()
 }

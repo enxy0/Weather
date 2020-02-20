@@ -9,15 +9,14 @@ import java.util.*
 
 @Entity(tableName = "forecast")
 data class Forecast(
-    @PrimaryKey(autoGenerate = true)
-    val forecastId: Int = 0,
+    @PrimaryKey
     val locationName: String,
     val longitude: Double,
     val latitude: Double,
     @TypeConverters(Converters::class)
     val timestamp: Calendar = Calendar.getInstance(),
-    val wasOpenedLast: Boolean = true,
-    val isFavourite: Boolean = false,
+    var wasOpenedLast: Boolean = true,
+    var isFavourite: Boolean = false,
     @Embedded
     val currentForecast: CurrentForecast,
     @Embedded

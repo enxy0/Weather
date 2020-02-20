@@ -70,7 +70,10 @@ class MainViewModel @Inject constructor(
 
     fun changeForecastFavouriteStatus(isFavourite: Boolean) {
         viewModelScope.launch {
-            forecast.value?.let { weatherRepository.changeForecastFavouriteStatus(it, isFavourite) }
+            forecast.value?.let {
+                it.isFavourite = isFavourite
+                weatherRepository.changeForecastFavouriteStatus(it)
+            }
             fetchFavouriteLocations()
         }
     }
