@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.enxy.weather.AndroidApplication
 import com.enxy.weather.R
@@ -17,6 +18,8 @@ import com.enxy.weather.ui.MainViewModel
 import com.enxy.weather.ui.settings.SettingsFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.favourite_fragment.*
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class FavouriteFragment : BottomSheetDialogFragment(), FavouriteAdapter.FavouriteLocationListener {
@@ -68,17 +71,23 @@ class FavouriteFragment : BottomSheetDialogFragment(), FavouriteAdapter.Favourit
 
     private fun setUpListeners() {
         settingsButton.setOnClickListener {
-            parentFragmentManager.commit {
-                this@FavouriteFragment.dismiss()
-                replace(R.id.mainContainer, SettingsFragment.newInstance())
-                addToBackStack(SettingsFragment.TAG)
+            lifecycleScope.launch {
+                delay(100) // 0.1 sec delay for showing ripple on the button
+                parentFragmentManager.commit {
+                    replace(R.id.mainContainer, SettingsFragment.newInstance())
+                    addToBackStack(SettingsFragment.TAG)
+                    this@FavouriteFragment.dismiss()
+                }
             }
         }
     }
 
     override fun onLocationClick(locationInfo: LocationInfo) {
-        viewModel.fetchWeatherForecast(locationInfo)
-        this.dismiss()
+        lifecycleScope.launch {
+            viewModel.fetchWeatherForecast(locationInfo)
+            delay(150) // 0.15 sec delay for showing ripple on the location
+            this@FavouriteFragment.dismiss()
+        }
     }
 
     private fun inject() {
