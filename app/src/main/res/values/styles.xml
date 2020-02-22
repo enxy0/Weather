@@ -4,6 +4,30 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
+    <style name="CustomStyle.Settings" />
+
+    <style name="CustomStyle.Settings.Icon">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_width">30dp</item>
+    </style>
+
+    <style name="CustomStyle.Settings.Name" parent="CustomStyle.Text.Header" />
+
+    <style name="CustomStyle.Settings.Title" parent="CustomStyle.Text.Primary">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="CustomStyle.Settings.Header" parent="CustomStyle.Text.Primary">
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="CustomStyle.Settings.Summary" parent="CustomStyle.Text.Secondary">
+        <item name="android:textStyle">normal</item>
+    </style>
+
     <style name="CustomStyle.Text" parent="Widget.MaterialComponents.TextView">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
@@ -18,6 +42,12 @@
 
     <style name="CustomStyle.Text.Primary.Title" parent="CustomStyle.Text.Primary">
         <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="CustomStyle.Clickable">
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
     </style>
 
     <style name="CustomStyle.Text.Primary.Clickable" parent="CustomStyle.Text.Primary">

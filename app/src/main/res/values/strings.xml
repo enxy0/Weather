@@ -36,4 +36,17 @@
     <string name="input_enter_city">Enter city…</string>
     <string name="header_favourite_locations">Favourite locations</string>
     <string name="search_hint">Enter the city name or exact address</string>
+    <string name="settings_title_temperature">Temperature</string>
+    <string name="settings_header_about">About</string>
+    <string name="settings_title_app_version">App version</string>
+    <string name="settings_title_build_number">Build Number</string>
+    <string name="settings_title_author">Author</string>
+    <string name="settings_summary_author">enxy0</string>
+    <string name="settings_title_github">Github</string>
+    <string name="settings_summary_github">https://github.com/enxy0/Weather</string>
+    <string name="settings_name">Settings</string>
+    <string name="settings_header_units">Units</string>
+    <string name="settings_vk_link">https://vk.com/enxyo</string>
+    <string name="settings_title_wind">Wind</string>
+    <string name="settings_title_pressure">Pressure</string>
 </resources>

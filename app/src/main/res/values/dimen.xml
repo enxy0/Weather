@@ -15,4 +15,13 @@
     <dimen name="list_padding">16dp</dimen>
     <dimen name="favourite_list_height">280dp</dimen>
     <dimen name="favourite_horizontal_margin">15dp</dimen>
+    <dimen name="settings_icon_margin">20dp</dimen>
+    <dimen name="settings_layout_vertical_padding">12dp</dimen>
+    <dimen name="settings_layout_horizontal_padding">16dp</dimen>
+    <dimen name="settings_header_horizontal_margin">70dp</dimen>
+    <dimen name="settings_header_vertical_margin">20dp</dimen>
+    <dimen name="settings_text_vertical_margin">4dp</dimen>
+    <dimen name="settings_text_horizontal_margin">16dp</dimen>
+    <dimen name="settings_text_no_icon_horizontal_margin">70dp</dimen>
+    <dimen name="settings_name_margin">20dp</dimen>
 </resources>

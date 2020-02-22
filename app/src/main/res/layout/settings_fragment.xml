@@ -1,11 +1,246 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        style="@style/CustomStyle.Text.Header"
-        android:layout_gravity="center"
-        android:text="SettingsFragment" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/CustomStyle.Settings.Name"
+            android:layout_margin="@dimen/settings_name_margin"
+            android:text="@string/settings_name" />
+
+        <TextView
+            style="@style/CustomStyle.Settings.Header"
+            android:layout_marginStart="@dimen/settings_header_horizontal_margin"
+            android:layout_marginEnd="@dimen/settings_header_horizontal_margin"
+            android:layout_marginBottom="@dimen/settings_text_vertical_margin"
+            android:text="@string/settings_header_units" />
+
+        <LinearLayout
+            android:id="@+id/temperatureLayout"
+            style="@style/CustomStyle.Clickable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                style="@style/CustomStyle.Settings.Icon"
+                android:layout_marginStart="@dimen/settings_icon_margin"
+                android:layout_marginEnd="@dimen/settings_icon_margin"
+                android:src="@drawable/ic_temperature" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/settings_layout_vertical_padding"
+                android:paddingBottom="@dimen/settings_layout_vertical_padding">
+
+                <TextView
+                    style="@style/CustomStyle.Settings.Title"
+                    android:layout_marginEnd="@dimen/settings_text_horizontal_margin"
+                    android:text="@string/settings_title_temperature" />
+
+                <TextView
+                    android:id="@+id/temperature"
+                    style="@style/CustomStyle.Settings.Summary"
+                    android:layout_marginEnd="@dimen/settings_text_horizontal_margin"
+                    android:text="C°" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/windLayout"
+            style="@style/CustomStyle.Clickable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                style="@style/CustomStyle.Settings.Icon"
+                android:layout_marginStart="@dimen/settings_icon_margin"
+                android:layout_marginEnd="@dimen/settings_icon_margin"
+                android:src="@drawable/ic_wind" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/settings_layout_vertical_padding"
+                android:paddingBottom="@dimen/settings_layout_vertical_padding">
+
+                <TextView
+                    style="@style/CustomStyle.Settings.Title"
+                    android:layout_marginEnd="@dimen/settings_text_horizontal_margin"
+                    android:text="@string/settings_title_wind" />
+
+                <TextView
+                    android:id="@+id/wind"
+                    style="@style/CustomStyle.Settings.Summary"
+                    android:layout_marginEnd="@dimen/settings_text_horizontal_margin"
+                    android:text="m/s" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/pressureLayout"
+            style="@style/CustomStyle.Clickable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                style="@style/CustomStyle.Settings.Icon"
+                android:layout_marginStart="@dimen/settings_icon_margin"
+                android:layout_marginEnd="@dimen/settings_icon_margin"
+                android:src="@drawable/ic_pressure" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/settings_layout_vertical_padding"
+                android:paddingBottom="@dimen/settings_layout_vertical_padding">
+
+                <TextView
+                    style="@style/CustomStyle.Settings.Title"
+                    android:layout_marginEnd="@dimen/settings_text_horizontal_margin"
+                    android:text="@string/settings_title_pressure" />
+
+                <TextView
+                    android:id="@+id/pressure"
+                    style="@style/CustomStyle.Settings.Summary"
+                    android:layout_marginEnd="@dimen/settings_text_horizontal_margin"
+                    android:text="GPa" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <TextView
+            style="@style/CustomStyle.Settings.Header"
+            android:layout_marginStart="@dimen/settings_header_horizontal_margin"
+            android:layout_marginTop="@dimen/settings_header_vertical_margin"
+            android:layout_marginEnd="@dimen/settings_header_horizontal_margin"
+            android:layout_marginBottom="@dimen/settings_text_vertical_margin"
+            android:text="@string/settings_header_about" />
+
+        <LinearLayout
+            android:id="@+id/githubLayout"
+            style="@style/CustomStyle.Clickable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                style="@style/CustomStyle.Settings.Icon"
+                android:layout_marginStart="@dimen/settings_icon_margin"
+                android:layout_marginEnd="@dimen/settings_icon_margin"
+                android:src="@drawable/ic_github" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/settings_layout_vertical_padding"
+                android:paddingBottom="@dimen/settings_layout_vertical_padding">
+
+                <TextView
+                    style="@style/CustomStyle.Settings.Title"
+                    android:layout_marginEnd="@dimen/settings_text_horizontal_margin"
+                    android:text="@string/settings_title_github" />
+
+                <TextView
+                    style="@style/CustomStyle.Settings.Summary"
+                    android:layout_marginEnd="@dimen/settings_text_horizontal_margin"
+                    android:text="@string/settings_summary_github" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/authorLayout"
+            style="@style/CustomStyle.Clickable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                style="@style/CustomStyle.Settings.Icon"
+                android:layout_marginStart="@dimen/settings_icon_margin"
+                android:layout_marginEnd="@dimen/settings_icon_margin"
+                android:src="@drawable/ic_vk" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/settings_layout_vertical_padding"
+                android:paddingBottom="@dimen/settings_layout_vertical_padding">
+
+                <TextView
+                    style="@style/CustomStyle.Settings.Title"
+                    android:layout_marginEnd="@dimen/settings_text_no_icon_horizontal_margin"
+                    android:text="@string/settings_title_author" />
+
+                <TextView
+                    style="@style/CustomStyle.Settings.Summary"
+                    android:layout_marginEnd="@dimen/settings_text_no_icon_horizontal_margin"
+                    android:text="@string/settings_summary_author" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/CustomStyle.Clickable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/settings_layout_vertical_padding"
+            android:paddingBottom="@dimen/settings_layout_vertical_padding">
+
+            <TextView
+                style="@style/CustomStyle.Settings.Title"
+                android:layout_marginStart="@dimen/settings_text_no_icon_horizontal_margin"
+                android:layout_marginEnd="@dimen/settings_text_no_icon_horizontal_margin"
+                android:text="@string/settings_title_app_version" />
+
+            <TextView
+                android:id="@+id/appVersion"
+                style="@style/CustomStyle.Settings.Summary"
+                android:layout_marginStart="@dimen/settings_text_no_icon_horizontal_margin"
+                android:layout_marginEnd="@dimen/settings_text_no_icon_horizontal_margin"
+                tools:text="X.X.X" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/CustomStyle.Clickable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/settings_layout_vertical_padding"
+            android:paddingBottom="@dimen/settings_layout_vertical_padding">
+
+            <TextView
+                style="@style/CustomStyle.Settings.Title"
+                android:layout_marginStart="@dimen/settings_text_no_icon_horizontal_margin"
+                android:layout_marginEnd="@dimen/settings_text_no_icon_horizontal_margin"
+                android:text="@string/settings_title_build_number" />
+
+            <TextView
+                android:id="@+id/buildNumber"
+                style="@style/CustomStyle.Settings.Summary"
+                android:layout_marginStart="@dimen/settings_text_no_icon_horizontal_margin"
+                android:layout_marginEnd="@dimen/settings_text_no_icon_horizontal_margin"
+                tools:text="XXXX" />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
