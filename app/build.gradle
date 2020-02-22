@@ -13,8 +13,8 @@ android {
         applicationId "com.enxy.weather"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0.0"
+        versionCode 63
+        versionName "1.0.0-alpha-1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
