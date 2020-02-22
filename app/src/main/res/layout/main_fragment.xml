@@ -7,307 +7,325 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:id="@+id/mainContentLinearLayout"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="invisible"
-            tools:visibility="visible">
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
             <LinearLayout
+                android:id="@+id/mainContentLinearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/bottom_app_bar_height"
+                android:orientation="vertical"
+                android:visibility="invisible"
+                tools:visibility="visible">
 
-                <TextView
-                    android:id="@+id/locationNameTextView"
-                    style="@style/CustomStyle.Text.Header"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                    android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    tools:text="Moscow, RU" />
+                    android:orientation="horizontal">
 
-                <ToggleButton
-                    android:id="@+id/favouriteToggle"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    <TextView
+                        android:id="@+id/locationNameTextView"
+                        style="@style/CustomStyle.Text.Header"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        tools:text="Moscow, RU" />
+
+                    <ToggleButton
+                        android:id="@+id/favouriteToggle"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:foreground="@drawable/selector_favourite"
+                        android:minWidth="0dp"
+                        android:minHeight="0dp"
+                        android:textOff=""
+                        android:textOn="" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/currentDescriptionImageView"
+                    style="@style/CustomStyle.ImageView.CurrentWeather"
                     android:layout_gravity="center"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:foreground="@drawable/selector_favourite"
-                    android:minWidth="0dp"
-                    android:minHeight="0dp"
-                    android:textOff=""
-                    android:textOn="" />
-            </LinearLayout>
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    tools:src="@drawable/weather_clear_day" />
 
-            <ImageView
-                android:id="@+id/currentDescriptionImageView"
-                style="@style/CustomStyle.ImageView.CurrentWeather"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                tools:src="@drawable/weather_clear_day" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/currentTemperatureTextView"
-                    style="@style/CustomStyle.Text.Header"
-                    android:textSize="45sp"
-                    tools:text="+1" />
-
-                <TextView
-                    style="@style/CustomStyle.Text.Header"
-                    android:text="@string/sign_degree"
-                    android:textSize="45sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="2dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/currentFeelsLikeValueTextView"
-                    style="@style/CustomStyle.Text.Secondary"
-                    android:text="@string/feels_like" />
-
-                <TextView
-                    android:id="@+id/currentFeelsLikeTextView"
-                    style="@style/CustomStyle.Text.Secondary"
-                    android:layout_marginStart="@dimen/text_space_margin"
-                    tools:text="+13" />
-
-                <TextView
-                    style="@style/CustomStyle.Text.Secondary"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/sign_degree"
-                    android:textSize="16sp" />
-            </LinearLayout>
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/currentDescriptionTextView"
-                style="@style/CustomStyle.Text.Primary"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                tools:text="Sunny" />
+                    <TextView
+                        android:id="@+id/currentTemperatureTextView"
+                        style="@style/CustomStyle.Text.Header"
+                        android:textSize="45sp"
+                        tools:text="+1" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/section_vertical_margin"
-                android:orientation="horizontal"
-                android:paddingStart="@dimen/details_layout_padding"
-                android:paddingEnd="@dimen/details_layout_padding">
+                    <TextView
+                        style="@style/CustomStyle.Text.Header"
+                        android:text="@string/sign_degree"
+                        android:textSize="45sp" />
+                </LinearLayout>
 
-                <com.google.android.material.card.MaterialCardView
-                    style="@style/CustomStyle.CardView"
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="2dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/currentFeelsLikeValueTextView"
+                        style="@style/CustomStyle.Text.Secondary"
+                        android:text="@string/feels_like" />
+
+                    <TextView
+                        android:id="@+id/currentFeelsLikeTextView"
+                        style="@style/CustomStyle.Text.Secondary"
+                        android:layout_marginStart="@dimen/text_space_margin"
+                        tools:text="+13" />
+
+                    <TextView
+                        style="@style/CustomStyle.Text.Secondary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sign_degree"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/currentDescriptionTextView"
+                    style="@style/CustomStyle.Text.Primary"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    tools:text="Sunny" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_weight="1"
-                    app:cardBackgroundColor="@color/humidityTileColor">
+                    android:layout_marginTop="@dimen/section_vertical_margin"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/details_layout_padding"
+                    android:paddingEnd="@dimen/details_layout_padding">
 
-                    <LinearLayout
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/CustomStyle.CardView"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:paddingTop="@dimen/card_details_layout_padding"
-                        android:paddingBottom="@dimen/card_details_layout_padding">
-
-                        <ImageView
-                            style="@style/CustomStyle.Icon"
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/ic_humidity"
-                            android:tint="@color/humidityTextColor" />
-
-                        <TextView
-                            style="@style/CustomStyle.Text.Primary"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="@dimen/card_text_top_margin"
-                            android:layout_marginBottom="@dimen/card_text_bottom_margin"
-                            android:text="@string/humidity"
-                            android:textAlignment="center"
-                            android:textColor="@color/humidityTextColor" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@color/humidityTileColor">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:orientation="horizontal">
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:paddingTop="@dimen/card_details_layout_padding"
+                            android:paddingBottom="@dimen/card_details_layout_padding">
+
+                            <ImageView
+                                style="@style/CustomStyle.Icon"
+                                android:layout_gravity="center_horizontal"
+                                android:src="@drawable/ic_humidity"
+                                android:tint="@color/humidityTextColor" />
 
                             <TextView
-                                android:id="@+id/currentHumidityValueTextView"
                                 style="@style/CustomStyle.Text.Primary"
-                                android:textColor="@color/humidityTextColor"
-                                tools:text="96" />
-
-                            <TextView
-                                android:id="@+id/currentHumidityUnitTextView"
-                                style="@style/CustomStyle.Text.Primary"
-                                android:layout_marginStart="@dimen/text_space_margin"
-                                android:text="@string/sign_percent"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/card_text_top_margin"
+                                android:layout_marginBottom="@dimen/card_text_bottom_margin"
+                                android:text="@string/humidity"
+                                android:textAlignment="center"
                                 android:textColor="@color/humidityTextColor" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/currentHumidityValueTextView"
+                                    style="@style/CustomStyle.Text.Primary"
+                                    android:textColor="@color/humidityTextColor"
+                                    tools:text="96" />
+
+                                <TextView
+                                    android:id="@+id/currentHumidityUnitTextView"
+                                    style="@style/CustomStyle.Text.Primary"
+                                    android:layout_marginStart="@dimen/text_space_margin"
+                                    android:text="@string/sign_percent"
+                                    android:textColor="@color/humidityTextColor" />
+                            </LinearLayout>
+
                         </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
 
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    style="@style/CustomStyle.CardView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_weight="1"
-                    app:cardBackgroundColor="@color/windTileColor">
-
-                    <LinearLayout
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/CustomStyle.CardView"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:paddingTop="@dimen/card_details_layout_padding"
-                        android:paddingBottom="@dimen/card_details_layout_padding">
-
-                        <ImageView
-                            style="@style/CustomStyle.Icon"
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/ic_wind"
-                            android:tint="@color/windTextColor" />
-
-                        <TextView
-                            style="@style/CustomStyle.Text.Primary"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="@dimen/card_text_top_margin"
-                            android:layout_marginBottom="@dimen/card_text_bottom_margin"
-                            android:text="@string/wind"
-                            android:textAlignment="center"
-                            android:textColor="@color/windTextColor" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@color/windTileColor">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:orientation="horizontal">
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:paddingTop="@dimen/card_details_layout_padding"
+                            android:paddingBottom="@dimen/card_details_layout_padding">
+
+                            <ImageView
+                                style="@style/CustomStyle.Icon"
+                                android:layout_gravity="center_horizontal"
+                                android:src="@drawable/ic_wind"
+                                android:tint="@color/windTextColor" />
 
                             <TextView
-                                android:id="@+id/currentWindValueTextView"
                                 style="@style/CustomStyle.Text.Primary"
-                                android:textColor="@color/windTextColor"
-                                tools:text="2" />
-
-                            <TextView
-                                android:id="@+id/currentWindUnitTextView"
-                                style="@style/CustomStyle.Text.Primary"
-                                android:layout_marginStart="@dimen/text_space_margin"
-                                android:text="@string/wind_value_meters_per_second"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/card_text_top_margin"
+                                android:layout_marginBottom="@dimen/card_text_bottom_margin"
+                                android:text="@string/wind"
+                                android:textAlignment="center"
                                 android:textColor="@color/windTextColor" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/currentWindValueTextView"
+                                    style="@style/CustomStyle.Text.Primary"
+                                    android:textColor="@color/windTextColor"
+                                    tools:text="2" />
+
+                                <TextView
+                                    android:id="@+id/currentWindUnitTextView"
+                                    style="@style/CustomStyle.Text.Primary"
+                                    android:layout_marginStart="@dimen/text_space_margin"
+                                    android:text="@string/wind_value_meters_per_second"
+                                    android:textColor="@color/windTextColor" />
+                            </LinearLayout>
                         </LinearLayout>
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
+                    </com.google.android.material.card.MaterialCardView>
 
-                <com.google.android.material.card.MaterialCardView
-                    style="@style/CustomStyle.CardView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_weight="1"
-                    app:cardBackgroundColor="@color/pressureTileColor">
-
-                    <LinearLayout
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/CustomStyle.CardView"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:paddingTop="@dimen/card_details_layout_padding"
-                        android:paddingBottom="@dimen/card_details_layout_padding">
-
-                        <ImageView
-                            style="@style/CustomStyle.Icon"
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/ic_pressure"
-                            android:tint="@color/pressureTextColor" />
-
-                        <TextView
-                            style="@style/CustomStyle.Text.Primary"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="@dimen/card_text_top_margin"
-                            android:layout_marginBottom="@dimen/card_text_bottom_margin"
-                            android:text="@string/pressure"
-                            android:textAlignment="center"
-                            android:textColor="@color/pressureTextColor" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@color/pressureTileColor">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:orientation="horizontal">
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:paddingTop="@dimen/card_details_layout_padding"
+                            android:paddingBottom="@dimen/card_details_layout_padding">
+
+                            <ImageView
+                                style="@style/CustomStyle.Icon"
+                                android:layout_gravity="center_horizontal"
+                                android:src="@drawable/ic_pressure"
+                                android:tint="@color/pressureTextColor" />
 
                             <TextView
-                                android:id="@+id/currentPressureValueTextView"
                                 style="@style/CustomStyle.Text.Primary"
-                                android:textColor="@color/pressureTextColor"
-                                tools:text="1016" />
-
-                            <TextView
-                                android:id="@+id/currentPressureUnitTextView"
-                                style="@style/CustomStyle.Text.Primary"
-                                android:layout_marginStart="@dimen/text_space_margin"
-                                android:text="@string/pressure_value_pascals"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/card_text_top_margin"
+                                android:layout_marginBottom="@dimen/card_text_bottom_margin"
+                                android:text="@string/pressure"
+                                android:textAlignment="center"
                                 android:textColor="@color/pressureTextColor" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/currentPressureValueTextView"
+                                    style="@style/CustomStyle.Text.Primary"
+                                    android:textColor="@color/pressureTextColor"
+                                    tools:text="1016" />
+
+                                <TextView
+                                    android:id="@+id/currentPressureUnitTextView"
+                                    style="@style/CustomStyle.Text.Primary"
+                                    android:layout_marginStart="@dimen/text_space_margin"
+                                    android:text="@string/pressure_value_pascals"
+                                    android:textColor="@color/pressureTextColor" />
+                            </LinearLayout>
                         </LinearLayout>
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/hourTextView"
+                    style="@style/CustomStyle.Text.Header"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/section_vertical_margin"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:text="@string/section_next_hours" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/hourRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:paddingStart="6dp"
+                    android:paddingTop="@dimen/section_content_top_padding"
+                    android:paddingEnd="6dp"
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    tools:itemCount="9"
+                    tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_hour"
+                    tools:orientation="horizontal" />
             </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
-            <TextView
-                android:id="@+id/hourTextView"
-                style="@style/CustomStyle.Text.Header"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/section_vertical_margin"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:text="@string/section_next_hours" />
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottomAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottom_app_bar_height"
+            android:layout_gravity="bottom"
+            app:elevation="@dimen/bottom_app_bar_elevation"
+            app:menu="@menu/main_menu"
+            app:navigationContentDescription="@string/menu_navigation_description"
+            app:navigationIcon="@drawable/ic_menu_black_24dp" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/hourRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:paddingStart="6dp"
-                android:paddingTop="@dimen/section_content_top_padding"
-                android:paddingEnd="6dp"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                tools:itemCount="9"
-                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_hour"
-                tools:orientation="horizontal" />
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

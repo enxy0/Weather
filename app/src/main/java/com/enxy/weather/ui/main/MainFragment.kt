@@ -2,9 +2,12 @@ package com.enxy.weather.ui.main
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
+import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.enxy.weather.R
@@ -15,7 +18,10 @@ import com.enxy.weather.exception.Failure
 import com.enxy.weather.extension.dpToPixels
 import com.enxy.weather.extension.failure
 import com.enxy.weather.extension.observe
+import com.enxy.weather.ui.MainActivity
 import com.enxy.weather.ui.MainViewModel
+import com.enxy.weather.ui.favourite.FavouriteFragment
+import com.enxy.weather.ui.search.SearchFragment
 import kotlinx.android.synthetic.main.main_fragment.*
 import javax.inject.Inject
 
@@ -39,8 +45,10 @@ class MainFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUpBottomAppBar()
         setUpSwipeRefreshLayout()
         setUpRecyclerView()
+        setHasOptionsMenu(true)
         favouriteToggle.setOnClickListener {
             viewModel.changeForecastFavouriteStatus(favouriteToggle.isChecked)
         }
@@ -48,6 +56,33 @@ class MainFragment : BaseFragment() {
             observe(forecast, ::renderForecast)
             failure(forecastFailure, ::handleFailure)
         }
+    }
+
+    private fun setUpBottomAppBar() {
+        (activity as MainActivity).setSupportActionBar(bottomAppBar)
+
+        bottomAppBar.setNavigationOnClickListener {
+            val fragment = FavouriteFragment.newInstance()
+            fragment.show(parentFragmentManager, FavouriteFragment.TAG)
+        }
+
+        bottomAppBar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.menu_search_action -> {
+                    parentFragmentManager.commit {
+                        replace(R.id.mainContainer, SearchFragment.newInstance())
+                        addToBackStack(SearchFragment.TAG)
+                    }
+                    true
+                }
+                else -> false
+            }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.main_menu, menu)
     }
 
     override fun onDestroyView() {

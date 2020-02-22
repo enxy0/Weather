@@ -1,24 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainContainer"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <FrameLayout
-        android:id="@+id/mainContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/bottom_app_bar_height"
-        tools:context=".ui.MainActivity" />
-
-    <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/bottomAppBar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/bottom_app_bar_height"
-        android:layout_gravity="bottom"
-        app:elevation="@dimen/bottom_app_bar_elevation"
-        app:menu="@menu/main_menu"
-        app:navigationContentDescription="@string/menu_navigation_description"
-        app:navigationIcon="@drawable/ic_menu_black_24dp" />
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    android:layout_height="match_parent" />
