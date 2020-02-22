@@ -1,4 +1,4 @@
-package com.enxy.weather.data.repository
+package com.enxy.weather.repository
 
 import android.util.Log
 import com.enxy.weather.BuildConfig

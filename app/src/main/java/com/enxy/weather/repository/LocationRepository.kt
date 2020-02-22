@@ -1,4 +1,4 @@
-package com.enxy.weather.data.repository
+package com.enxy.weather.repository
 
 import com.enxy.weather.BuildConfig
 import com.enxy.weather.base.BaseRepository

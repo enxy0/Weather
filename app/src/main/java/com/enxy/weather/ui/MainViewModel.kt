@@ -5,10 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.enxy.weather.data.model.Forecast
 import com.enxy.weather.data.model.LocationInfo
-import com.enxy.weather.data.repository.LocationRepository
-import com.enxy.weather.data.repository.WeatherRepository
 import com.enxy.weather.exception.Failure
 import com.enxy.weather.functional.Result
+import com.enxy.weather.repository.LocationRepository
+import com.enxy.weather.repository.WeatherRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
