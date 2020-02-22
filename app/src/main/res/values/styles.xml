@@ -16,6 +16,10 @@
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>
 
+    <style name="CustomStyle.Text.Primary.Title" parent="CustomStyle.Text.Primary">
+        <item name="android:textSize">18sp</item>
+    </style>
+
     <style name="CustomStyle.Text.Primary.Clickable" parent="CustomStyle.Text.Primary">
         <item name="android:background">?attr/selectableItemBackground</item>
         <item name="android:textStyle">normal</item>
@@ -28,7 +32,8 @@
     </style>
 
     <style name="CustomStyle.Text.Header" parent="CustomStyle.Text.Primary">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">19sp</item>
+        <item name="android:fontFamily">@font/open_sans_bold</item>
     </style>
 
     <style name="CustomStyle.ImageView">
