@@ -49,6 +49,7 @@ class WeatherRepository @Inject constructor(
             } else {
                 val result: Result<Failure, Forecast> = requestForecast(locationInfo)
                 if (result is Result.Success) {
+                    result.success.isFavourite = forecast.isFavourite
                     database.getForecastDao().updateForecast(result.success)
                 }
                 return result
