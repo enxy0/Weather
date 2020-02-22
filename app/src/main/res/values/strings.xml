@@ -35,4 +35,5 @@
     <string name="menu_search_description">Search</string>
     <string name="input_enter_city">Enter city…</string>
     <string name="header_favourite_locations">Favourite locations</string>
+    <string name="search_hint">Enter the city name or exact address</string>
 </resources>

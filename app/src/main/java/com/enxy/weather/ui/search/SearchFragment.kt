@@ -4,6 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.commitNow
 import androidx.lifecycle.ViewModelProvider
@@ -44,6 +46,7 @@ class SearchFragment : BaseFragment() {
         locationAdapter = LocationAdapter(this, viewModel)
         setUpRecyclerView()
         setFocusOnInput()
+        showHint()
         searchCityEditText.doOnTextChanged { text, _, _, _ ->
             text?.let { if (it.length > 1) viewModel.fetchListOfLocationsByName(it.toString()) }
         }
@@ -54,7 +57,13 @@ class SearchFragment : BaseFragment() {
     }
 
     private fun renderData(locationInfoArrayList: ArrayList<LocationInfo>?) {
-        locationInfoArrayList?.let { locationAdapter.updateData(it) }
+        locationInfoArrayList?.let {
+            if (hint.isVisible) {
+                hint.isGone = true
+                locationRecyclerView.isVisible = true
+            }
+            locationAdapter.updateData(it)
+        }
     }
 
     private fun handleFailure(failure: Failure?) {
@@ -76,6 +85,13 @@ class SearchFragment : BaseFragment() {
             InputMethodManager.SHOW_FORCED,
             InputMethodManager.HIDE_IMPLICIT_ONLY
         )
+    }
+
+    private fun showHint() {
+        if (locationAdapter.itemCount == 0) {
+            hint.isVisible = true
+            locationRecyclerView.isGone = true
+        }
     }
 
     fun hideKeyboard() {
