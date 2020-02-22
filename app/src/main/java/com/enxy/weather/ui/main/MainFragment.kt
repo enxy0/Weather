@@ -54,6 +54,7 @@ class MainFragment : BaseFragment() {
         }
         with(viewModel) {
             observe(forecast, ::renderForecast)
+            observe(isLoading, ::showLoading)
             failure(forecastFailure, ::handleFailure)
         }
     }
@@ -90,13 +91,13 @@ class MainFragment : BaseFragment() {
         viewModel.let {
             it.forecast.removeObservers(this)
             it.forecastFailure.removeObservers(this)
+            it.isLoading.removeObservers(this)
         }
     }
 
     private fun setUpSwipeRefreshLayout() {
         swipeRefreshLayout.setProgressViewOffset(true, 0, 55.dpToPixels)
         swipeRefreshLayout.setOnRefreshListener(::onRefresh)
-        swipeRefreshLayout.isRefreshing = true
     }
 
     private fun onRefresh() {
@@ -108,14 +109,16 @@ class MainFragment : BaseFragment() {
     private fun handleFailure(failure: Failure?) {
         failure?.let {
             Log.d("MainFragment", "handleFailure: Failure=${failure.javaClass.name}")
-            swipeRefreshLayout.isRefreshing = false
         }
+    }
+
+    private fun showLoading(isLoading: Boolean?) {
+        isLoading?.let { swipeRefreshLayout.isRefreshing = isLoading }
     }
 
     private fun renderForecast(forecast: Forecast?) {
         forecast?.let {
             Log.d("MainFragment", "renderHourWeather: hourForecast=$it")
-            swipeRefreshLayout.isRefreshing = false
             renderCurrentForecast(it.currentForecast)
             hourAdapter.updateData(it.hourForecast.hourArrayList)
             // By default mainContentLinearLayout is invisible, so the user can see forecast
@@ -136,7 +139,6 @@ class MainFragment : BaseFragment() {
         currentHumidityValueTextView.text = currentForecast.humidity
         currentWindValueTextView.text = currentForecast.wind
         currentPressureValueTextView.text = currentForecast.pressure
-        swipeRefreshLayout.isRefreshing = false
     }
 
     private fun setUpRecyclerView() {

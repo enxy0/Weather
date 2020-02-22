@@ -22,6 +22,7 @@ class MainViewModel @Inject constructor(
     val locationFailure = MutableLiveData<Failure>()
     val favouriteLocationsList = MutableLiveData<ArrayList<LocationInfo>>()
     val favouriteLocationsFailure = MutableLiveData<Failure>()
+    val isLoading = MutableLiveData<Boolean>(false)
 
     init {
         fetchLastOpenedForecast()
@@ -32,11 +33,7 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             when (val result = weatherRepository.getLastOpenedForecast()) {
                 is Result.Success -> with(result.success) {
-                    val locationInfo = LocationInfo(
-                        locationName,
-                        longitude,
-                        latitude
-                    )
+                    val locationInfo = LocationInfo(locationName, longitude, latitude)
                     fetchWeatherForecast(locationInfo)
                     handleForecastSuccess(this)
                 }
@@ -54,6 +51,7 @@ class MainViewModel @Inject constructor(
 
     fun fetchWeatherForecast(locationInfo: LocationInfo) {
         viewModelScope.launch {
+            isLoading.value = true
             weatherRepository.getForecast(locationInfo)
                 .handle(::handleForecastFailure, ::handleForecastSuccess)
         }
@@ -90,10 +88,12 @@ class MainViewModel @Inject constructor(
     private fun handleForecastSuccess(forecast: Forecast) {
         this.forecast.value = forecast
         this.forecastFailure.value = null
+        this.isLoading.value = false
     }
 
     private fun handleForecastFailure(failure: Failure) {
         this.forecastFailure.value = failure
+        this.isLoading.value = false
     }
 
     private fun handleLocationSuccess(locationList: ArrayList<LocationInfo>) {
