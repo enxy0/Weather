@@ -40,11 +40,11 @@ class MainFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         appComponent.inject(this)
-        viewModel = getMainViewModel(viewModelFactory)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = getMainViewModel()
         setUpBottomAppBar()
         setUpSwipeRefreshLayout()
         setUpRecyclerView()

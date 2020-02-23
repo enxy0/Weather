@@ -8,7 +8,6 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.commitNow
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.enxy.weather.R
 import com.enxy.weather.base.BaseFragment
@@ -16,18 +15,14 @@ import com.enxy.weather.data.model.LocationInfo
 import com.enxy.weather.exception.Failure
 import com.enxy.weather.extension.failure
 import com.enxy.weather.extension.observe
-import com.enxy.weather.network.NetworkService
 import com.enxy.weather.ui.MainViewModel
 import com.enxy.weather.ui.main.MainFragment
 import kotlinx.android.synthetic.main.search_fragment.*
-import javax.inject.Inject
 
 
-class SearchFragment : BaseFragment() {
+class SearchFragment : BaseFragment(), LocationAdapter.LocationListener {
     override val layoutId = R.layout.search_fragment
-    @Inject lateinit var networkService: NetworkService
-    @Inject lateinit var viewModel: MainViewModel
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    private lateinit var viewModel: MainViewModel
     private lateinit var locationAdapter: LocationAdapter
 
     companion object {
@@ -38,12 +33,12 @@ class SearchFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         appComponent.inject(this)
-        viewModel = getMainViewModel(viewModelFactory)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        locationAdapter = LocationAdapter(this, viewModel)
+        viewModel = getMainViewModel()
+        locationAdapter = LocationAdapter(this)
         setUpRecyclerView()
         setFocusOnInput()
         showHint()
@@ -70,6 +65,15 @@ class SearchFragment : BaseFragment() {
         failure?.let { notify("Failure: ${it.javaClass.simpleName}") }
     }
 
+    override fun onLocationChange(locationInfo: LocationInfo) {
+        viewModel.fetchWeatherForecast(locationInfo)
+        hideKeyboard()
+        if (isOpenedFirst())
+            openMainFragment()
+        else
+            parentFragmentManager.popBackStack()
+    }
+
     private fun setUpRecyclerView() {
         locationRecyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -94,7 +98,7 @@ class SearchFragment : BaseFragment() {
         }
     }
 
-    fun hideKeyboard() {
+    private fun hideKeyboard() {
         val inputMethodManager =
             activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(
@@ -103,9 +107,9 @@ class SearchFragment : BaseFragment() {
         )
     }
 
-    fun isOpenedFirst(): Boolean = parentFragmentManager.backStackEntryCount == 0
+    private fun isOpenedFirst(): Boolean = parentFragmentManager.backStackEntryCount == 0
 
-    fun openMainFragment() {
+    private fun openMainFragment() {
         activity!!.supportFragmentManager.commitNow {
             replace(R.id.mainContainer, MainFragment.newInstance())
         }

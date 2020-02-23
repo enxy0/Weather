@@ -6,11 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.enxy.weather.R
 import com.enxy.weather.data.model.LocationInfo
-import com.enxy.weather.ui.MainViewModel
 import com.enxy.weather.ui.search.LocationAdapter.LocationHolder
 import kotlinx.android.synthetic.main.item_location.view.*
 
-class LocationAdapter(private val fragment: SearchFragment, private val viewModel: MainViewModel) :
+class LocationAdapter(private val locationListener: LocationListener) :
     RecyclerView.Adapter<LocationHolder>() {
     private val data = ArrayList<LocationInfo>()
 
@@ -24,12 +23,7 @@ class LocationAdapter(private val fragment: SearchFragment, private val viewMode
         fun bind(locationInfo: LocationInfo) {
             itemView.locationName.text = locationInfo.locationName
             itemView.locationName.setOnClickListener {
-                viewModel.fetchWeatherForecast(locationInfo)
-                fragment.hideKeyboard()
-                if (fragment.isOpenedFirst())
-                    fragment.openMainFragment()
-                else
-                    fragment.parentFragmentManager.popBackStack()
+                locationListener.onLocationChange(locationInfo)
             }
         }
     }
@@ -44,5 +38,9 @@ class LocationAdapter(private val fragment: SearchFragment, private val viewMode
 
     override fun onBindViewHolder(holder: LocationHolder, position: Int) {
         holder.bind(data[position])
+    }
+
+    interface LocationListener {
+        fun onLocationChange(locationInfo: LocationInfo)
     }
 }

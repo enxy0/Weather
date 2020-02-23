@@ -113,5 +113,4 @@ class MainViewModel @Inject constructor(
     private fun handleFavouriteLocationsFailure(failure: Failure) {
         favouriteLocationsFailure.value = failure
     }
-
 }
