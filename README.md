@@ -1,10 +1,11 @@
 # Weather
 Minimalistic Android weather app written in Kotlin. This project is my attempt to make the code clean and readable.
+Simple and light design makes easy to see the necessary data.
 
 Status: **In development**
 
 # Screenshots
-<img  src="/screenshots/main.jpg?raw=true"  width=33% /> <img  src="/screenshots/search.jpg?raw=true"  width=33% />
+<img  src="/screenshots/main.jpg?raw=true"  width=23% /> <img  src="/screenshots/favourite.jpg?raw=true"  width=23% /> <img  src="/screenshots/search.jpg?raw=true"  width=23% /> <img  src="/screenshots/settings.jpg?raw=true"  width=23% />
 
 # Libraries & Dependencies
 * [Retrofit](https://github.com/square/retrofit) - Type-safe HTTP client for Android and Java by Square, Inc.
@@ -12,6 +13,7 @@ Status: **In development**
 * [Room](https://developer.android.com/topic/libraries/architecture/room) - The Room persistence library provides an abstraction layer over SQLite to allow for more robust database access.
 * [Gson](https://github.com/google/gson) - Gson is a Java library that can be used to convert Java Objects into their JSON representation.
 * [Material Design Components](https://material.io/develop/android/) - Material CardView, Bottom AppBar
+
 # How to use this project
 1. Create API keys:
     * [OpenWeatherMap](https://openweathermap.org/api) to display weather
@@ -28,4 +30,4 @@ api_key_open_cage = "OPEN_CAGE_API_KEY"
 3. Rebuild project
 
 # Credits
-Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+Icons made by [Freepik](https://www.flaticon.com/authors/freepik) from [www.flaticon.com](https://www.flaticon.com/)
