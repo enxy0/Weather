@@ -14,7 +14,7 @@
 
         <TextView
             android:id="@+id/favouriteTextView"
-            style="@style/CustomStyle.Text.Primary.Title"
+            style="@style/CustomStyle.Text.Header"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:text="@string/header_favourite_locations" />
