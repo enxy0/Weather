@@ -13,14 +13,19 @@ android {
         applicationId "com.enxy.weather"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 68
+        versionCode 80
         versionName "1.0.0-alpha-1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "weather-${variant.buildType.name}-${defaultConfig.versionName}(${defaultConfig.versionCode}).apk"
+                }
+            }
         }
     }
     compileOptions {
