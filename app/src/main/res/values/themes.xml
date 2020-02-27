@@ -18,6 +18,7 @@
         <item name="android:textColorSecondary">@color/colorTextSecondary</item>
         <item name="android:textColorPrimary">@color/colorTextPrimary</item>
         <item name="bottomSheetDialogTheme">@style/CustomStyle.BottomSheetDialog</item>
+        <item name="md_corner_radius">@dimen/card_radius</item>
     </style>
 
     <!--    <style name="AppTheme.Dark" parent="Theme.MaterialComponents.DayNight.NoActionBar">-->
