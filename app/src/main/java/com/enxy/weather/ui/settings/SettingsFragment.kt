@@ -4,6 +4,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.list.listItems
 import com.enxy.weather.BuildConfig
 import com.enxy.weather.R
 import com.enxy.weather.base.BaseFragment
@@ -20,12 +22,45 @@ class SettingsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUpViews()
+        setUpListeners()
+    }
+
+    private fun setUpViews() {
         appVersion.text = BuildConfig.VERSION_NAME
         buildNumber.text = BuildConfig.VERSION_CODE.toString()
-        val openGithub =
-            Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.settings_summary_github)))
-        val openVk = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.settings_vk_link)))
-        githubLayout.setOnClickListener { (activity as MainActivity).startActivity(openGithub) }
-        authorLayout.setOnClickListener { (activity as MainActivity).startActivity(openVk) }
+    }
+
+    private fun setUpListeners() {
+        // Units section
+        temperatureLayout.setOnClickListener {
+            MaterialDialog(requireContext()).show {
+                title(R.string.temperature_title)
+                listItems(R.array.temperature_entries)
+            }
+        }
+        windLayout.setOnClickListener {
+            MaterialDialog(requireContext()).show {
+                title(R.string.wind_title)
+                listItems(R.array.wind_entries)
+            }
+        }
+        pressureLayout.setOnClickListener {
+            MaterialDialog(requireContext()).show {
+                title(R.string.pressure_title)
+                listItems(R.array.pressure_entries)
+            }
+        }
+
+        // About section
+        githubLayout.setOnClickListener {
+            val openGithub =
+                Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.settings_summary_github)))
+            (activity as MainActivity).startActivity(openGithub)
+        }
+        authorLayout.setOnClickListener {
+            val openVk = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.settings_vk_link)))
+            (activity as MainActivity).startActivity(openVk)
+        }
     }
 }
