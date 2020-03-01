@@ -21,8 +21,7 @@ import kotlin.math.roundToInt
 class WeatherRepository @Inject constructor(
     private val service: NetworkService,
     private val database: AppDataBase
-) :
-    BaseRepository() {
+) : BaseRepository {
     companion object {
         // OpenWeatherMap API URL queries
         const val OPEN_WEATHER_MAP_APPID = BuildConfig.API_KEY_OPEN_WEATHER_MAP

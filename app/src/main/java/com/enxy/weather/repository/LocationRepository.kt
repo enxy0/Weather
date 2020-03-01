@@ -11,8 +11,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class LocationRepository @Inject constructor(private val service: NetworkService) :
-    BaseRepository() {
+class LocationRepository @Inject constructor(private val service: NetworkService) : BaseRepository {
     companion object {
         const val OPEN_CAGE_API_KEY = BuildConfig.API_KEY_OPEN_CAGE
     }

@@ -10,7 +10,7 @@ import retrofit2.Response
 import java.io.IOException
 
 
-open class BaseRepository {
+interface BaseRepository {
     suspend fun <JSON, MODEL> safeApiCall(
         call: suspend () -> Response<JSON>,
         transform: (JSON) -> MODEL
