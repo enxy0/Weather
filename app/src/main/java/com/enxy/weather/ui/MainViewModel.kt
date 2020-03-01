@@ -29,58 +29,46 @@ class MainViewModel @Inject constructor(
         fetchFavouriteLocations()
     }
 
-    private fun fetchLastOpenedForecast() {
-        viewModelScope.launch {
-            when (val result = weatherRepository.getLastOpenedForecast()) {
-                is Result.Success -> with(result.success) {
-                    val locationInfo = LocationInfo(locationName, longitude, latitude)
-                    fetchWeatherForecast(locationInfo)
-                    handleForecastSuccess(this)
-                }
-                is Result.Error -> handleForecastFailure(result.error)
+    private fun fetchLastOpenedForecast() = viewModelScope.launch {
+        when (val result = weatherRepository.getLastOpenedForecast()) {
+            is Result.Success -> with(result.success) {
+                val locationInfo = LocationInfo(locationName, longitude, latitude)
+                fetchWeatherForecast(locationInfo)
+                handleForecastSuccess(this)
             }
+            is Result.Error -> handleForecastFailure(result.error)
         }
     }
 
-    private fun fetchFavouriteLocations() {
-        viewModelScope.launch {
-            weatherRepository.getFavouriteLocationsList()
-                .handle(::handleFavouriteLocationsFailure, ::handleFavouriteLocationsSuccess)
-        }
+    private fun fetchFavouriteLocations() = viewModelScope.launch {
+        weatherRepository.getFavouriteLocationsList()
+            .handle(::handleFavouriteLocationsFailure, ::handleFavouriteLocationsSuccess)
     }
 
-    fun fetchWeatherForecast(locationInfo: LocationInfo) {
-        viewModelScope.launch {
-            isLoading.value = true
-            weatherRepository.getForecast(locationInfo)
+    fun fetchWeatherForecast(locationInfo: LocationInfo) = viewModelScope.launch {
+        isLoading.value = true
+        weatherRepository.getForecast(locationInfo)
+            .handle(::handleForecastFailure, ::handleForecastSuccess)
+    }
+
+    fun updateWeatherForecast() = viewModelScope.launch {
+        forecast.value?.let {
+            weatherRepository.updateForecast(it)
                 .handle(::handleForecastFailure, ::handleForecastSuccess)
         }
     }
 
-    fun updateWeatherForecast() {
-        viewModelScope.launch {
-            forecast.value?.let {
-                weatherRepository.updateForecast(it)
-                    .handle(::handleForecastFailure, ::handleForecastSuccess)
-            }
+    fun changeForecastFavouriteStatus(isFavourite: Boolean) = viewModelScope.launch {
+        forecast.value?.let {
+            it.isFavourite = isFavourite
+            weatherRepository.changeForecastFavouriteStatus(it)
         }
+        fetchFavouriteLocations()
     }
 
-    fun changeForecastFavouriteStatus(isFavourite: Boolean) {
-        viewModelScope.launch {
-            forecast.value?.let {
-                it.isFavourite = isFavourite
-                weatherRepository.changeForecastFavouriteStatus(it)
-            }
-            fetchFavouriteLocations()
-        }
-    }
-
-    fun fetchListOfLocationsByName(locationName: String) {
-        viewModelScope.launch {
-            locationRepository.getLocationsByName(locationName)
-                .handle(::handleLocationFailure, ::handleLocationSuccess)
-        }
+    fun fetchListOfLocationsByName(locationName: String) = viewModelScope.launch {
+        locationRepository.getLocationsByName(locationName)
+            .handle(::handleLocationFailure, ::handleLocationSuccess)
     }
 
     suspend fun isAppFirstLaunched(): Boolean = !weatherRepository.hasCachedForecasts()
