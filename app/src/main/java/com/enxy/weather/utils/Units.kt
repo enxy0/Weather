@@ -12,3 +12,8 @@ fun hectoPascalsToMmHg(hectoPascals: Int): Int =
 fun celsiusToFahrenheit(celsius: Int): Int = (celsius * 1.8 + 32).roundToInt()
 
 fun fahrenheitToCelsius(fahrenheit: Int): Int = ((fahrenheit - 32) / 1.8).roundToInt()
+
+fun metersPerSecToKilometersPerHour(metersPerSec: Int): Int = metersPerSec * 60 * 60 / 1000
+
+fun kilometersPerHourToMetersPerSec(kilometersPerHour: Int): Int =
+    kilometersPerHour * 1000 / (60 * 60)
