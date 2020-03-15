@@ -2,7 +2,7 @@ package com.enxy.weather.repository
 
 import android.util.Log
 import com.enxy.weather.BuildConfig
-import com.enxy.weather.base.BaseRepository
+import com.enxy.weather.base.NetworkRepository
 import com.enxy.weather.data.AppDataBase
 import com.enxy.weather.data.model.*
 import com.enxy.weather.exception.Failure
@@ -21,7 +21,7 @@ import kotlin.math.roundToInt
 class WeatherRepository @Inject constructor(
     private val service: NetworkService,
     private val database: AppDataBase
-) : BaseRepository {
+) : NetworkRepository {
     companion object {
         // OpenWeatherMap API URL queries
         const val OPEN_WEATHER_MAP_APPID = BuildConfig.API_KEY_OPEN_WEATHER_MAP
