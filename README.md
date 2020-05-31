@@ -8,11 +8,11 @@ Simple and light design makes easy to see the necessary data.
 **Status:** In development *(1.0.0-alpha-2)* ⚙️
 
 ## Goals
-- [x]   Display weather forecasts for different locations ☁️
-- [x]   Save locations to favourites ⭐
-- [ ]   Support different units 📏
-- [ ]   Add dark theme 🌙
-- [ ]   Add animations 🔥
+-   [x] Display weather forecasts for different locations ☁️
+-   [x] Save locations to favourites ⭐
+-   [ ] Support different units 📏
+-   [ ] Add dark theme 🌙
+-   [ ] Add animations 🔥
 
 ## Screenshots
 <img  src="https://raw.githubusercontent.com/enxy0/Weather/development/screenshots/main.jpg?raw=true"  width=23% /> <img  src="https://raw.githubusercontent.com/enxy0/Weather/development/screenshots/favourite.jpg?raw=true"  width=23% /> <img  src="https://raw.githubusercontent.com/enxy0/Weather/development/screenshots/search.jpg?raw=true"  width=23% /> <img  src="https://raw.githubusercontent.com/enxy0/Weather/development/screenshots/settings.jpg?raw=true"  width=23% />
@@ -26,8 +26,8 @@ Simple and light design makes easy to see the necessary data.
 
 ## How to use this project
 1.  Create API keys:
-    *   [OpenWeatherMap](https://openweathermap.org/api) to display weather
-    *   [OpenCage Geocoder](https://opencagedata.com/api) to find locations by name
+    -   [OpenWeatherMap](https://openweathermap.org/api) to display weather
+    -   [OpenCage Geocoder](https://opencagedata.com/api) to find locations by name
 
 2.  Edit `local.properties` file. Add your API keys here:
 
