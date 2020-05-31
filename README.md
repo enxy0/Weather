@@ -1,4 +1,7 @@
 # Weather
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/258b02ce02084532a66ed715f6c70f77)](https://app.codacy.com/manual/enxy0/Weather?utm_source=github.com&utm_medium=referral&utm_content=enxy0/Weather&utm_campaign=Badge_Grade_Dashboard)
+
 Minimalistic Android weather app written in Kotlin. This project is my attempt to make the code clean and readable.
 <br>Simple and light design makes easy to see the necessary data.
 
