@@ -1,4 +1,4 @@
-package com.enxy.weather.extension
+package com.enxy.weather.utils.extension
 
 import android.animation.AnimatorListenerAdapter
 import android.view.View

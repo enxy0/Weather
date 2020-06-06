@@ -16,15 +16,15 @@ import com.enxy.weather.data.AppSettings
 import com.enxy.weather.data.entity.CurrentForecast
 import com.enxy.weather.data.entity.Forecast
 import com.enxy.weather.exception.Failure
-import com.enxy.weather.extension.dpToPixels
-import com.enxy.weather.extension.failure
-import com.enxy.weather.extension.observe
 import com.enxy.weather.ui.MainActivity
 import com.enxy.weather.ui.MainViewModel
 import com.enxy.weather.ui.favourite.FavouriteFragment
 import com.enxy.weather.ui.search.SearchFragment
 import com.enxy.weather.utils.Pressure
 import com.enxy.weather.utils.Wind
+import com.enxy.weather.utils.extension.dpToPixels
+import com.enxy.weather.utils.extension.failure
+import com.enxy.weather.utils.extension.observe
 import kotlinx.android.synthetic.main.main_fragment.*
 import javax.inject.Inject
 

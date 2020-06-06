@@ -1,4 +1,4 @@
-package com.enxy.weather.extension
+package com.enxy.weather.utils.extension
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData

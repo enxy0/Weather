@@ -12,10 +12,10 @@ import com.enxy.weather.AndroidApplication
 import com.enxy.weather.R
 import com.enxy.weather.data.entity.LocationInfo
 import com.enxy.weather.exception.Failure
-import com.enxy.weather.extension.failure
-import com.enxy.weather.extension.observe
 import com.enxy.weather.ui.MainViewModel
 import com.enxy.weather.ui.settings.SettingsFragment
+import com.enxy.weather.utils.extension.failure
+import com.enxy.weather.utils.extension.observe
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.favourite_fragment.*
 import kotlinx.coroutines.delay

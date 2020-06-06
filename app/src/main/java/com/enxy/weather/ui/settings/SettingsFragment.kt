@@ -10,12 +10,12 @@ import com.afollestad.materialdialogs.list.listItems
 import com.enxy.weather.BuildConfig
 import com.enxy.weather.R
 import com.enxy.weather.base.BaseFragment
-import com.enxy.weather.extension.observe
 import com.enxy.weather.ui.MainActivity
 import com.enxy.weather.ui.MainViewModel
 import com.enxy.weather.utils.Pressure
 import com.enxy.weather.utils.Temperature
 import com.enxy.weather.utils.Wind
+import com.enxy.weather.utils.extension.observe
 import kotlinx.android.synthetic.main.settings_fragment.*
 import javax.inject.Inject
 
