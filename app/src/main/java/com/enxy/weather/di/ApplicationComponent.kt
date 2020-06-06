@@ -6,6 +6,7 @@ import com.enxy.weather.ui.MainActivity
 import com.enxy.weather.ui.favourite.FavouriteFragment
 import com.enxy.weather.ui.main.MainFragment
 import com.enxy.weather.ui.search.SearchFragment
+import com.enxy.weather.ui.settings.SettingsFragment
 import dagger.Component
 import javax.inject.Singleton
 
@@ -14,6 +15,7 @@ import javax.inject.Singleton
 interface ApplicationComponent {
     fun inject(mainFragment: MainFragment)
     fun inject(searchFragment: SearchFragment)
+    fun inject(settingsFragment: SettingsFragment)
     fun inject(favouriteFragment: FavouriteFragment)
     fun inject(mainActivity: MainActivity)
     fun inject(application: AndroidApplication)

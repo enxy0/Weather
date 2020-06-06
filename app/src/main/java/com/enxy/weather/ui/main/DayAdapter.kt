@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.enxy.weather.R
-import com.enxy.weather.data.DayWeather
+import com.enxy.weather.data.entity.DayWeather
 import kotlinx.android.synthetic.main.item_day.view.*
 import javax.inject.Inject
 

@@ -12,8 +12,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.enxy.weather.R
 import com.enxy.weather.base.BaseFragment
-import com.enxy.weather.data.model.CurrentForecast
-import com.enxy.weather.data.model.Forecast
+import com.enxy.weather.data.AppSettings
+import com.enxy.weather.data.entity.CurrentForecast
+import com.enxy.weather.data.entity.Forecast
 import com.enxy.weather.exception.Failure
 import com.enxy.weather.extension.dpToPixels
 import com.enxy.weather.extension.failure
@@ -22,16 +23,20 @@ import com.enxy.weather.ui.MainActivity
 import com.enxy.weather.ui.MainViewModel
 import com.enxy.weather.ui.favourite.FavouriteFragment
 import com.enxy.weather.ui.search.SearchFragment
+import com.enxy.weather.utils.Pressure
+import com.enxy.weather.utils.Wind
 import kotlinx.android.synthetic.main.main_fragment.*
 import javax.inject.Inject
-
 
 class MainFragment : BaseFragment() {
     override val layoutId = R.layout.main_fragment
     private lateinit var viewModel: MainViewModel
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
-    @Inject lateinit var hourAdapter: HourAdapter
-    @Inject lateinit var dayAdapter: DayAdapter
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
+    lateinit var hourAdapter: HourAdapter
+    @Inject
+    lateinit var dayAdapter: DayAdapter
 
     companion object {
         fun newInstance() = MainFragment()
@@ -54,6 +59,7 @@ class MainFragment : BaseFragment() {
         }
         with(viewModel) {
             observe(forecast, ::renderForecast)
+            observe(settings, ::renderCorrectUnits)
             observe(isLoading, ::showLoading)
             failure(forecastFailure, ::handleFailure)
         }
@@ -139,6 +145,27 @@ class MainFragment : BaseFragment() {
         currentHumidityValueTextView.text = currentForecast.humidity
         currentWindValueTextView.text = currentForecast.wind
         currentPressureValueTextView.text = currentForecast.pressure
+    }
+
+    /**
+     * Shows correct units selected by user (or by default)
+     * It only changes units name (e.g. m/s, mmHg...)
+     */
+    private fun renderCorrectUnits(settings: AppSettings?) {
+        settings?.let {
+            when (settings.windUnit) {
+                Wind.METERS_PER_SECOND ->
+                    currentWindUnitTextView.setText(R.string.wind_value_meters_per_second)
+                Wind.KILOMETERS_PER_HOUR ->
+                    currentWindUnitTextView.setText(R.string.wind_value_kilometers_per_hour)
+            }
+            when (settings.pressureUnit) {
+                Pressure.MILLIMETERS_OF_MERCURY ->
+                    currentPressureUnitTextView.setText(R.string.pressure_value_millimeters)
+                Pressure.HECTO_PASCALS ->
+                    currentPressureUnitTextView.setText(R.string.pressure_value_pascals)
+            }
+        }
     }
 
     private fun setUpRecyclerView() {

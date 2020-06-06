@@ -6,7 +6,7 @@
     <string name="humidity">Humidity</string>
     <string name="wind">Wind</string>
     <string name="pressure">Pressure</string>
-    <string name="pressure_value_pascals">GPa</string>
+    <string name="pressure_value_pascals">hPa</string>
     <string name="pressure_value_millimeters">mmHg</string>
     <string name="wind_value_meters_per_second">m/s</string>
     <string name="wind_value_kilometers_per_hour">km/h</string>

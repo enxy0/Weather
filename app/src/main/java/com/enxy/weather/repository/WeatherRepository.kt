@@ -4,7 +4,7 @@ import android.util.Log
 import com.enxy.weather.BuildConfig
 import com.enxy.weather.base.NetworkRepository
 import com.enxy.weather.data.AppDataBase
-import com.enxy.weather.data.model.*
+import com.enxy.weather.data.entity.*
 import com.enxy.weather.exception.Failure
 import com.enxy.weather.functional.Result
 import com.enxy.weather.network.ImageChooser
@@ -31,19 +31,13 @@ class WeatherRepository @Inject constructor(
     }
 
     suspend fun getForecast(locationInfo: LocationInfo): Result<Failure, Forecast> {
-        Log.d("WeatherRepository", "getForecast: locationInfo=$locationInfo")
         database.getForecastDao().updateLastOpenedForecast(locationInfo.locationName)
         val isForecastCached: Boolean = database.getForecastDao()
             .isForecastCached(locationInfo.locationName)
-        Log.d("WeatherRepository", "getForecast: isForecastCached=$isForecastCached")
         if (isForecastCached) {
-            val forecast: Forecast = database.getForecastDao()
-                .getForecastByLocationName(locationInfo.locationName)
-            Log.d(
-                "WeatherRepository",
-                "getForecast: forecast.containsValidInfo()=${forecast.containsValidInfo()}"
-            )
-            if (forecast.containsValidInfo()) {
+            val forecast: Forecast =
+                database.getForecastDao().getForecastByLocationName(locationInfo.locationName)
+            if (forecast.isNotOutdated()) {
                 return Result.Success(forecast)
             } else {
                 val result: Result<Failure, Forecast> = requestForecast(locationInfo)
@@ -55,10 +49,6 @@ class WeatherRepository @Inject constructor(
             }
         } else {
             val result: Result<Failure, Forecast> = requestForecast(locationInfo)
-            Log.d(
-                "WeatherRepository",
-                "getForecast: result is Result.Success=${result is Result.Success}"
-            )
             if (result is Result.Success) {
                 database.getForecastDao().insertForecast(result.success)
             }

@@ -5,9 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.enxy.weather.data.model.CurrentForecast
-import com.enxy.weather.data.model.Forecast
-import com.enxy.weather.data.model.HourForecast
+import com.enxy.weather.data.entity.CurrentForecast
+import com.enxy.weather.data.entity.Forecast
+import com.enxy.weather.data.entity.HourForecast
 
 @Database(entities = [CurrentForecast::class, HourForecast::class, Forecast::class], version = 3)
 @TypeConverters(Converters::class)

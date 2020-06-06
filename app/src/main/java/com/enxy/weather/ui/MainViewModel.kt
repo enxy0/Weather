@@ -2,9 +2,11 @@ package com.enxy.weather.ui
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
-import com.enxy.weather.data.model.Forecast
-import com.enxy.weather.data.model.LocationInfo
+import com.enxy.weather.data.AppSettings
+import com.enxy.weather.data.entity.Forecast
+import com.enxy.weather.data.entity.LocationInfo
 import com.enxy.weather.exception.Failure
 import com.enxy.weather.functional.Result
 import com.enxy.weather.repository.LocationRepository
@@ -14,7 +16,8 @@ import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
     private val weatherRepository: WeatherRepository,
-    private val locationRepository: LocationRepository
+    private val locationRepository: LocationRepository,
+    private val appSettings: AppSettings
 ) : ViewModel() {
     val forecast = MutableLiveData<Forecast>()
     val forecastFailure = MutableLiveData<Failure>()
@@ -23,6 +26,7 @@ class MainViewModel @Inject constructor(
     val favouriteLocationsList = MutableLiveData<ArrayList<LocationInfo>>()
     val favouriteLocationsFailure = MutableLiveData<Failure>()
     val isLoading = MutableLiveData<Boolean>(false)
+    val settings = liveData { emit(appSettings) }
 
     init {
         fetchLastOpenedForecast()
@@ -73,8 +77,22 @@ class MainViewModel @Inject constructor(
 
     suspend fun isAppFirstLaunched(): Boolean = !weatherRepository.hasCachedForecasts()
 
+    /**
+     * Fetches opened forecast but with new measure units
+     * [handleForecastSuccess] invokes [Forecast.inUnits] to update units
+     */
+    fun updateForecastUnits() {
+        forecast.value?.let {
+            fetchWeatherForecast(LocationInfo(it.locationName, it.longitude, it.latitude))
+        }
+    }
+
     private fun handleForecastSuccess(forecast: Forecast) {
-        this.forecast.value = forecast
+        this.forecast.value = forecast.inUnits(
+            appSettings.temperatureUnit,
+            appSettings.windUnit,
+            appSettings.pressureUnit
+        )
         this.forecastFailure.value = null
         this.isLoading.value = false
     }

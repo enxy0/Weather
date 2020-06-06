@@ -1,7 +1,7 @@
 package com.enxy.weather.data
 
 import androidx.room.TypeConverter
-import com.enxy.weather.data.model.Hour
+import com.enxy.weather.data.entity.Hour
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type

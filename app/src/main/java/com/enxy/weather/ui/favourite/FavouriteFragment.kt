@@ -10,7 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.enxy.weather.AndroidApplication
 import com.enxy.weather.R
-import com.enxy.weather.data.model.LocationInfo
+import com.enxy.weather.data.entity.LocationInfo
 import com.enxy.weather.exception.Failure
 import com.enxy.weather.extension.failure
 import com.enxy.weather.extension.observe

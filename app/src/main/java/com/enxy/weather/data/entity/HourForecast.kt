@@ -1,4 +1,4 @@
-package com.enxy.weather.data.model
+package com.enxy.weather.data.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -22,7 +22,7 @@ data class HourForecast(
 
 @Entity(tableName = "hour")
 data class Hour(
-    val temperature: String,
+    var temperature: String,
     val time: String,
     val imageId: Int
 )

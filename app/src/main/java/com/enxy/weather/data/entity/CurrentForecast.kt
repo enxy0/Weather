@@ -1,4 +1,4 @@
-package com.enxy.weather.data.model
+package com.enxy.weather.data.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -14,11 +14,11 @@ data class CurrentForecast(
     val longitude: Double,
     @ColumnInfo(name = "currentLatitude")
     val latitude: Double,
-    val temperature: String,
+    var temperature: String,
     val description: String,
-    val feelsLikeTemperature: String,
-    val wind: String,
-    val pressure: String,
+    var feelsLikeTemperature: String,
+    var wind: String,
+    var pressure: String,
     val humidity: String,
     val imageId: Int
 )

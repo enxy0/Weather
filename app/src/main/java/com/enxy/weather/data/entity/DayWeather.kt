@@ -1,4 +1,4 @@
-package com.enxy.weather.data
+package com.enxy.weather.data.entity
 
 import com.google.gson.annotations.SerializedName
 

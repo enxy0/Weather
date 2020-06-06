@@ -1,7 +1,7 @@
 package com.enxy.weather.data
 
 import androidx.room.*
-import com.enxy.weather.data.model.Forecast
+import com.enxy.weather.data.entity.Forecast
 
 @Dao
 abstract class ForecastDao {
