@@ -10,7 +10,7 @@ Simple and light design makes easy to see the necessary data.
 ## Goals
 -   [x] Display weather forecasts for different locations ☁️
 -   [x] Save locations to favourites ⭐
--   [ ] Support different units 📏
+-   [x] Support different units 📏
 -   [ ] Add dark theme 🌙
 -   [ ] Add animations 🔥
 
