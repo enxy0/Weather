@@ -26,13 +26,13 @@ abstract class BaseFragment : Fragment() {
     }
 
     fun getMainViewModel() =
-        ViewModelProvider(this.activity!!).get(MainViewModel::class.java)
+        ViewModelProvider(this.requireActivity()).get(MainViewModel::class.java)
 
     fun notify(message: String) {
-        Snackbar.make(activity!!.mainContainer, message, Snackbar.LENGTH_LONG).show()
+        Snackbar.make(requireActivity().mainContainer, message, Snackbar.LENGTH_LONG).show()
     }
 
     fun notify(message: Int) {
-        Snackbar.make(activity!!.mainContainer, message, Snackbar.LENGTH_LONG).show()
+        Snackbar.make(requireActivity().mainContainer, message, Snackbar.LENGTH_LONG).show()
     }
 }

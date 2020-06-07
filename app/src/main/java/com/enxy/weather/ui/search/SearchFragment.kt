@@ -84,7 +84,7 @@ class SearchFragment : BaseFragment(), LocationAdapter.LocationListener {
     private fun setFocusOnInput() {
         searchCityEditText.requestFocus()
         val inputMethodManager =
-            context!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.toggleSoftInput(
             InputMethodManager.SHOW_FORCED,
             InputMethodManager.HIDE_IMPLICIT_ONLY
@@ -100,7 +100,7 @@ class SearchFragment : BaseFragment(), LocationAdapter.LocationListener {
 
     private fun hideKeyboard() {
         val inputMethodManager =
-            activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(
             searchCityEditText.windowToken,
             InputMethodManager.RESULT_UNCHANGED_SHOWN
@@ -110,7 +110,7 @@ class SearchFragment : BaseFragment(), LocationAdapter.LocationListener {
     private fun isOpenedFirst(): Boolean = parentFragmentManager.backStackEntryCount == 0
 
     private fun openMainFragment() {
-        activity!!.supportFragmentManager.commitNow {
+        requireActivity().supportFragmentManager.commitNow {
             replace(R.id.mainContainer, MainFragment.newInstance())
         }
     }

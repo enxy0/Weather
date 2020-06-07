@@ -46,11 +46,11 @@ class FavouriteFragment : BottomSheetDialogFragment(), FavouriteAdapter.Favourit
         super.onViewCreated(view, savedInstanceState)
         inject()
         setUpListeners()
-        viewModel = ViewModelProvider(activity!!, viewModelFactory).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity(), viewModelFactory).get(MainViewModel::class.java)
         favouriteAdapter = FavouriteAdapter(this)
         with(favouriteRecyclerView) {
             adapter = favouriteAdapter
-            layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             setHasFixedSize(true)
         }
         with(viewModel) {
@@ -91,6 +91,6 @@ class FavouriteFragment : BottomSheetDialogFragment(), FavouriteAdapter.Favourit
     }
 
     private fun inject() {
-        (activity!!.application as AndroidApplication).appComponent.inject(this)
+        (requireActivity().application as AndroidApplication).appComponent.inject(this)
     }
 }
