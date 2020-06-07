@@ -5,7 +5,7 @@
 Minimalistic Android weather app written in Kotlin with MVVM architecture. This project is my attempt to make the code clean and readable.  
 Simple and light design makes easy to see the necessary data.
 
-**Status:** In development *(1.0.0-alpha-2)* ⚙️
+**Status:** In development *(1.0.0-alpha-3)* ⚙️
 
 ## Goals
 -   [x] Display weather forecasts for different locations ☁️
