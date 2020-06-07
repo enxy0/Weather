@@ -1,7 +1,5 @@
 package com.enxy.weather.ui.settings
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
@@ -10,12 +8,12 @@ import com.afollestad.materialdialogs.list.listItems
 import com.enxy.weather.BuildConfig
 import com.enxy.weather.R
 import com.enxy.weather.base.BaseFragment
-import com.enxy.weather.ui.MainActivity
 import com.enxy.weather.ui.MainViewModel
 import com.enxy.weather.utils.Pressure
 import com.enxy.weather.utils.Temperature
 import com.enxy.weather.utils.Wind
 import com.enxy.weather.utils.extension.observe
+import com.enxy.weather.utils.extension.openLink
 import kotlinx.android.synthetic.main.settings_fragment.*
 import javax.inject.Inject
 
@@ -36,6 +34,7 @@ class SettingsFragment : BaseFragment() {
         appComponent.inject(this)
         viewModel = ViewModelProvider(this, viewModelFactory)[SettingsViewModel::class.java]
         activityViewModel = getMainViewModel()
+        setUpAboutSection()
         with(viewModel) {
             // Units selected by user (or by default)
             observe(selectedTemperature, { temperature.text = it?.displayedName })
@@ -46,8 +45,6 @@ class SettingsFragment : BaseFragment() {
             observe(availableWindUnits, ::setAvailableWindUnits)
             observe(availablePressureUnits, ::setAvailablePressureUnits)
         }
-        setUpViews()
-        setUpListeners()
     }
 
     private fun setAvailableTemperatureUnits(temperatureUnits: Array<Temperature>?) {
@@ -95,21 +92,15 @@ class SettingsFragment : BaseFragment() {
         }
     }
 
-    private fun setUpViews() {
-        appVersion.text = BuildConfig.VERSION_NAME
-        buildNumber.text = BuildConfig.VERSION_CODE.toString()
-    }
-
-    private fun setUpListeners() {
+    private fun setUpAboutSection() {
         // About section
         githubLayout.setOnClickListener {
-            val openGithub =
-                Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.settings_summary_github)))
-            (activity as MainActivity).startActivity(openGithub)
+            openLink(R.string.settings_summary_github)
         }
         authorLayout.setOnClickListener {
-            val openVk = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.settings_vk_link)))
-            (activity as MainActivity).startActivity(openVk)
+            openLink(R.string.settings_vk_link)
         }
+        appVersion.text = BuildConfig.VERSION_NAME
+        buildNumber.text = BuildConfig.VERSION_CODE.toString()
     }
 }
