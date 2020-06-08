@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.commit
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.enxy.weather.R
 import com.enxy.weather.data.entity.LocationInfo
@@ -15,10 +13,9 @@ import com.enxy.weather.ui.settings.SettingsFragment
 import com.enxy.weather.utils.exception.Failure
 import com.enxy.weather.utils.extension.failure
 import com.enxy.weather.utils.extension.observe
+import com.enxy.weather.utils.extension.runDelayed
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.favourite_fragment.*
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.core.parameter.parametersOf
@@ -68,23 +65,18 @@ class FavouriteFragment : BottomSheetDialogFragment(), FavouriteLocationListener
 
     private fun setUpListeners() {
         settingsButton.setOnClickListener {
-            lifecycleScope.launch {
-                delay(100) // 0.1 sec delay for showing ripple on the button
-                parentFragmentManager.commit {
-                    replace(R.id.mainContainer, SettingsFragment.newInstance())
-                    addToBackStack(SettingsFragment.TAG)
-                    this@FavouriteFragment.dismiss()
-                }
+            runDelayed(100) {
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.mainContainer, SettingsFragment.newInstance())
+                    .addToBackStack(SettingsFragment.TAG)
+                    .commit()
+                dismiss()
             }
         }
     }
 
     override fun onLocationClick(locationInfo: LocationInfo) {
-        lifecycleScope.launch {
-            // TODO: Rewrite as a function
-            viewModel.fetchWeatherForecast(locationInfo)
-            delay(150) // 0.15 sec delay for showing ripple on the location
-            this@FavouriteFragment.dismiss()
-        }
+        viewModel.fetchWeatherForecast(locationInfo)
+        runDelayed(150) { dismiss() }
     }
 }
