@@ -58,7 +58,7 @@
                             android:id="@+id/temperature"
                             style="@style/CustomStyle.Settings.Summary"
                             android:layout_marginEnd="@dimen/settings_text_horizontal_margin"
-                            android:text="C°" />
+                            tools:text="C°" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -92,7 +92,7 @@
                             android:id="@+id/wind"
                             style="@style/CustomStyle.Settings.Summary"
                             android:layout_marginEnd="@dimen/settings_text_horizontal_margin"
-                            android:text="m/s" />
+                            tools:text="@string/wind_value_meters_per_second" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -126,7 +126,7 @@
                             android:id="@+id/pressure"
                             style="@style/CustomStyle.Settings.Summary"
                             android:layout_marginEnd="@dimen/settings_text_horizontal_margin"
-                            android:text="GPa" />
+                            tools:text="@string/pressure_value_pascals" />
                     </LinearLayout>
                 </LinearLayout>
 
