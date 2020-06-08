@@ -2,11 +2,8 @@ package com.enxy.weather.network
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class NetworkService @Inject constructor() {
+class NetworkService {
     private val openWeatherMapRetrofit: Retrofit = Retrofit.Builder()
         .baseUrl(OPEN_WEATHER_MAP_URL)
         .addConverterFactory(GsonConverterFactory.create())

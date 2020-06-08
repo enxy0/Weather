@@ -6,8 +6,6 @@ import com.enxy.weather.utils.Pressure
 import com.enxy.weather.utils.Temperature
 import com.enxy.weather.utils.Theme
 import com.enxy.weather.utils.Wind
-import javax.inject.Inject
-import javax.inject.Singleton
 import android.content.SharedPreferences as SharedPreferences1
 
 /**
@@ -23,8 +21,7 @@ interface AppSettings {
 /**
  * [AppSettings] impl backed by [android.content.SharedPreferences].
  */
-@Singleton
-class AppSettingsImpl @Inject constructor(context: Context) : AppSettings {
+class AppSettingsImpl(context: Context) : AppSettings {
     companion object {
         const val PREF_NAME = "pref_settings"
         const val PREF_DARK_MODE_ENABLED = "pref_dark_mode"

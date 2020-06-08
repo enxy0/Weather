@@ -7,11 +7,8 @@ import com.enxy.weather.exception.Failure
 import com.enxy.weather.functional.Result
 import com.enxy.weather.network.NetworkService
 import com.enxy.weather.network.json.opencage.LocationResponse
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class LocationRepository @Inject constructor(private val service: NetworkService) :
+class LocationRepository(private val service: NetworkService) :
     NetworkRepository {
     companion object {
         const val OPEN_CAGE_API_KEY = BuildConfig.API_KEY_OPEN_CAGE

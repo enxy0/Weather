@@ -8,7 +8,6 @@ import android.view.View
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.commit
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.enxy.weather.R
 import com.enxy.weather.base.BaseFragment
@@ -26,30 +25,20 @@ import com.enxy.weather.utils.extension.dpToPixels
 import com.enxy.weather.utils.extension.failure
 import com.enxy.weather.utils.extension.observe
 import kotlinx.android.synthetic.main.main_fragment.*
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class MainFragment : BaseFragment() {
     override val layoutId = R.layout.main_fragment
-    private lateinit var viewModel: MainViewModel
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    @Inject
-    lateinit var hourAdapter: HourAdapter
-    @Inject
-    lateinit var dayAdapter: DayAdapter
+    private val viewModel: MainViewModel by sharedViewModel()
+    private val hourAdapter: HourAdapter by inject()
 
     companion object {
         fun newInstance() = MainFragment()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        appComponent.inject(this)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = getMainViewModel()
         setUpBottomAppBar()
         setUpSwipeRefreshLayout()
         setUpRecyclerView()

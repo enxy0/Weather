@@ -15,30 +15,27 @@ import com.enxy.weather.data.entity.LocationInfo
 import com.enxy.weather.exception.Failure
 import com.enxy.weather.ui.MainViewModel
 import com.enxy.weather.ui.main.MainFragment
+import com.enxy.weather.ui.search.LocationAdapter.LocationListener
 import com.enxy.weather.utils.extension.failure
 import com.enxy.weather.utils.extension.observe
 import kotlinx.android.synthetic.main.search_fragment.*
+import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.core.parameter.parametersOf
 
 
-class SearchFragment : BaseFragment(), LocationAdapter.LocationListener {
+class SearchFragment : BaseFragment(), LocationListener {
     override val layoutId = R.layout.search_fragment
-    private lateinit var viewModel: MainViewModel
-    private lateinit var locationAdapter: LocationAdapter
+    private val viewModel: MainViewModel by sharedViewModel()
+    private val locationAdapter: LocationAdapter by inject { parametersOf(this) }
 
     companion object {
         const val TAG = "SearchFragment"
         fun newInstance() = SearchFragment()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        appComponent.inject(this)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = getMainViewModel()
-        locationAdapter = LocationAdapter(this)
         setUpRecyclerView()
         setFocusOnInput()
         showHint()
@@ -107,8 +104,10 @@ class SearchFragment : BaseFragment(), LocationAdapter.LocationListener {
         )
     }
 
+    // TODO: Rename function
     private fun isOpenedFirst(): Boolean = parentFragmentManager.backStackEntryCount == 0
 
+    // TODO: Extract fragment opening function into extension function
     private fun openMainFragment() {
         requireActivity().supportFragmentManager.commitNow {
             replace(R.id.mainContainer, MainFragment.newInstance())

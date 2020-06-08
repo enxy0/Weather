@@ -2,7 +2,6 @@ package com.enxy.weather.ui.settings
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItems
 import com.enxy.weather.BuildConfig
@@ -15,14 +14,13 @@ import com.enxy.weather.utils.Wind
 import com.enxy.weather.utils.extension.observe
 import com.enxy.weather.utils.extension.openLink
 import kotlinx.android.synthetic.main.settings_fragment.*
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class SettingsFragment : BaseFragment() {
     override val layoutId = R.layout.settings_fragment
-    lateinit var viewModel: SettingsViewModel
-    lateinit var activityViewModel: MainViewModel
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private val viewModel: SettingsViewModel by inject()
+    private val activityViewModel: MainViewModel by sharedViewModel()
 
     companion object {
         const val TAG = "SettingsFragment"
@@ -31,9 +29,6 @@ class SettingsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        appComponent.inject(this)
-        viewModel = ViewModelProvider(this, viewModelFactory)[SettingsViewModel::class.java]
-        activityViewModel = getMainViewModel()
         setUpAboutSection()
         with(viewModel) {
             // Units selected by user (or by default)

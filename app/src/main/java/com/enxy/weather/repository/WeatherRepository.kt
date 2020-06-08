@@ -13,12 +13,9 @@ import com.enxy.weather.network.json.openweathermap.current.CurrentForecastRespo
 import com.enxy.weather.network.json.openweathermap.hour.HourForecastResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
-import javax.inject.Singleton
 import kotlin.math.roundToInt
 
-@Singleton
-class WeatherRepository @Inject constructor(
+class WeatherRepository(
     private val service: NetworkService,
     private val database: AppDataBase
 ) : NetworkRepository {

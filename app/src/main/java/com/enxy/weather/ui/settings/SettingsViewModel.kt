@@ -7,10 +7,8 @@ import com.enxy.weather.data.AppSettings
 import com.enxy.weather.utils.Pressure
 import com.enxy.weather.utils.Temperature
 import com.enxy.weather.utils.Wind
-import javax.inject.Inject
 
-
-class SettingsViewModel @Inject constructor(private val appSettings: AppSettings) : ViewModel() {
+class SettingsViewModel(private val appSettings: AppSettings) : ViewModel() {
     val selectedTemperature: LiveData<Temperature> = liveData {
         emit(appSettings.temperatureUnit)
     }

@@ -7,9 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.enxy.weather.R
 import com.enxy.weather.data.entity.Hour
 import kotlinx.android.synthetic.main.item_hour.view.*
-import javax.inject.Inject
 
-class HourAdapter @Inject constructor() : RecyclerView.Adapter<HourAdapter.HourHolder>() {
+class HourAdapter : RecyclerView.Adapter<HourAdapter.HourHolder>() {
     private val hourDataModelArrayList = ArrayList<Hour>()
 
     fun updateData(hourForecastArrayList: ArrayList<Hour>) {

@@ -19,7 +19,7 @@ Simple and light design makes easy to see the necessary data.
 
 ## Libraries & Dependencies
 -   [Retrofit](https://github.com/square/retrofit) - Type-safe HTTP client for Android and Java by Square, Inc.
--   [Dagger 2](https://github.com/google/dagger) - Fast dependency injector for Java and Android.
+-   [Koin](https://github.com/InsertKoinIO/koin) - Pragmatic lightweight dependency injection framework for Kotlin.
 -   [Room](https://developer.android.com/topic/libraries/architecture/room) - The Room persistence library provides an abstraction layer over SQLite to allow for more robust database access.
 -   [Gson](https://github.com/google/gson) - Gson is a Java library that can be used to convert Java Objects into their JSON representation.
 -   [Material Design Components](https://material.io/develop/android/) - Material CardView, Bottom AppBar

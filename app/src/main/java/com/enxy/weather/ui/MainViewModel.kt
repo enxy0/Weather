@@ -12,9 +12,8 @@ import com.enxy.weather.functional.Result
 import com.enxy.weather.repository.LocationRepository
 import com.enxy.weather.repository.WeatherRepository
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class MainViewModel @Inject constructor(
+class MainViewModel(
     private val weatherRepository: WeatherRepository,
     private val locationRepository: LocationRepository,
     private val appSettings: AppSettings

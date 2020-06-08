@@ -5,10 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.enxy.weather.AndroidApplication
-import com.enxy.weather.di.ApplicationComponent
-import com.enxy.weather.ui.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.main_activity.*
 
@@ -20,13 +16,6 @@ abstract class BaseFragment : Fragment() {
     ): View? {
         return inflater.inflate(layoutId, container, false)
     }
-
-    val appComponent: ApplicationComponent by lazy(mode = LazyThreadSafetyMode.NONE) {
-        (activity?.application as AndroidApplication).appComponent
-    }
-
-    fun getMainViewModel() =
-        ViewModelProvider(this.requireActivity()).get(MainViewModel::class.java)
 
     fun notify(message: String) {
         Snackbar.make(requireActivity().mainContainer, message, Snackbar.LENGTH_LONG).show()

@@ -5,14 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.commit
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.enxy.weather.AndroidApplication
 import com.enxy.weather.R
 import com.enxy.weather.data.entity.LocationInfo
 import com.enxy.weather.exception.Failure
 import com.enxy.weather.ui.MainViewModel
+import com.enxy.weather.ui.favourite.FavouriteAdapter.FavouriteLocationListener
 import com.enxy.weather.ui.settings.SettingsFragment
 import com.enxy.weather.utils.extension.failure
 import com.enxy.weather.utils.extension.observe
@@ -20,12 +19,13 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.favourite_fragment.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.core.parameter.parametersOf
 
-class FavouriteFragment : BottomSheetDialogFragment(), FavouriteAdapter.FavouriteLocationListener {
-    private lateinit var favouriteAdapter: FavouriteAdapter
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var viewModel: MainViewModel
+class FavouriteFragment : BottomSheetDialogFragment(), FavouriteLocationListener {
+    private val favouriteAdapter: FavouriteAdapter by inject { parametersOf(this) }
+    private val viewModel: MainViewModel by sharedViewModel()
 
     override fun getTheme(): Int = R.style.CustomStyle_BottomSheetDialog
 
@@ -44,10 +44,7 @@ class FavouriteFragment : BottomSheetDialogFragment(), FavouriteAdapter.Favourit
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        inject()
         setUpListeners()
-        viewModel = ViewModelProvider(requireActivity(), viewModelFactory).get(MainViewModel::class.java)
-        favouriteAdapter = FavouriteAdapter(this)
         with(favouriteRecyclerView) {
             adapter = favouriteAdapter
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -84,13 +81,10 @@ class FavouriteFragment : BottomSheetDialogFragment(), FavouriteAdapter.Favourit
 
     override fun onLocationClick(locationInfo: LocationInfo) {
         lifecycleScope.launch {
+            // TODO: Rewrite as a function
             viewModel.fetchWeatherForecast(locationInfo)
             delay(150) // 0.15 sec delay for showing ripple on the location
             this@FavouriteFragment.dismiss()
         }
-    }
-
-    private fun inject() {
-        (requireActivity().application as AndroidApplication).appComponent.inject(this)
     }
 }

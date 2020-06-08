@@ -1,24 +1,20 @@
 package com.enxy.weather.ui
 
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commitNow
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.enxy.weather.R
-import com.enxy.weather.base.BaseActivity
 import com.enxy.weather.ui.main.MainFragment
 import com.enxy.weather.ui.search.SearchFragment
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
-class MainActivity : BaseActivity() {
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var viewModel: MainViewModel
+class MainActivity : AppCompatActivity() {
+    private val viewModel: MainViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        appComponent.inject(this)
-        viewModel = getViewModel(this, viewModelFactory)
         setContentView(R.layout.main_activity)
         showFragment(savedInstanceState)
     }
