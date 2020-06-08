@@ -46,6 +46,9 @@ android {
         it.buildConfigField 'String', "API_KEY_OPEN_WEATHER_MAP", apiKeyOpenWeatherMap
         it.resValue 'string', "api_key_open_weather_map", apiKeyOpenWeatherMap
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
