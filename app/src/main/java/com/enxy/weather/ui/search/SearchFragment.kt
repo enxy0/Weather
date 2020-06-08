@@ -37,7 +37,7 @@ class SearchFragment : BaseFragment(), LocationListener {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerView()
         setFocusOnInput()
-        showHint()
+        showHintIfNeeded()
         searchCityEditText.doOnTextChanged { text, _, _, _ ->
             text?.let { if (it.length > 1) viewModel.fetchListOfLocationsByName(it.toString()) }
         }
@@ -87,7 +87,7 @@ class SearchFragment : BaseFragment(), LocationListener {
         )
     }
 
-    private fun showHint() {
+    private fun showHintIfNeeded() {
         if (locationAdapter.itemCount == 0) {
             hint.isVisible = true
             locationRecyclerView.isGone = true
