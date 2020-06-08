@@ -7,7 +7,6 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
-import androidx.fragment.app.commitNow
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.enxy.weather.R
 import com.enxy.weather.base.BaseFragment
@@ -65,8 +64,8 @@ class SearchFragment : BaseFragment(), LocationListener {
     override fun onLocationChange(locationInfo: LocationInfo) {
         viewModel.fetchWeatherForecast(locationInfo)
         hideKeyboard()
-        if (isOpenedFirst())
-            openMainFragment()
+        if (isAppFirstLaunched())
+            showMainScreen()
         else
             parentFragmentManager.popBackStack()
     }
@@ -104,13 +103,12 @@ class SearchFragment : BaseFragment(), LocationListener {
         )
     }
 
-    // TODO: Rename function
-    private fun isOpenedFirst(): Boolean = parentFragmentManager.backStackEntryCount == 0
+    private fun isAppFirstLaunched(): Boolean = parentFragmentManager.backStackEntryCount == 0
 
-    // TODO: Extract fragment opening function into extension function
-    private fun openMainFragment() {
-        requireActivity().supportFragmentManager.commitNow {
-            replace(R.id.mainContainer, MainFragment.newInstance())
-        }
+    private fun showMainScreen() {
+        requireActivity().supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.mainContainer, MainFragment.newInstance())
+            .commitNow()
     }
 }
