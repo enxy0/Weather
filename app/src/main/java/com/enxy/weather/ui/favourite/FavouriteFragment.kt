@@ -9,10 +9,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.enxy.weather.R
 import com.enxy.weather.data.entity.LocationInfo
-import com.enxy.weather.exception.Failure
 import com.enxy.weather.ui.MainViewModel
 import com.enxy.weather.ui.favourite.FavouriteAdapter.FavouriteLocationListener
 import com.enxy.weather.ui.settings.SettingsFragment
+import com.enxy.weather.utils.exception.Failure
 import com.enxy.weather.utils.extension.failure
 import com.enxy.weather.utils.extension.observe
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment

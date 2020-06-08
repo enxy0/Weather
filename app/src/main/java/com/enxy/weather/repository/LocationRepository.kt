@@ -3,10 +3,10 @@ package com.enxy.weather.repository
 import com.enxy.weather.BuildConfig
 import com.enxy.weather.base.NetworkRepository
 import com.enxy.weather.data.entity.LocationInfo
-import com.enxy.weather.exception.Failure
-import com.enxy.weather.functional.Result
 import com.enxy.weather.network.NetworkService
 import com.enxy.weather.network.json.opencage.LocationResponse
+import com.enxy.weather.utils.Result
+import com.enxy.weather.utils.exception.Failure
 
 class LocationRepository(private val service: NetworkService) :
     NetworkRepository {

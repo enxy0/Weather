@@ -1,8 +1,8 @@
 package com.enxy.weather.base
 
 import android.util.Log
-import com.enxy.weather.exception.Failure
-import com.enxy.weather.functional.Result
+import com.enxy.weather.utils.Result
+import com.enxy.weather.utils.exception.Failure
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException

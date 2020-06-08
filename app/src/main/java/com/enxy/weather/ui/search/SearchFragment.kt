@@ -12,10 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.enxy.weather.R
 import com.enxy.weather.base.BaseFragment
 import com.enxy.weather.data.entity.LocationInfo
-import com.enxy.weather.exception.Failure
 import com.enxy.weather.ui.MainViewModel
 import com.enxy.weather.ui.main.MainFragment
 import com.enxy.weather.ui.search.LocationAdapter.LocationListener
+import com.enxy.weather.utils.exception.Failure
 import com.enxy.weather.utils.extension.failure
 import com.enxy.weather.utils.extension.observe
 import kotlinx.android.synthetic.main.search_fragment.*

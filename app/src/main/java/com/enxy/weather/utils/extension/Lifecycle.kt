@@ -3,7 +3,7 @@ package com.enxy.weather.utils.extension
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import com.enxy.weather.exception.Failure
+import com.enxy.weather.utils.exception.Failure
 
 fun <T : Any, L : LiveData<T>> LifecycleOwner.observe(liveData: L, body: (T?) -> Unit) =
     liveData.observe(this, Observer(body))

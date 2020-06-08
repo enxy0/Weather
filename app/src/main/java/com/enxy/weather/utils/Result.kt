@@ -1,4 +1,4 @@
-package com.enxy.weather.functional
+package com.enxy.weather.utils
 
 /**
  * Represents a value of one of two possible types (a disjoint union).

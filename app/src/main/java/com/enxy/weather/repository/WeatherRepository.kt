@@ -5,12 +5,12 @@ import com.enxy.weather.BuildConfig
 import com.enxy.weather.base.NetworkRepository
 import com.enxy.weather.data.AppDataBase
 import com.enxy.weather.data.entity.*
-import com.enxy.weather.exception.Failure
-import com.enxy.weather.functional.Result
 import com.enxy.weather.network.ImageChooser
 import com.enxy.weather.network.NetworkService
 import com.enxy.weather.network.json.openweathermap.current.CurrentForecastResponse
 import com.enxy.weather.network.json.openweathermap.hour.HourForecastResponse
+import com.enxy.weather.utils.Result
+import com.enxy.weather.utils.exception.Failure
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.math.roundToInt
