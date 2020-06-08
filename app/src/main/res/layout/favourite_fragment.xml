@@ -17,7 +17,8 @@
             style="@style/CustomStyle.Text.Header"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="@string/header_favourite_locations" />
+            android:text="@string/header_favourite_locations"
+            android:layout_width="0dp" />
 
         <ImageView
             android:id="@+id/themeButton"
