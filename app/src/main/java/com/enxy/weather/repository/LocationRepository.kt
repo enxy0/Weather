@@ -2,7 +2,7 @@ package com.enxy.weather.repository
 
 import com.enxy.weather.BuildConfig
 import com.enxy.weather.base.NetworkRepository
-import com.enxy.weather.data.entity.LocationInfo
+import com.enxy.weather.data.entity.Location
 import com.enxy.weather.network.NetworkService
 import com.enxy.weather.network.json.opencage.LocationResponse
 import com.enxy.weather.utils.Result
@@ -14,7 +14,7 @@ class LocationRepository(private val service: NetworkService) :
         const val OPEN_CAGE_API_KEY = BuildConfig.API_KEY_OPEN_CAGE
     }
 
-    suspend fun getLocationsByName(locationName: String): Result<Failure, ArrayList<LocationInfo>> {
+    suspend fun getLocationsByName(locationName: String): Result<Failure, ArrayList<Location>> {
         return safeApiCall(
             call = {
                 service.locationApi().getLocationsByNameAsync(
@@ -26,13 +26,13 @@ class LocationRepository(private val service: NetworkService) :
         )
     }
 
-    private fun transformLocationResponse(locationResponse: LocationResponse): ArrayList<LocationInfo> {
-        val data = ArrayList<LocationInfo>()
+    private fun transformLocationResponse(locationResponse: LocationResponse): ArrayList<Location> {
+        val data = ArrayList<Location>()
         for (result in locationResponse.results) {
             val longitude = result.geometry.lng
             val latitude = result.geometry.lat
             val locationName = result.formatted
-            val model = LocationInfo(
+            val model = Location(
                 locationName,
                 longitude,
                 latitude

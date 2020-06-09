@@ -5,25 +5,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.enxy.weather.R
-import com.enxy.weather.data.entity.LocationInfo
+import com.enxy.weather.data.entity.Location
 import com.enxy.weather.ui.search.LocationAdapter.LocationHolder
 import kotlinx.android.synthetic.main.item_location.view.*
 
 class LocationAdapter(private val locationListener: LocationListener) :
     RecyclerView.Adapter<LocationHolder>() {
-    private val data = ArrayList<LocationInfo>()
+    private val data = ArrayList<Location>()
 
-    fun updateData(data: ArrayList<LocationInfo>) {
+    fun updateData(data: ArrayList<Location>) {
         this.data.clear()
         this.data.addAll(data)
         notifyDataSetChanged()
     }
 
     inner class LocationHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(locationInfo: LocationInfo) {
-            itemView.locationName.text = locationInfo.locationName
+        fun bind(location: Location) {
+            itemView.locationName.text = location.locationName
             itemView.locationName.setOnClickListener {
-                locationListener.onLocationChange(locationInfo)
+                locationListener.onLocationChange(location)
             }
         }
     }
@@ -41,6 +41,6 @@ class LocationAdapter(private val locationListener: LocationListener) :
     }
 
     interface LocationListener {
-        fun onLocationChange(locationInfo: LocationInfo)
+        fun onLocationChange(location: Location)
     }
 }

@@ -1,12 +1,9 @@
 package com.enxy.weather.ui
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.enxy.weather.data.AppSettings
 import com.enxy.weather.data.entity.Forecast
-import com.enxy.weather.data.entity.LocationInfo
+import com.enxy.weather.data.entity.Location
 import com.enxy.weather.repository.LocationRepository
 import com.enxy.weather.repository.WeatherRepository
 import com.enxy.weather.utils.Result
@@ -20,11 +17,15 @@ class MainViewModel(
 ) : ViewModel() {
     val forecast = MutableLiveData<Forecast>()
     val forecastFailure = MutableLiveData<Failure>()
-    val locationInfoArrayList = MutableLiveData<ArrayList<LocationInfo>>()
-    val locationFailure = MutableLiveData<Failure>()
-    val favouriteLocationsList = MutableLiveData<ArrayList<LocationInfo>>()
+    val searchedLocations = MutableLiveData<ArrayList<Location>>()
+    val searchedLocationsFailure = MutableLiveData<Failure>()
+    val favouriteLocationsList = MutableLiveData<ArrayList<Location>>()
     val favouriteLocationsFailure = MutableLiveData<Failure>()
     val isLoading = MutableLiveData<Boolean>(false)
+    val isAppFirstLaunched: LiveData<Boolean> = liveData {
+        val result = !weatherRepository.hasCachedForecasts()
+        emit(result)
+    }
     val settings = liveData { emit(appSettings) }
 
     init {
@@ -35,7 +36,7 @@ class MainViewModel(
     private fun fetchLastOpenedForecast() = viewModelScope.launch {
         when (val result = weatherRepository.getLastOpenedForecast()) {
             is Result.Success -> with(result.success) {
-                val locationInfo = LocationInfo(locationName, longitude, latitude)
+                val locationInfo = Location(locationName, longitude, latitude)
                 fetchWeatherForecast(locationInfo)
                 handleForecastSuccess(this)
             }
@@ -48,9 +49,9 @@ class MainViewModel(
             .handle(::handleFavouriteLocationsFailure, ::handleFavouriteLocationsSuccess)
     }
 
-    fun fetchWeatherForecast(locationInfo: LocationInfo) = viewModelScope.launch {
+    fun fetchWeatherForecast(location: Location) = viewModelScope.launch {
         isLoading.value = true
-        weatherRepository.getForecast(locationInfo)
+        weatherRepository.getForecast(location)
             .handle(::handleForecastFailure, ::handleForecastSuccess)
     }
 
@@ -74,15 +75,13 @@ class MainViewModel(
             .handle(::handleLocationFailure, ::handleLocationSuccess)
     }
 
-    suspend fun isAppFirstLaunched(): Boolean = !weatherRepository.hasCachedForecasts()
-
     /**
      * Fetches opened forecast but with new measure units
      * [handleForecastSuccess] invokes [Forecast.inUnits] to update units
      */
     fun updateForecastUnits() {
         forecast.value?.let {
-            fetchWeatherForecast(LocationInfo(it.locationName, it.longitude, it.latitude))
+            fetchWeatherForecast(Location(it.locationName, it.longitude, it.latitude))
         }
     }
 
@@ -101,16 +100,16 @@ class MainViewModel(
         this.isLoading.value = false
     }
 
-    private fun handleLocationSuccess(locationList: ArrayList<LocationInfo>) {
-        locationInfoArrayList.value = locationList
-        locationFailure.value = null
+    private fun handleLocationSuccess(locationList: ArrayList<Location>) {
+        searchedLocations.value = locationList
+        searchedLocationsFailure.value = null
     }
 
     private fun handleLocationFailure(failure: Failure) {
-        locationFailure.value = failure
+        searchedLocationsFailure.value = failure
     }
 
-    private fun handleFavouriteLocationsSuccess(locationList: ArrayList<LocationInfo>) {
+    private fun handleFavouriteLocationsSuccess(locationList: ArrayList<Location>) {
         favouriteLocationsList.value = locationList
         favouriteLocationsFailure.value = null
     }

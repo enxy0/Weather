@@ -1,16 +1,18 @@
 package com.enxy.weather.ui.search
 
-import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.view.inputmethod.InputMethodManager.*
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import com.enxy.weather.R
 import com.enxy.weather.base.BaseFragment
-import com.enxy.weather.data.entity.LocationInfo
+import com.enxy.weather.data.entity.Location
 import com.enxy.weather.ui.MainViewModel
 import com.enxy.weather.ui.main.MainFragment
 import com.enxy.weather.ui.search.LocationAdapter.LocationListener
@@ -42,18 +44,18 @@ class SearchFragment : BaseFragment(), LocationListener {
             text?.let { if (it.length > 1) viewModel.fetchListOfLocationsByName(it.toString()) }
         }
         with(viewModel) {
-            observe(locationInfoArrayList, ::renderData)
-            failure(locationFailure, ::handleFailure)
+            observe(searchedLocations, ::renderData)
+            failure(searchedLocationsFailure, ::handleFailure)
         }
     }
 
-    private fun renderData(locationInfoArrayList: ArrayList<LocationInfo>?) {
-        locationInfoArrayList?.let {
+    private fun renderData(locations: ArrayList<Location>?) {
+        locations?.let {
             if (hint.isVisible) {
                 hint.isGone = true
-                locationRecyclerView.isVisible = true
+                locationList.isVisible = true
             }
-            locationAdapter.updateData(it)
+            locationAdapter.updateData(locations)
         }
     }
 
@@ -61,8 +63,8 @@ class SearchFragment : BaseFragment(), LocationListener {
         failure?.let { notify("Failure: ${it.javaClass.simpleName}") }
     }
 
-    override fun onLocationChange(locationInfo: LocationInfo) {
-        viewModel.fetchWeatherForecast(locationInfo)
+    override fun onLocationChange(location: Location) {
+        viewModel.fetchWeatherForecast(location)
         hideKeyboard()
         if (isAppFirstLaunched())
             showMainScreen()
@@ -71,35 +73,33 @@ class SearchFragment : BaseFragment(), LocationListener {
     }
 
     private fun setUpRecyclerView() {
-        locationRecyclerView.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        locationRecyclerView.adapter = locationAdapter
-        locationRecyclerView.setHasFixedSize(true)
+        locationList.apply {
+            layoutManager = LinearLayoutManager(context, VERTICAL, false)
+            adapter = locationAdapter
+            setHasFixedSize(true)
+        }
     }
 
     private fun setFocusOnInput() {
         searchCityEditText.requestFocus()
         val inputMethodManager =
-            requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.toggleSoftInput(
-            InputMethodManager.SHOW_FORCED,
-            InputMethodManager.HIDE_IMPLICIT_ONLY
-        )
+            requireContext().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.toggleSoftInput(SHOW_FORCED, HIDE_IMPLICIT_ONLY)
     }
 
     private fun showHintIfNeeded() {
         if (locationAdapter.itemCount == 0) {
             hint.isVisible = true
-            locationRecyclerView.isGone = true
+            locationList.isGone = true
         }
     }
 
     private fun hideKeyboard() {
         val inputMethodManager =
-            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(
             searchCityEditText.windowToken,
-            InputMethodManager.RESULT_UNCHANGED_SHOWN
+            RESULT_UNCHANGED_SHOWN
         )
     }
 

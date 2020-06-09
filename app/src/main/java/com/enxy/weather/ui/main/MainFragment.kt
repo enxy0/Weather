@@ -9,6 +9,7 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL
 import com.enxy.weather.R
 import com.enxy.weather.base.BaseFragment
 import com.enxy.weather.data.AppSettings
@@ -81,24 +82,11 @@ class MainFragment : BaseFragment() {
         inflater.inflate(R.menu.main_menu, menu)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        viewModel.let {
-            it.forecast.removeObservers(this)
-            it.forecastFailure.removeObservers(this)
-            it.isLoading.removeObservers(this)
-        }
-    }
-
     private fun setUpSwipeRefreshLayout() {
         swipeRefreshLayout.setProgressViewOffset(true, 0, 55.dpToPixels)
-        swipeRefreshLayout.setOnRefreshListener(::onRefresh)
-    }
-
-    private fun onRefresh() {
-        if (!swipeRefreshLayout.isRefreshing)
-            swipeRefreshLayout.isRefreshing = true
-        viewModel.updateWeatherForecast()
+        swipeRefreshLayout.setOnRefreshListener {
+            viewModel.updateWeatherForecast()
+        }
     }
 
     private fun handleFailure(failure: Failure?) {
@@ -108,7 +96,9 @@ class MainFragment : BaseFragment() {
     }
 
     private fun showLoading(isLoading: Boolean?) {
-        isLoading?.let { swipeRefreshLayout.isRefreshing = isLoading }
+        isLoading?.let {
+            swipeRefreshLayout.isRefreshing = isLoading
+        }
     }
 
     private fun renderForecast(forecast: Forecast?) {
@@ -116,8 +106,6 @@ class MainFragment : BaseFragment() {
             Log.d("MainFragment", "renderHourWeather: hourForecast=$it")
             renderCurrentForecast(it.currentForecast)
             hourAdapter.updateData(it.hourForecast.hourArrayList)
-            // By default mainContentLinearLayout is invisible, so the user can see forecast
-            // only when it is ready to be displayed.
             if (mainContentLinearLayout.isInvisible)
                 mainContentLinearLayout.isVisible = true
             favouriteToggle.isChecked = it.isFavourite
@@ -136,10 +124,6 @@ class MainFragment : BaseFragment() {
         currentPressureValueTextView.text = currentForecast.pressure
     }
 
-    /**
-     * Shows correct units selected by user (or by default)
-     * It only changes units name (e.g. m/s, mmHg...)
-     */
     private fun renderCorrectUnits(settings: AppSettings?) {
         settings?.let {
             when (settings.windUnit) {
@@ -158,11 +142,10 @@ class MainFragment : BaseFragment() {
     }
 
     private fun setUpRecyclerView() {
-        hourRecyclerView.adapter = hourAdapter
-
-        hourRecyclerView.layoutManager = LinearLayoutManager(
-            context, LinearLayoutManager.HORIZONTAL, false
-        )
-        hourRecyclerView.isNestedScrollingEnabled = false
+        hourRecyclerView.apply {
+            adapter = hourAdapter
+            layoutManager = LinearLayoutManager(context, HORIZONTAL, false)
+            isNestedScrollingEnabled = false
+        }
     }
 }

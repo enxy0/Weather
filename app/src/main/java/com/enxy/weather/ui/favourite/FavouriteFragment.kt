@@ -5,8 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import com.enxy.weather.R
-import com.enxy.weather.data.entity.LocationInfo
+import com.enxy.weather.data.entity.Location
 import com.enxy.weather.ui.MainViewModel
 import com.enxy.weather.ui.favourite.FavouriteAdapter.FavouriteLocationListener
 import com.enxy.weather.ui.settings.SettingsFragment
@@ -28,6 +29,8 @@ class FavouriteFragment : BottomSheetDialogFragment(), FavouriteLocationListener
 
     companion object {
         const val TAG = "FavouriteFragment"
+        private const val SETTINGS_RIPPLE_DELAY = 100L
+        private const val FORECAST_RIPPLE_DELAY = 150L
         fun newInstance() = FavouriteFragment()
     }
 
@@ -42,9 +45,9 @@ class FavouriteFragment : BottomSheetDialogFragment(), FavouriteLocationListener
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpListeners()
-        with(favouriteRecyclerView) {
+        favouriteList.apply {
             adapter = favouriteAdapter
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            layoutManager = LinearLayoutManager(requireContext(), VERTICAL, false)
             setHasFixedSize(true)
         }
         with(viewModel) {
@@ -53,8 +56,10 @@ class FavouriteFragment : BottomSheetDialogFragment(), FavouriteLocationListener
         }
     }
 
-    private fun renderData(favouriteLocationList: ArrayList<LocationInfo>?) {
-        favouriteLocationList?.let { favouriteAdapter.updateData(it) }
+    private fun renderData(favouriteLocations: ArrayList<Location>?) {
+        favouriteLocations?.let {
+            favouriteAdapter.updateData(favouriteLocations)
+        }
     }
 
     private fun handleFailure(failure: Failure?) {
@@ -65,7 +70,7 @@ class FavouriteFragment : BottomSheetDialogFragment(), FavouriteLocationListener
 
     private fun setUpListeners() {
         settingsButton.setOnClickListener {
-            runDelayed(100) {
+            runDelayed(SETTINGS_RIPPLE_DELAY) {
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.mainContainer, SettingsFragment.newInstance())
                     .addToBackStack(SettingsFragment.TAG)
@@ -75,8 +80,10 @@ class FavouriteFragment : BottomSheetDialogFragment(), FavouriteLocationListener
         }
     }
 
-    override fun onLocationClick(locationInfo: LocationInfo) {
-        viewModel.fetchWeatherForecast(locationInfo)
-        runDelayed(150) { dismiss() }
+    override fun onLocationClick(location: Location) {
+        viewModel.fetchWeatherForecast(location)
+        runDelayed(FORECAST_RIPPLE_DELAY) {
+            dismiss()
+        }
     }
 }
