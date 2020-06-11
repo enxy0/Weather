@@ -36,11 +36,11 @@ class DayAdapter : RecyclerView.Adapter<DayAdapter.DayHolder>() {
         fun bind(dayWeather: DayWeather) {
             with(itemView) {
                 Log.d("DayHolder", "bind: dayWeatherModel=$dayWeather")
-                dayNameTextView.text = dayWeather.dayName
-                dateTextView.text = dayWeather.date
-                highTemperatureTextView.text = dayWeather.temperatureHigh
-                lowTemperatureTextView.text = dayWeather.temperatureLow
-                descriptionImageView.setImageResource(dayWeather.imageId)
+                day.text = dayWeather.dayName
+                date.text = dayWeather.date
+                highestTemperature.text = dayWeather.temperatureHigh
+                lowestTemperature.text = dayWeather.temperatureLow
+                description.setImageResource(dayWeather.imageId)
             }
         }
     }

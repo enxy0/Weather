@@ -14,13 +14,13 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/dayNameTextView"
+            android:id="@+id/day"
             style="@style/CustomStyle.Text.Primary"
             android:text="@{dayWeatherModel.day}"
             tools:text="Monday" />
 
         <TextView
-            android:id="@+id/dateTextView"
+            android:id="@+id/date"
             style="@style/CustomStyle.Text.Secondary"
             android:text="@{dayWeatherModel.date}"
             android:textSize="14sp"
@@ -28,14 +28,14 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/descriptionImageView"
+        android:id="@+id/description"
         style="@style/CustomStyle.ImageView"
         android:layout_gravity="center_vertical"
         android:layout_marginEnd="28dp"
         tools:srcCompat="@drawable/weather_scattered_clouds" />
 
     <TextView
-        android:id="@+id/highTemperatureTextView"
+        android:id="@+id/highestTemperature"
         style="@style/CustomStyle.Text.Primary"
         android:layout_gravity="end|center"
         android:minWidth="30dp"
@@ -44,14 +44,13 @@
         tools:text="-10" />
 
     <TextView
-        android:id="@+id/boldDegreeTextView"
         style="@style/CustomStyle.Text.Primary"
         android:layout_gravity="end|center"
         android:layout_marginEnd="25dp"
         tools:text="°" />
 
     <TextView
-        android:id="@+id/lowTemperatureTextView"
+        android:id="@+id/lowestTemperature"
         style="@style/CustomStyle.Text.Secondary"
         android:layout_gravity="end|center"
         android:minWidth="30dp"
@@ -60,7 +59,6 @@
         tools:text="-10" />
 
     <TextView
-        android:id="@+id/degreeTextView"
         style="@style/CustomStyle.Text.Secondary"
         android:layout_gravity="end|center"
         tools:text="°" />

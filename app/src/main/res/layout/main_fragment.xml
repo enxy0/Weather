@@ -36,7 +36,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/locationNameTextView"
+                        android:id="@+id/locationName"
                         style="@style/CustomStyle.Text.Header"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/currentDescriptionImageView"
+                    android:id="@+id/currentDescriptionImage"
                     style="@style/CustomStyle.ImageView.CurrentWeather"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -76,7 +76,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/currentTemperatureTextView"
+                        android:id="@+id/currentTemperature"
                         style="@style/CustomStyle.Text.Header"
                         android:textSize="45sp"
                         tools:text="+1" />
@@ -95,12 +95,12 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/currentFeelsLikeValueTextView"
+                        android:id="@+id/currentFeelsLikeValue"
                         style="@style/CustomStyle.Text.Secondary"
                         android:text="@string/feels_like" />
 
                     <TextView
-                        android:id="@+id/currentFeelsLikeTextView"
+                        android:id="@+id/currentFeelsLike"
                         style="@style/CustomStyle.Text.Secondary"
                         android:layout_marginStart="@dimen/text_space_margin"
                         tools:text="+13" />
@@ -114,7 +114,7 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/currentDescriptionTextView"
+                    android:id="@+id/currentDescription"
                     style="@style/CustomStyle.Text.Primary"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
@@ -168,13 +168,13 @@
                                 android:orientation="horizontal">
 
                                 <TextView
-                                    android:id="@+id/currentHumidityValueTextView"
+                                    android:id="@+id/currentHumidityValue"
                                     style="@style/CustomStyle.Text.Primary"
                                     android:textColor="@color/humidityTextColor"
                                     tools:text="96" />
 
                                 <TextView
-                                    android:id="@+id/currentHumidityUnitTextView"
+                                    android:id="@+id/currentHumidityUnit"
                                     style="@style/CustomStyle.Text.Primary"
                                     android:layout_marginStart="@dimen/text_space_margin"
                                     android:text="@string/sign_percent"
@@ -222,13 +222,13 @@
                                 android:orientation="horizontal">
 
                                 <TextView
-                                    android:id="@+id/currentWindValueTextView"
+                                    android:id="@+id/currentWindValue"
                                     style="@style/CustomStyle.Text.Primary"
                                     android:textColor="@color/windTextColor"
                                     tools:text="2" />
 
                                 <TextView
-                                    android:id="@+id/currentWindUnitTextView"
+                                    android:id="@+id/currentWindUnit"
                                     style="@style/CustomStyle.Text.Primary"
                                     android:layout_marginStart="@dimen/text_space_margin"
                                     android:text="@string/wind_value_meters_per_second"
@@ -275,13 +275,13 @@
                                 android:orientation="horizontal">
 
                                 <TextView
-                                    android:id="@+id/currentPressureValueTextView"
+                                    android:id="@+id/currentPressureValue"
                                     style="@style/CustomStyle.Text.Primary"
                                     android:textColor="@color/pressureTextColor"
                                     tools:text="1016" />
 
                                 <TextView
-                                    android:id="@+id/currentPressureUnitTextView"
+                                    android:id="@+id/currentPressureUnit"
                                     style="@style/CustomStyle.Text.Primary"
                                     android:layout_marginStart="@dimen/text_space_margin"
                                     android:text="@string/pressure_value_pascals"
@@ -292,7 +292,7 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/hourTextView"
+                    android:id="@+id/hourTitle"
                     style="@style/CustomStyle.Text.Header"
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
                     android:layout_marginTop="@dimen/section_vertical_margin"

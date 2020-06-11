@@ -20,7 +20,7 @@
         android:paddingBottom="8dp">
 
         <TextView
-            android:id="@+id/timeTextView"
+            android:id="@+id/time"
             style="@style/CustomStyle.Text.Primary"
             android:layout_gravity="center"
             android:letterSpacing="0.08"
@@ -28,7 +28,7 @@
             tools:text="23:00" />
 
         <ImageView
-            android:id="@+id/descriptionImageView"
+            android:id="@+id/description"
             style="@style/CustomStyle.ImageView"
             android:layout_gravity="center"
             android:layout_marginTop="11dp"
@@ -43,13 +43,12 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/temperatureTextView"
+                android:id="@+id/temperature"
                 style="@style/CustomStyle.Text.Primary"
                 android:textColor="@color/nextHoursTextColor"
                 tools:text="-10" />
 
             <TextView
-                android:id="@+id/degreeTextView"
                 style="@style/CustomStyle.Text.Primary"
                 android:text="@string/sign_degree"
                 android:textColor="@color/nextHoursTextColor" />

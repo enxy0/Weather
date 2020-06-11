@@ -114,29 +114,29 @@ class MainFragment : BaseFragment() {
 
     private fun renderCurrentForecast(currentForecast: CurrentForecast) {
         Log.d("MainFragment", "renderCurrentWeather: currentForecast=$currentForecast")
-        currentDescriptionTextView.text = currentForecast.description
-        currentDescriptionImageView.setImageResource(currentForecast.imageId)
-        currentTemperatureTextView.text = currentForecast.temperature
-        currentFeelsLikeTextView.text = currentForecast.feelsLikeTemperature
-        locationNameTextView.text = currentForecast.locationName
-        currentHumidityValueTextView.text = currentForecast.humidity
-        currentWindValueTextView.text = currentForecast.wind
-        currentPressureValueTextView.text = currentForecast.pressure
+        currentDescription.text = currentForecast.description
+        currentDescriptionImage.setImageResource(currentForecast.imageId)
+        currentTemperature.text = currentForecast.temperature
+        currentFeelsLike.text = currentForecast.feelsLikeTemperature
+        locationName.text = currentForecast.locationName
+        currentHumidityValue.text = currentForecast.humidity
+        currentWindValue.text = currentForecast.wind
+        currentPressureValue.text = currentForecast.pressure
     }
 
     private fun renderCorrectUnits(settings: AppSettings?) {
         settings?.let {
             when (settings.windUnit) {
                 Wind.METERS_PER_SECOND ->
-                    currentWindUnitTextView.setText(R.string.wind_value_meters_per_second)
+                    currentWindUnit.setText(R.string.wind_value_meters_per_second)
                 Wind.KILOMETERS_PER_HOUR ->
-                    currentWindUnitTextView.setText(R.string.wind_value_kilometers_per_hour)
+                    currentWindUnit.setText(R.string.wind_value_kilometers_per_hour)
             }
             when (settings.pressureUnit) {
                 Pressure.MILLIMETERS_OF_MERCURY ->
-                    currentPressureUnitTextView.setText(R.string.pressure_value_millimeters)
+                    currentPressureUnit.setText(R.string.pressure_value_millimeters)
                 Pressure.HECTO_PASCALS ->
-                    currentPressureUnitTextView.setText(R.string.pressure_value_pascals)
+                    currentPressureUnit.setText(R.string.pressure_value_pascals)
             }
         }
     }

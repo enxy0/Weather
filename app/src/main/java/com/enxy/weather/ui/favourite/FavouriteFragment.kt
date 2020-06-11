@@ -69,7 +69,7 @@ class FavouriteFragment : BottomSheetDialogFragment(), FavouriteLocationListener
     }
 
     private fun setUpListeners() {
-        settingsButton.setOnClickListener {
+        settings.setOnClickListener {
             runDelayed(SETTINGS_RIPPLE_DELAY) {
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.mainContainer, SettingsFragment.newInstance())

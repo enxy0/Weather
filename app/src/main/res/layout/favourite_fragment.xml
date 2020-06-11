@@ -13,7 +13,7 @@
         android:layout_marginBottom="@dimen/favourite_horizontal_margin">
 
         <TextView
-            android:id="@+id/favouriteTextView"
+            android:id="@+id/favouriteTitle"
             style="@style/CustomStyle.Text.Header"
             android:layout_gravity="center"
             android:layout_weight="1"
@@ -21,14 +21,14 @@
             android:layout_width="0dp" />
 
         <ImageView
-            android:id="@+id/themeButton"
+            android:id="@+id/theme"
             style="@style/CustomStyle.Icon.Clickable"
             android:layout_gravity="center"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:src="@drawable/ic_moon" />
 
         <ImageView
-            android:id="@+id/settingsButton"
+            android:id="@+id/settings"
             style="@style/CustomStyle.Icon.Clickable"
             android:layout_gravity="center"
             android:src="@drawable/ic_settings" />

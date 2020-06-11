@@ -34,9 +34,9 @@ class HourAdapter : RecyclerView.Adapter<HourAdapter.HourHolder>() {
     inner class HourHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(hourForecast: Hour) {
             with(itemView) {
-                temperatureTextView.text = hourForecast.temperature
-                timeTextView.text = hourForecast.time
-                descriptionImageView.setImageResource(hourForecast.imageId)
+                temperature.text = hourForecast.temperature
+                time.text = hourForecast.time
+                description.setImageResource(hourForecast.imageId)
             }
         }
     }
