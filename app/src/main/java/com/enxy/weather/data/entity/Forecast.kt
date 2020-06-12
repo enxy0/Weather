@@ -50,15 +50,15 @@ data class Forecast(
         // Functions to convert units
         var convertTemperature: (String) -> String = { it } // celsius used by default
         var convertWind: (String) -> String = { it } // mps used by default
-        var convertPressure: (String) -> String = { it } // mmHg used by default
+        var convertPressure: (String) -> String = { it } // hPa used by default
 
         // Checking which units are used
         if (temperatureUnit == Temperature.FAHRENHEIT)
             convertTemperature = { celsiusToFahrenheit(it.toInt()).toString() }
         if (windUnit == Wind.KILOMETERS_PER_HOUR)
             convertWind = { metersPerSecToKilometersPerHour(it.toInt()).toString() }
-        if (pressureUnit == Pressure.HECTO_PASCALS)
-            convertPressure = { mmHgToHectoPascals(it.toInt()).toString() }
+        if (pressureUnit == Pressure.MILLIMETERS_OF_MERCURY)
+            convertPressure = { hectoPascalsToMmHg(it.toInt()).toString() }
 
         // Applying units to the forecast
         this.currentForecast.apply {
@@ -76,7 +76,7 @@ data class Forecast(
     @Ignore
     private val millimeterOfMercury: Double = 133.3223684
 
-    private fun mmHgToHectoPascals(mmHg: Int): Int = (mmHg / millimeterOfMercury * 100).roundToInt()
+    private fun hectoPascalsToMmHg(hectoPascals: Int): Int = (hectoPascals / millimeterOfMercury * 100).roundToInt()
 
     private fun celsiusToFahrenheit(celsius: Int): Int = (celsius * 1.8 + 32).roundToInt()
 
