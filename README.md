@@ -5,12 +5,14 @@
 Minimalistic Android weather app written in Kotlin with MVVM architecture. This project is my attempt to make the code clean and readable.  
 Simple and light design makes easy to see the necessary data.
 
-**Status:** In development *(1.0.0-alpha-3)* ⚙️
+**Status:** In development *(1.0.0-alpha-4)* ⚙️
 
 ## Goals
 -   [x] Display weather forecasts for different locations ☁️
 -   [x] Save locations to favourites ⭐
 -   [x] Support different units 📏
+-   [ ] Add tests for UI and code 🛠️
+-   [ ] Display weather forecast based on user location📍
 -   [ ] Add dark theme 🌙
 -   [ ] Add animations 🔥
 
@@ -26,7 +28,7 @@ Simple and light design makes easy to see the necessary data.
 
 ## How to use this project
 1.  Create API keys:
-    -   [OpenWeatherMap](https://openweathermap.org/api) to display weather
+    -   [OpenWeatherMap](https://openweathermap.org/api) to fetch weather forecasts
     -   [OpenCage Geocoder](https://opencagedata.com/api) to find locations by name
 
 2.  Edit `local.properties` file. Add your API keys here:
