@@ -5,15 +5,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.enxy.weather.R
-import com.enxy.weather.data.entity.Hour
+import com.enxy.weather.data.entity.HourForecast
 import kotlinx.android.synthetic.main.item_hour.view.*
 
 class HourAdapter : RecyclerView.Adapter<HourAdapter.HourHolder>() {
-    private val hourDataModelArrayList = ArrayList<Hour>()
+    private val hourDataModelArrayList = ArrayList<HourForecast>()
 
-    fun updateData(hourForecastArrayList: ArrayList<Hour>) {
+    fun updateData(hourForecastList: ArrayList<HourForecast>) {
         this.hourDataModelArrayList.clear()
-        this.hourDataModelArrayList.addAll(hourForecastArrayList)
+        this.hourDataModelArrayList.addAll(hourForecastList)
         notifyDataSetChanged()
     }
 
@@ -32,11 +32,11 @@ class HourAdapter : RecyclerView.Adapter<HourAdapter.HourHolder>() {
     }
 
     inner class HourHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(hourForecast: Hour) {
+        fun bind(hourForecastList: HourForecast) {
             with(itemView) {
-                temperature.text = hourForecast.temperature
-                time.text = hourForecast.time
-                description.setImageResource(hourForecast.imageId)
+                temperature.text = hourForecastList.temperature
+                time.text = hourForecastList.time
+                description.setImageResource(hourForecastList.imageId)
             }
         }
     }

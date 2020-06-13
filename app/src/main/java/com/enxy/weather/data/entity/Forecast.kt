@@ -20,8 +20,8 @@ data class Forecast(
     var isFavourite: Boolean = false,
     @Embedded
     val currentForecast: CurrentForecast,
-    @Embedded
-    val hourForecast: HourForecast
+    @TypeConverters(Converters::class)
+    val hourForecastList: ArrayList<HourForecast>
 ) {
     /** Checks if data is valid to display to the user.
      * Valid time: 2 hours (openweathermap for free forecast)
@@ -63,11 +63,11 @@ data class Forecast(
         // Applying units to the forecast
         this.currentForecast.apply {
             temperature = convertTemperature(temperature)
-            feelsLikeTemperature = convertTemperature(feelsLikeTemperature)
+            feelsLike = convertTemperature(feelsLike)
             wind = convertWind(wind)
             pressure = convertPressure(pressure)
         }
-        this.hourForecast.hourArrayList.map {
+        this.hourForecastList.map {
             it.apply { temperature = convertTemperature(temperature) }
         }
         return this

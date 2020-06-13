@@ -103,22 +103,20 @@ class MainFragment : BaseFragment() {
 
     private fun renderForecast(forecast: Forecast?) {
         forecast?.let {
-            Log.d("MainFragment", "renderHourWeather: hourForecast=$it")
             renderCurrentForecast(it.currentForecast)
-            hourAdapter.updateData(it.hourForecast.hourArrayList)
+            hourAdapter.updateData(it.hourForecastList)
+            locationName.text = it.locationName
+            favouriteToggle.isChecked = it.isFavourite
             if (mainContentLinearLayout.isInvisible)
                 mainContentLinearLayout.isVisible = true
-            favouriteToggle.isChecked = it.isFavourite
         }
     }
 
     private fun renderCurrentForecast(currentForecast: CurrentForecast) {
-        Log.d("MainFragment", "renderCurrentWeather: currentForecast=$currentForecast")
         currentDescription.text = currentForecast.description
         currentDescriptionImage.setImageResource(currentForecast.imageId)
         currentTemperature.text = currentForecast.temperature
-        currentFeelsLike.text = currentForecast.feelsLikeTemperature
-        locationName.text = currentForecast.locationName
+        currentFeelsLike.text = currentForecast.feelsLike
         currentHumidityValue.text = currentForecast.humidity
         currentWindValue.text = currentForecast.wind
         currentPressureValue.text = currentForecast.pressure

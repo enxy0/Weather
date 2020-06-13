@@ -3,7 +3,10 @@ package com.enxy.weather.repository
 import com.enxy.weather.BuildConfig
 import com.enxy.weather.base.NetworkRepository
 import com.enxy.weather.data.AppDataBase
-import com.enxy.weather.data.entity.*
+import com.enxy.weather.data.entity.CurrentForecast
+import com.enxy.weather.data.entity.Forecast
+import com.enxy.weather.data.entity.HourForecast
+import com.enxy.weather.data.entity.Location
 import com.enxy.weather.network.ImageChooser
 import com.enxy.weather.network.NetworkService
 import com.enxy.weather.network.json.openweathermap.current.CurrentForecastResponse
@@ -33,15 +36,15 @@ class WeatherRepository(
         if (isForecastCached) {
             val forecast: Forecast =
                 database.getForecastDao().getForecastByLocationName(location.locationName)
-            if (forecast.isNotOutdated()) {
-                return Result.Success(forecast)
+            return if (forecast.isNotOutdated()) {
+                Result.Success(forecast)
             } else {
                 val result: Result<Failure, Forecast> = requestForecast(location)
                 if (result is Result.Success) {
                     result.success.isFavourite = forecast.isFavourite
                     database.getForecastDao().updateForecast(result.success)
                 }
-                return result
+                result
             }
         } else {
             val result: Result<Failure, Forecast> = requestForecast(location)
@@ -53,8 +56,7 @@ class WeatherRepository(
     }
 
     suspend fun updateForecast(forecast: Forecast): Result<Failure, Forecast> {
-        val location =
-            Location(forecast.locationName, forecast.longitude, forecast.latitude)
+        val location = Location(forecast.locationName, forecast.longitude, forecast.latitude)
         val result: Result<Failure, Forecast> = requestForecast(location)
         if (result is Result.Success) {
             result.success.isFavourite = forecast.isFavourite
@@ -64,9 +66,9 @@ class WeatherRepository(
     }
 
     suspend fun getLastOpenedForecast(): Result<Failure, Forecast> {
-        return if (hasCachedForecasts()) {
+        return if (hasCachedForecasts())
             Result.Success(database.getForecastDao().getLastOpenedForecast())
-        } else
+        else
             Result.Error(Failure.DataNotFoundInCache)
     }
 
@@ -75,7 +77,17 @@ class WeatherRepository(
     suspend fun getFavouriteLocationsList(): Result<Failure, ArrayList<Location>> {
         val favouriteForecasts = database.getForecastDao().getFavouriteForecastList()
         return if (favouriteForecasts != null)
-            Result.Success(transformToLocationList(favouriteForecasts))
+            withContext(Dispatchers.Default) {
+                Result.Success(
+                    favouriteForecasts.map {
+                        Location(
+                            locationName = it.locationName,
+                            latitude = it.latitude,
+                            longitude = it.longitude
+                        )
+                    } as ArrayList
+                )
+            }
         else
             Result.Error(Failure.DataNotFoundInCache)
     }
@@ -88,16 +100,22 @@ class WeatherRepository(
     private suspend fun requestForecast(location: Location): Result<Failure, Forecast> {
         val currentForecast: Result<Failure, CurrentForecast> =
             requestCurrentWeatherForecast(location.longitude, location.latitude)
-        val hourForecast: Result<Failure, HourForecast> =
+        val hourForecastList: Result<Failure, ArrayList<HourForecast>> =
             requestHourWeatherForecast(location.longitude, location.latitude)
         return when {
             currentForecast is Result.Error -> Result.Error(currentForecast.error)
-            hourForecast is Result.Error -> Result.Error(hourForecast.error)
-            else -> transformToForecast(
-                location = location,
-                currentForecast = (currentForecast as Result.Success).success,
-                hourForecast = (hourForecast as Result.Success).success
-            )
+            hourForecastList is Result.Error -> Result.Error(hourForecastList.error)
+            else -> withContext(Dispatchers.Default) {
+                Result.Success(
+                    Forecast(
+                        locationName = location.locationName,
+                        longitude = location.longitude,
+                        latitude = location.latitude,
+                        currentForecast = (currentForecast as Result.Success).success,
+                        hourForecastList = (hourForecastList as Result.Success).success
+                    )
+                )
+            }
         }
     }
 
@@ -115,14 +133,14 @@ class WeatherRepository(
                     units = DEFAULT_UNITS
                 )
             },
-            transform = ::transformCurrentForecastResponse
+            transform = ::responseToCurrentForecast
         )
     }
 
     private suspend fun requestHourWeatherForecast(
         longitude: Double,
         latitude: Double
-    ): Result<Failure, HourForecast> {
+    ): Result<Failure, ArrayList<HourForecast>> {
         return safeApiCall(
             call = {
                 service.weatherApi().getHourForecastAsync(
@@ -134,81 +152,24 @@ class WeatherRepository(
                     units = DEFAULT_UNITS
                 )
             },
-            transform = ::transformHourForecastResponse
+            transform = ::responseToHourForecastList
         )
     }
 
-    private suspend fun transformToLocationList(forecastList: List<Forecast>): ArrayList<Location> =
-        withContext(Dispatchers.Default) {
-            val locationList = ArrayList<Location>()
-            forecastList.forEach {
-                locationList.add(
-                    Location(
-                        locationName = it.locationName,
-                        latitude = it.latitude,
-                        longitude = it.longitude
-                    )
-                )
-            }
-            locationList
-        }
-
-    /* This transform function differs from others.
-     * It transforms the result of two forecasts (not the response of them) */
-    private suspend fun transformToForecast(
-        location: Location,
-        currentForecast: CurrentForecast,
-        hourForecast: HourForecast
-    ): Result<Failure, Forecast> = withContext(Dispatchers.Default) {
-        val locationName = location.locationName
-        val longitude = location.longitude
-        val latitude = location.latitude
-        Result.Success(
-            Forecast(
-                locationName = locationName,
-                longitude = longitude,
-                latitude = latitude,
-                currentForecast = currentForecast.copy(
-                    longitude = longitude,
-                    latitude = latitude,
-                    locationName = locationName
-                ),
-                hourForecast = hourForecast.copy(
-                    longitude = longitude,
-                    latitude = latitude,
-                    locationName = locationName
-                )
-            )
-        )
-    }
-
-    private fun transformCurrentForecastResponse(currentForecastResponse: CurrentForecastResponse): CurrentForecast {
-        val longitude = currentForecastResponse.coord.lon
-        val latitude = currentForecastResponse.coord.lat
-        val cityName = "${currentForecastResponse.name}, ${currentForecastResponse.sys.country}"
-        val temperature: String
-        currentForecastResponse.main.temp.roundToInt().let {
-            temperature = when {
-                it > 0 -> "+$it"
-                else -> it.toString()
-            }
-        }
-        val feelsLikeTemperature = currentForecastResponse.main.feelsLike.roundToInt().toString()
-        val wind = currentForecastResponse.wind.speed.roundToInt().toString()
-        val description = currentForecastResponse.weather[0].description.capitalize()
-        val pressure = currentForecastResponse.main.pressure.toString()
-        val humidity = currentForecastResponse.main.humidity.toString()
-        val imageCode = currentForecastResponse.weather[0].id
-        val dayPart: Char
-        currentForecastResponse.weather[0].icon.let { dayPart = it[it.length - 1] }
+    private fun responseToCurrentForecast(response: CurrentForecastResponse): CurrentForecast {
+        val temperature = response.main.temp.roundToInt().let { if (it > 0) "+$it" else "$it" }
+        val feelsLikeTemperature = response.main.feelsLike.roundToInt().toString()
+        val wind = response.wind.speed.roundToInt().toString()
+        val description = response.weather[0].description.capitalize()
+        val pressure = response.main.pressure.toString()
+        val humidity = response.main.humidity.toString()
+        val imageCode = response.weather[0].id
+        val dayPart = response.weather[0].icon.let { it[it.length - 1] }
         val imageId = ImageChooser.OpenWeatherMap.getImageIdCurrentForecast(imageCode, dayPart)
         return CurrentForecast(
-            locationName = cityName,
-            longitude = longitude,
-            latitude = latitude,
             temperature = temperature,
             description = description,
-            feelsLikeTemperature = feelsLikeTemperature,
+            feelsLike = feelsLikeTemperature,
             wind = wind,
             pressure = pressure,
             humidity = humidity,
@@ -216,39 +177,13 @@ class WeatherRepository(
         )
     }
 
-    private fun transformHourForecastResponse(hourForecastResponse: HourForecastResponse): HourForecast {
-        val hourList = ArrayList<Hour>(hourForecastResponse.list.size)
-        val longitude = hourForecastResponse.city.coord.lon
-        val latitude = hourForecastResponse.city.coord.lat
-        val locationName = "${hourForecastResponse.city.name}, ${hourForecastResponse.city.country}"
-        for (hourListItem in hourForecastResponse.list) {
-            val temperature: String
-            hourListItem.main.temp.roundToInt().let {
-                temperature = when {
-                    it > 0 -> "+$it"
-                    else -> it.toString()
-                }
-            }
-            val time = hourListItem.dtTxt.substring(11, 16)
-            val imageCode = hourListItem.weather[0].id
-            val dayPart: Char
-            hourListItem.weather[0].icon.let {
-                dayPart = it[it.length - 1]
-            }
-            val imageId = ImageChooser.OpenWeatherMap.getImageIdHourForecast(imageCode, dayPart)
-            hourList.add(
-                Hour(
-                    temperature = temperature,
-                    time = time,
-                    imageId = imageId
-                )
-            )
-        }
-        return HourForecast(
-            locationName = locationName,
-            longitude = longitude,
-            latitude = latitude,
-            hourArrayList = hourList
-        )
-    }
+    private fun responseToHourForecastList(response: HourForecastResponse): ArrayList<HourForecast> =
+        response.list.map { forecast ->
+            val temperature = forecast.main.temp.roundToInt().let { if (it > 0) "+$it" else "$it" }
+            val time = forecast.dtTxt.substring(11, 16)
+            val weatherCode = forecast.weather[0].id
+            val dayPart = forecast.weather[0].icon.let { it[it.length - 1] }
+            val imageId = ImageChooser.OpenWeatherMap.getImageIdHourForecast(weatherCode, dayPart)
+            HourForecast(temperature = temperature, time = time, imageId = imageId)
+        } as ArrayList
 }
