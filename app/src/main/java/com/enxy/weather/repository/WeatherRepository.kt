@@ -13,6 +13,7 @@ import com.enxy.weather.network.json.openweathermap.current.CurrentForecastRespo
 import com.enxy.weather.network.json.openweathermap.hour.HourForecastResponse
 import com.enxy.weather.utils.Result
 import com.enxy.weather.utils.exception.Failure
+import com.enxy.weather.utils.extension.withSign
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.math.roundToInt
@@ -157,8 +158,8 @@ class WeatherRepository(
     }
 
     private fun responseToCurrentForecast(response: CurrentForecastResponse): CurrentForecast {
-        val temperature = response.main.temp.roundToInt().let { if (it > 0) "+$it" else "$it" }
-        val feelsLikeTemperature = response.main.feelsLike.roundToInt().toString()
+        val temperature = response.main.temp.roundToInt().withSign()
+        val feelsLikeTemperature = response.main.feelsLike.roundToInt().withSign()
         val wind = response.wind.speed.roundToInt().toString()
         val description = response.weather[0].description.capitalize()
         val pressure = response.main.pressure.toString()

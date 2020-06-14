@@ -55,7 +55,7 @@ data class Forecast(
 
         // Checking which units are used
         if (temperatureUnit == Temperature.FAHRENHEIT)
-            convertTemperature = { celsiusToFahrenheit(it.toInt()).toString().withSign() }
+            convertTemperature = { celsiusToFahrenheit(it.toInt()).withSign() }
         if (windUnit == Wind.KILOMETERS_PER_HOUR)
             convertWind = { metersPerSecToKilometersPerHour(it.toInt()).toString() }
         if (pressureUnit == Pressure.MILLIMETERS_OF_MERCURY)
