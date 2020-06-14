@@ -5,6 +5,7 @@ import com.enxy.weather.data.Converters
 import com.enxy.weather.utils.Pressure
 import com.enxy.weather.utils.Temperature
 import com.enxy.weather.utils.Wind
+import com.enxy.weather.utils.extension.withSign
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -54,7 +55,7 @@ data class Forecast(
 
         // Checking which units are used
         if (temperatureUnit == Temperature.FAHRENHEIT)
-            convertTemperature = { celsiusToFahrenheit(it.toInt()).toString() }
+            convertTemperature = { celsiusToFahrenheit(it.toInt()).toString().withSign() }
         if (windUnit == Wind.KILOMETERS_PER_HOUR)
             convertWind = { metersPerSecToKilometersPerHour(it.toInt()).toString() }
         if (pressureUnit == Pressure.MILLIMETERS_OF_MERCURY)
