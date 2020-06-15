@@ -4,13 +4,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.enxy.weather.R
 import com.enxy.weather.base.BaseFragment
-import com.enxy.weather.ui.main.MainFragment
 import com.enxy.weather.ui.search.SearchFragment
+import com.enxy.weather.ui.weather.WeatherFragment
 import com.enxy.weather.utils.extension.observe
 import org.koin.android.ext.android.inject
 
-class MainActivity : AppCompatActivity() {
-    private val viewModel: MainViewModel by inject()
+class WeatherActivity : AppCompatActivity() {
+    private val viewModel: WeatherViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
             val fragment: BaseFragment = if (isAppFirstLaunched)
                 SearchFragment.newInstance()
             else
-                MainFragment.newInstance()
+                WeatherFragment.newInstance()
             supportFragmentManager.beginTransaction()
                 .replace(R.id.mainContainer, fragment)
                 .commitNow()

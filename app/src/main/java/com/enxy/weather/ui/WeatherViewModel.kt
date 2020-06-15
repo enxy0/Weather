@@ -10,7 +10,7 @@ import com.enxy.weather.utils.Result
 import com.enxy.weather.utils.exception.Failure
 import kotlinx.coroutines.launch
 
-class MainViewModel(
+class WeatherViewModel(
     private val weatherRepository: WeatherRepository,
     private val locationRepository: LocationRepository,
     private val appSettings: AppSettings

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import com.enxy.weather.R
 import com.enxy.weather.data.entity.Location
-import com.enxy.weather.ui.MainViewModel
+import com.enxy.weather.ui.WeatherViewModel
 import com.enxy.weather.ui.favourite.FavouriteAdapter.FavouriteLocationListener
 import com.enxy.weather.ui.settings.SettingsFragment
 import com.enxy.weather.utils.exception.Failure
@@ -23,7 +23,7 @@ import org.koin.core.parameter.parametersOf
 
 class FavouriteFragment : BottomSheetDialogFragment(), FavouriteLocationListener {
     private val favouriteAdapter: FavouriteAdapter by inject { parametersOf(this) }
-    private val viewModel: MainViewModel by sharedViewModel()
+    private val viewModel: WeatherViewModel by sharedViewModel()
 
     override fun getTheme(): Int = R.style.CustomStyle_BottomSheetDialog
 

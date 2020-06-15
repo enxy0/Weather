@@ -13,7 +13,7 @@ import com.enxy.weather.data.network.LocationApi
 import com.enxy.weather.data.network.WeatherApi
 import com.enxy.weather.data.repository.LocationRepository
 import com.enxy.weather.data.repository.WeatherRepository
-import com.enxy.weather.ui.MainViewModel
+import com.enxy.weather.ui.WeatherViewModel
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
@@ -49,8 +49,8 @@ val locationRepository: LocationRepository
 val appSettings: AppSettings
     get() = AppSettingsImpl(context)
 
-val mainViewModel: MainViewModel
-    get() = MainViewModel(weatherRepository, locationRepository, appSettings)
+val weatherViewModel: WeatherViewModel
+    get() = WeatherViewModel(weatherRepository, locationRepository, appSettings)
 
 val moscowForecast = Forecast(
     locationName = "Moscow, Central Administrative Okrug, Russia",

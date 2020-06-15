@@ -18,7 +18,7 @@ import org.junit.runner.RunWith
 class FirstAppLaunchTest {
     @Rule
     @JvmField
-    val activityTestRule = ActivityTestRule(MainActivity::class.java)
+    val activityTestRule = ActivityTestRule(WeatherActivity::class.java)
 
     companion object {
         @JvmStatic

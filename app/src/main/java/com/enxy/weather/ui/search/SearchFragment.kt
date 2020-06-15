@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import com.enxy.weather.R
 import com.enxy.weather.base.BaseFragment
 import com.enxy.weather.data.entity.Location
-import com.enxy.weather.ui.MainViewModel
-import com.enxy.weather.ui.main.MainFragment
+import com.enxy.weather.ui.WeatherViewModel
+import com.enxy.weather.ui.weather.WeatherFragment
 import com.enxy.weather.ui.search.LocationAdapter.LocationListener
 import com.enxy.weather.utils.exception.Failure
 import com.enxy.weather.utils.extension.failure
@@ -27,7 +27,7 @@ import org.koin.core.parameter.parametersOf
 
 class SearchFragment : BaseFragment(), LocationListener {
     override val layoutId = R.layout.search_fragment
-    private val viewModel: MainViewModel by sharedViewModel()
+    private val viewModel: WeatherViewModel by sharedViewModel()
     private val locationAdapter: LocationAdapter by inject { parametersOf(this) }
 
     companion object {
@@ -108,7 +108,7 @@ class SearchFragment : BaseFragment(), LocationListener {
     private fun showMainScreen() {
         requireActivity().supportFragmentManager
             .beginTransaction()
-            .replace(R.id.mainContainer, MainFragment.newInstance())
+            .replace(R.id.mainContainer, WeatherFragment.newInstance())
             .commitNow()
     }
 }

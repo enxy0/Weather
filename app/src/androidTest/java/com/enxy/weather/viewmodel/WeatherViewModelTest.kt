@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.enxy.weather.utils.appDatabase
 import com.enxy.weather.utils.getValue
-import com.enxy.weather.utils.mainViewModel
+import com.enxy.weather.utils.weatherViewModel
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Rule
@@ -12,8 +12,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class MainViewModelTest {
-    private val viewModel = mainViewModel
+class WeatherViewModelTest {
+    private val viewModel = weatherViewModel
     private val database = appDatabase
 
     @get:Rule

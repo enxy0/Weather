@@ -1,4 +1,4 @@
-package com.enxy.weather.ui.main
+package com.enxy.weather.ui.weather
 
 import android.os.Bundle
 import android.util.Log
@@ -15,8 +15,8 @@ import com.enxy.weather.base.BaseFragment
 import com.enxy.weather.data.AppSettings
 import com.enxy.weather.data.entity.CurrentForecast
 import com.enxy.weather.data.entity.Forecast
-import com.enxy.weather.ui.MainActivity
-import com.enxy.weather.ui.MainViewModel
+import com.enxy.weather.ui.WeatherActivity
+import com.enxy.weather.ui.WeatherViewModel
 import com.enxy.weather.ui.favourite.FavouriteFragment
 import com.enxy.weather.ui.search.SearchFragment
 import com.enxy.weather.utils.Pressure
@@ -29,13 +29,13 @@ import kotlinx.android.synthetic.main.main_fragment.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
-class MainFragment : BaseFragment() {
+class WeatherFragment : BaseFragment() {
     override val layoutId = R.layout.main_fragment
-    private val viewModel: MainViewModel by sharedViewModel()
+    private val viewModel: WeatherViewModel by sharedViewModel()
     private val hourAdapter: HourAdapter by inject()
 
     companion object {
-        fun newInstance() = MainFragment()
+        fun newInstance() = WeatherFragment()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,7 +56,7 @@ class MainFragment : BaseFragment() {
     }
 
     private fun setUpBottomAppBar() {
-        (activity as MainActivity).setSupportActionBar(bottomAppBar)
+        (activity as WeatherActivity).setSupportActionBar(bottomAppBar)
 
         bottomAppBar.setNavigationOnClickListener {
             val fragment = FavouriteFragment.newInstance()

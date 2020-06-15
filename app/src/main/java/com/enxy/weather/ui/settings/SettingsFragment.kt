@@ -7,7 +7,7 @@ import com.afollestad.materialdialogs.list.listItems
 import com.enxy.weather.BuildConfig
 import com.enxy.weather.R
 import com.enxy.weather.base.BaseFragment
-import com.enxy.weather.ui.MainViewModel
+import com.enxy.weather.ui.WeatherViewModel
 import com.enxy.weather.utils.Pressure
 import com.enxy.weather.utils.Temperature
 import com.enxy.weather.utils.Wind
@@ -20,7 +20,7 @@ import org.koin.android.viewmodel.ext.android.sharedViewModel
 class SettingsFragment : BaseFragment() {
     override val layoutId = R.layout.settings_fragment
     private val viewModel: SettingsViewModel by inject()
-    private val activityViewModel: MainViewModel by sharedViewModel()
+    private val activityViewModel: WeatherViewModel by sharedViewModel()
 
     companion object {
         const val TAG = "SettingsFragment"

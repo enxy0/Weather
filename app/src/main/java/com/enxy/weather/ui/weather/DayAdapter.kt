@@ -1,4 +1,4 @@
-package com.enxy.weather.ui.main
+package com.enxy.weather.ui.weather
 
 import android.util.Log
 import android.view.LayoutInflater
