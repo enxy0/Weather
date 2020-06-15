@@ -1,5 +1,6 @@
 package com.enxy.weather.di
 
+import com.enxy.weather.data.AppSettings
 import com.enxy.weather.data.AppSettingsImpl
 import com.enxy.weather.data.db.AppDataBase
 import com.enxy.weather.data.repository.LocationRepository
@@ -16,5 +17,5 @@ val appModule = module {
     single { WeatherRepository(get(), get()) }
     single { LocationRepository(get()) }
     single { AppDataBase.getInstance(androidApplication()) }
-    single { AppSettingsImpl(androidApplication()) }
+    single { AppSettingsImpl(androidApplication()) as AppSettings }
 }
