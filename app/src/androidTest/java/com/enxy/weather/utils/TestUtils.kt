@@ -9,14 +9,14 @@ import com.enxy.weather.data.db.AppDataBase
 import com.enxy.weather.data.entity.CurrentForecast
 import com.enxy.weather.data.entity.Forecast
 import com.enxy.weather.data.entity.HourForecast
-import com.enxy.weather.data.network.NetworkService
+import com.enxy.weather.data.network.LocationApi
+import com.enxy.weather.data.network.WeatherApi
 import com.enxy.weather.data.repository.LocationRepository
 import com.enxy.weather.data.repository.WeatherRepository
 import com.enxy.weather.ui.MainViewModel
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
-
-val networkService: NetworkService
-    get() = NetworkService()
 
 val context: Context
     get() = InstrumentationRegistry.getInstrumentation().targetContext
@@ -25,14 +25,29 @@ val appDatabase: AppDataBase
     get() = Room.inMemoryDatabaseBuilder(context, AppDataBase::class.java)
         .allowMainThreadQueries()
         .build()
+
+val weatherApi: WeatherApi
+    get() = Retrofit.Builder()
+        .baseUrl(OPEN_WEATHER_MAP_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(WeatherApi::class.java)
+
+val locationApi: LocationApi
+    get() = Retrofit.Builder()
+        .baseUrl(OPEN_CAGE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(LocationApi::class.java)
+
 val weatherRepository: WeatherRepository
-    get() = WeatherRepository(networkService, appDatabase)
+    get() = WeatherRepository(weatherApi, appDatabase)
+
+val locationRepository: LocationRepository
+    get() = LocationRepository(locationApi)
 
 val appSettings: AppSettings
     get() = AppSettingsImpl(context)
-
-val locationRepository: LocationRepository
-    get() = LocationRepository(networkService)
 
 val mainViewModel: MainViewModel
     get() = MainViewModel(weatherRepository, locationRepository, appSettings)

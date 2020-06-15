@@ -20,3 +20,6 @@ enum class Theme(val displayedName: String) {
     LIGHT("Light"),
     DARK("Dark")
 }
+
+const val OPEN_WEATHER_MAP_URL = "https://api.openweathermap.org"
+const val OPEN_CAGE_URL = "https://api.opencagedata.com/"

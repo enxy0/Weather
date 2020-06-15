@@ -8,7 +8,7 @@ import com.enxy.weather.data.entity.Forecast
 import com.enxy.weather.data.entity.HourForecast
 import com.enxy.weather.data.entity.Location
 import com.enxy.weather.data.network.ImageChooser
-import com.enxy.weather.data.network.NetworkService
+import com.enxy.weather.data.network.WeatherApi
 import com.enxy.weather.data.network.json.openweathermap.current.CurrentForecastResponse
 import com.enxy.weather.data.network.json.openweathermap.hour.HourForecastResponse
 import com.enxy.weather.utils.Result
@@ -19,7 +19,7 @@ import kotlinx.coroutines.withContext
 import kotlin.math.roundToInt
 
 class WeatherRepository(
-    private val service: NetworkService,
+    private val weatherApi: WeatherApi,
     private val database: AppDataBase
 ) : NetworkRepository {
     companion object {
@@ -126,7 +126,7 @@ class WeatherRepository(
     ): Result<Failure, CurrentForecast> {
         return safeApiCall(
             call = {
-                service.weatherApi().getCurrentForecastAsync(
+                weatherApi.getCurrentForecastAsync(
                     longitude = longitude,
                     latitude = latitude,
                     APPID = OPEN_WEATHER_MAP_APPID,
@@ -144,7 +144,7 @@ class WeatherRepository(
     ): Result<Failure, ArrayList<HourForecast>> {
         return safeApiCall(
             call = {
-                service.weatherApi().getHourForecastAsync(
+                weatherApi.getHourForecastAsync(
                     longitude = longitude,
                     latitude = latitude,
                     APPID = OPEN_WEATHER_MAP_APPID,

@@ -13,8 +13,8 @@ import org.koin.dsl.module
 val appModule = module {
     viewModel { MainViewModel(get(), get(), get()) }
     viewModel { SettingsViewModel(get()) }
-    factory { WeatherRepository(get(), get()) }
-    factory { LocationRepository(get()) }
+    single { WeatherRepository(get(), get()) }
+    single { LocationRepository(get()) }
     single { AppDataBase.getInstance(androidApplication()) }
     single { AppSettingsImpl(androidApplication()) }
 }
