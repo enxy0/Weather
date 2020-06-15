@@ -5,7 +5,6 @@ import com.enxy.weather.utils.Result
 import com.enxy.weather.utils.exception.Failure
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException
 
@@ -32,7 +31,7 @@ interface NetworkRepository {
                     )
             } else {
                 Result.Error(
-                    Failure.ServerResponseError(
+                    Failure.ServerError(
                         "Response was not successful",
                         "${response.raw().request().url()}",
                         response.code()
@@ -43,9 +42,6 @@ interface NetworkRepository {
             e.printStackTrace()
             Log.d("BaseRepository", "safeApiCall: e.message=${e.message}")
             Result.Error(Failure.ConnectionError(e.message))
-        } catch (e: HttpException) {
-            e.printStackTrace()
-            Result.Error(Failure.ServerResponseError(e.message(), null, null))
         } catch (throwable: Throwable) {
             throwable.printStackTrace()
             Result.Error(Failure.ServerError(throwable.message, null, null))

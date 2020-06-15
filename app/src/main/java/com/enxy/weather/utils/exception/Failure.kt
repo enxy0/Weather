@@ -14,11 +14,5 @@ sealed class Failure {
         val responseCode: Int?
     ) : Failure()
 
-    data class ServerResponseError(
-        val message: String?,
-        val url: String?,
-        val responseCode: Int?
-    ) : Failure()
-
     object DataNotFoundInCache : Failure()
 }
