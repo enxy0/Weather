@@ -11,8 +11,8 @@ Simple and light design makes easy to see the necessary data.
 -   [x] Display weather forecasts for different locations ☁️
 -   [x] Save locations to favourites ⭐
 -   [x] Support different units 📏
--   [ ] Add tests for UI and code 🛠️
--   [ ] Display weather forecast based on user location📍
+-   [x] Add tests for UI and code 🛠️
+-   [ ] Display weather forecast based on user location 📍
 -   [ ] Add dark theme 🌙
 -   [ ] Add animations 🔥
 
