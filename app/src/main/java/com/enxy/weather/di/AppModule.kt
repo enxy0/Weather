@@ -1,10 +1,9 @@
 package com.enxy.weather.di
 
-import com.enxy.weather.data.AppDataBase
-import com.enxy.weather.data.AppSettings
 import com.enxy.weather.data.AppSettingsImpl
-import com.enxy.weather.repository.LocationRepository
-import com.enxy.weather.repository.WeatherRepository
+import com.enxy.weather.data.db.AppDataBase
+import com.enxy.weather.data.repository.LocationRepository
+import com.enxy.weather.data.repository.WeatherRepository
 import com.enxy.weather.ui.MainViewModel
 import com.enxy.weather.ui.settings.SettingsViewModel
 import org.koin.android.ext.koin.androidApplication
@@ -17,5 +16,5 @@ val appModule = module {
     factory { WeatherRepository(get(), get()) }
     factory { LocationRepository(get()) }
     single { AppDataBase.getInstance(androidApplication()) }
-    single { AppSettingsImpl(androidApplication()) as AppSettings }
+    single { AppSettingsImpl(androidApplication()) }
 }

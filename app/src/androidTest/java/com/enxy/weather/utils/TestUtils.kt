@@ -3,15 +3,15 @@ package com.enxy.weather.utils
 import android.content.Context
 import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
-import com.enxy.weather.data.AppDataBase
 import com.enxy.weather.data.AppSettings
 import com.enxy.weather.data.AppSettingsImpl
+import com.enxy.weather.data.db.AppDataBase
 import com.enxy.weather.data.entity.CurrentForecast
 import com.enxy.weather.data.entity.Forecast
 import com.enxy.weather.data.entity.HourForecast
-import com.enxy.weather.network.NetworkService
-import com.enxy.weather.repository.LocationRepository
-import com.enxy.weather.repository.WeatherRepository
+import com.enxy.weather.data.network.NetworkService
+import com.enxy.weather.data.repository.LocationRepository
+import com.enxy.weather.data.repository.WeatherRepository
 import com.enxy.weather.ui.MainViewModel
 import java.util.*
 

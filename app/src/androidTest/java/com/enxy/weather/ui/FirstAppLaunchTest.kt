@@ -8,7 +8,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.enxy.weather.R
-import com.enxy.weather.data.AppDataBase.Companion.DATABASE_NAME
+import com.enxy.weather.data.db.AppDataBase.Companion.DATABASE_NAME
 import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test

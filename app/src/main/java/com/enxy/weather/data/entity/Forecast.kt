@@ -1,7 +1,7 @@
 package com.enxy.weather.data.entity
 
 import androidx.room.*
-import com.enxy.weather.data.Converters
+import com.enxy.weather.data.db.Converters
 import com.enxy.weather.utils.Pressure
 import com.enxy.weather.utils.Temperature
 import com.enxy.weather.utils.Wind

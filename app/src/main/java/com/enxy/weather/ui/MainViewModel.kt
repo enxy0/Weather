@@ -4,8 +4,8 @@ import androidx.lifecycle.*
 import com.enxy.weather.data.AppSettings
 import com.enxy.weather.data.entity.Forecast
 import com.enxy.weather.data.entity.Location
-import com.enxy.weather.repository.LocationRepository
-import com.enxy.weather.repository.WeatherRepository
+import com.enxy.weather.data.repository.LocationRepository
+import com.enxy.weather.data.repository.WeatherRepository
 import com.enxy.weather.utils.Result
 import com.enxy.weather.utils.exception.Failure
 import kotlinx.coroutines.launch
