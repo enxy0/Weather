@@ -49,4 +49,13 @@
     <string name="settings_vk_link">https://vk.com/enxyo</string>
     <string name="settings_title_wind">Wind</string>
     <string name="settings_title_pressure">Pressure</string>
+    <string name="failure_connection_error">Couldn\'t load data. Please, check your internet connection!</string>
+    <string name="failure_server_error">Something went wrong… Server is not responding!</string>
+    <string name="button_try_again">Try again</string>
+    <string name="hint_title_no_locations">Failed to find location</string>
+    <string name="hint_description_no_locations">Nothing found matching your query</string>
+    <string name="hint_icon_sad">😔</string>
+    <string name="hint_title_no_internet">Couldn\'t load data.</string>
+    <string name="hint_description_no_internet">Please, check your internet connection and try again.</string>
+    <string name="hint_icon_web">🌐</string>
 </resources>

@@ -5,8 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.view.inputmethod.InputMethodManager.*
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
+import androidx.core.view.children
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
@@ -14,53 +13,77 @@ import com.enxy.weather.R
 import com.enxy.weather.base.BaseFragment
 import com.enxy.weather.data.entity.Location
 import com.enxy.weather.ui.WeatherViewModel
-import com.enxy.weather.ui.weather.WeatherFragment
 import com.enxy.weather.ui.search.LocationAdapter.LocationListener
+import com.enxy.weather.ui.weather.WeatherFragment
 import com.enxy.weather.utils.exception.Failure
-import com.enxy.weather.utils.extension.failure
-import com.enxy.weather.utils.extension.observe
+import com.enxy.weather.utils.extension.*
 import kotlinx.android.synthetic.main.search_fragment.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.core.parameter.parametersOf
-
 
 class SearchFragment : BaseFragment(), LocationListener {
     override val layoutId = R.layout.search_fragment
     private val viewModel: WeatherViewModel by sharedViewModel()
     private val locationAdapter: LocationAdapter by inject { parametersOf(this) }
 
+
     companion object {
         const val TAG = "SearchFragment"
         fun newInstance() = SearchFragment()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setUpRecyclerView()
-        setFocusOnInput()
-        showHintIfNeeded()
-        searchCityEditText.doOnTextChanged { text, _, _, _ ->
-            text?.let { if (it.length > 1) viewModel.fetchListOfLocationsByName(it.toString()) }
-        }
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         with(viewModel) {
             observe(searchedLocations, ::renderData)
             failure(searchedLocationsFailure, ::handleFailure)
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUpRecyclerView()
+        setFocusOnInput()
+        showHint(enterHint)
+        searchCityEditText.doOnTextChanged { text, _, _, _ ->
+            text?.let { if (it.length > 1) viewModel.fetchListOfLocationsByName(it.toString()) }
+        }
+    }
+
     private fun renderData(locations: ArrayList<Location>?) {
         locations?.let {
-            if (hint.isVisible) {
-                hint.isGone = true
-                locationList.isVisible = true
+            if (locations.isEmpty()) {
+                handleFailure(Failure.NoLocationsFound)
+            } else {
+                hints.hide()
+                locationList.show()
+                locationAdapter.updateData(locations)
             }
-            locationAdapter.updateData(locations)
+        }
+    }
+
+    private fun showHint(hintToShow: View) {
+        locationList.hide()
+        hints.show()
+        hints.children.iterator().forEach {
+            if (it != hintToShow)
+                it.hide()
+            else
+                it.show()
         }
     }
 
     private fun handleFailure(failure: Failure?) {
-        failure?.let { notify("Failure: ${it.javaClass.simpleName}") }
+        when (failure) {
+            is Failure.NoLocationsFound -> showHint(noLocationsHint)
+            is Failure.ConnectionError -> showHint(noInternetHint)
+            is Failure.ServerError -> snackbarShort(rootLayout, R.string.failure_server_error)
+        }
     }
 
     override fun onLocationChange(location: Location) {
@@ -85,13 +108,6 @@ class SearchFragment : BaseFragment(), LocationListener {
         val inputMethodManager =
             requireContext().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.toggleSoftInput(SHOW_FORCED, HIDE_IMPLICIT_ONLY)
-    }
-
-    private fun showHintIfNeeded() {
-        if (locationAdapter.itemCount == 0) {
-            hint.isVisible = true
-            locationList.isGone = true
-        }
     }
 
     private fun hideKeyboard() {

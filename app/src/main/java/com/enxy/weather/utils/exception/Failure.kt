@@ -15,4 +15,6 @@ sealed class Failure {
     ) : Failure()
 
     object DataNotFoundInCache : Failure()
+
+    object NoLocationsFound : Failure()
 }

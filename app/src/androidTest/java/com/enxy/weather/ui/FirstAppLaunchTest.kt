@@ -29,6 +29,6 @@ class FirstAppLaunchTest {
 
     @Test
     fun firstAppLaunchOpensSearchScreen() {
-        onView(withId(R.id.hint)).check(matches(isDisplayed()))
+        onView(withId(R.id.enterHint)).check(matches(isDisplayed()))
     }
 }

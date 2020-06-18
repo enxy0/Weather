@@ -8,6 +8,7 @@
     android:layout_height="match_parent">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -16,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
                 android:id="@+id/mainContentLinearLayout"
@@ -322,6 +323,7 @@
             android:layout_gravity="bottom"
             app:elevation="@dimen/bottom_app_bar_elevation"
             app:menu="@menu/main_menu"
+            app:layout_behavior="com.google.android.material.bottomappbar.BottomAppBar$Behavior"
             app:navigationContentDescription="@string/menu_navigation_description"
             app:navigationIcon="@drawable/ic_menu_black_24dp" />
 

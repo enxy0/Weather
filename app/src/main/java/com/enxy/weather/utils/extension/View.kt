@@ -28,3 +28,11 @@ fun View.startCircularRevealAnimation(
         animator.startDelay = delay
     animator.start()
 }
+
+fun View.hide() {
+    this.visibility = View.GONE
+}
+
+fun View.show() {
+    this.visibility = View.VISIBLE
+}

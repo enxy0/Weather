@@ -26,4 +26,6 @@
     <dimen name="settings_text_horizontal_margin">16dp</dimen>
     <dimen name="settings_text_no_icon_horizontal_margin">70dp</dimen>
     <dimen name="settings_name_margin">20dp</dimen>
+    <dimen name="hint_text_margin">8dp</dimen>
+    <dimen name="hint_layout_margin">24dp</dimen>
 </resources>

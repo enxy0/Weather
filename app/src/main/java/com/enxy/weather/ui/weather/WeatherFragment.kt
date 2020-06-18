@@ -1,7 +1,6 @@
 package com.enxy.weather.ui.weather
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
@@ -22,9 +21,12 @@ import com.enxy.weather.ui.search.SearchFragment
 import com.enxy.weather.utils.Pressure
 import com.enxy.weather.utils.Wind
 import com.enxy.weather.utils.exception.Failure
+import com.enxy.weather.utils.exception.Failure.ConnectionError
+import com.enxy.weather.utils.exception.Failure.ServerError
 import com.enxy.weather.utils.extension.dpToPixels
 import com.enxy.weather.utils.extension.failure
 import com.enxy.weather.utils.extension.observe
+import com.enxy.weather.utils.extension.snackbarAction
 import kotlinx.android.synthetic.main.main_fragment.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -38,6 +40,16 @@ class WeatherFragment : BaseFragment() {
         fun newInstance() = WeatherFragment()
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        with(viewModel) {
+            observe(forecast, ::renderForecast)
+            observe(settings, ::renderCorrectUnits)
+            observe(isLoading, ::showLoading)
+            failure(forecastFailure, ::handleFailure)
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpBottomAppBar()
@@ -46,12 +58,6 @@ class WeatherFragment : BaseFragment() {
         setHasOptionsMenu(true)
         favouriteToggle.setOnClickListener {
             viewModel.changeForecastFavouriteStatus(favouriteToggle.isChecked)
-        }
-        with(viewModel) {
-            observe(forecast, ::renderForecast)
-            observe(settings, ::renderCorrectUnits)
-            observe(isLoading, ::showLoading)
-            failure(forecastFailure, ::handleFailure)
         }
     }
 
@@ -90,8 +96,32 @@ class WeatherFragment : BaseFragment() {
     }
 
     private fun handleFailure(failure: Failure?) {
-        failure?.let {
-            Log.d("MainFragment", "handleFailure: Failure=${failure.javaClass.name}")
+        when (failure) {
+            is ConnectionError -> {
+                snackbarAction(
+                    coordinatorLayout,
+                    bottomAppBar,
+                    R.string.failure_connection_error,
+                    R.string.button_try_again
+                ) {
+                    viewModel.updateWeatherForecast()
+                    swipeRefreshLayout.isRefreshing = true
+                }
+            }
+            is ServerError -> {
+                snackbarAction(
+                    coordinatorLayout,
+                    bottomAppBar,
+                    R.string.failure_server_error,
+                    R.string.button_try_again
+                ) {
+                    viewModel.updateWeatherForecast()
+                    swipeRefreshLayout.isRefreshing = true
+                }
+            }
+            else -> {
+                /* TODO: Handle other failures? */
+            }
         }
     }
 
