@@ -12,6 +12,7 @@ Simple and light design makes easy to see the necessary data.
 -   [x] Save locations to favourites ⭐
 -   [x] Support different units 📏
 -   [x] Add tests for UI and code 🛠️
+-   [ ] Show 7-day forecast ⛅
 -   [ ] Display weather forecast based on user location 📍
 -   [ ] Add dark theme 🌙
 -   [ ] Add animations 🔥
