@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!--    <color name="colorPrimary">#FFFFFF</color>-->
-<!--    <color name="colorPrimaryDark">#FFFFFF</color>-->
     <color name="colorPrimary">#4CAF50</color>
     <color name="colorPrimaryDark">#4CAF50</color>
     <color name="colorAccent">#4CAF50</color>
@@ -17,6 +15,7 @@
     <color name="dividerColorNight">#AEAEAE</color>
     <color name="colorTextPrimary">#000000</color>
     <color name="colorTextSecondary">#606060</color>
+    <color name="settingsHeaderColor">#8899AA</color>
 
 <!-- Forecast tiles colors -->
     <color name="humidityTileColor">#4D29B6F6</color>
