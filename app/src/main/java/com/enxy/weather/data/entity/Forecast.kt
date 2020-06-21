@@ -5,14 +5,13 @@ import com.enxy.weather.data.db.Converters
 import com.enxy.weather.utils.Pressure
 import com.enxy.weather.utils.Temperature
 import com.enxy.weather.utils.Wind
-import com.enxy.weather.utils.extension.withSign
 import java.util.*
 import kotlin.math.roundToInt
 
 @Entity(tableName = "forecast")
 data class Forecast(
     @PrimaryKey
-    val locationName: String,
+    var locationName: String,
     val longitude: Double,
     val latitude: Double,
     @TypeConverters(Converters::class)
@@ -22,7 +21,9 @@ data class Forecast(
     @Embedded
     val currentForecast: CurrentForecast,
     @TypeConverters(Converters::class)
-    val hourForecastList: ArrayList<HourForecast>
+    val hourForecastList: ArrayList<HourForecast>,
+    @TypeConverters(Converters::class)
+    val dayForecastList: ArrayList<DayForecast>
 ) {
     /** Checks if data is valid to display to the user.
      * Valid time: 2 hours (openweathermap for free forecast)
@@ -49,37 +50,42 @@ data class Forecast(
         pressureUnit: Pressure = Pressure.MILLIMETERS_OF_MERCURY
     ): Forecast {
         // Functions to convert units
-        var convertTemperature: (String) -> String = { it } // celsius used by default
-        var convertWind: (String) -> String = { it } // mps used by default
-        var convertPressure: (String) -> String = { it } // hPa used by default
+        var convertTemperature: (Int) -> Int = { it } // celsius used by default
+        var convertWind: (Int) -> Int = { it } // mps used by default
+        var convertPressure: (Int) -> Int = { it } // hPa used by default
 
         // Checking which units are used
         if (temperatureUnit == Temperature.FAHRENHEIT)
-            convertTemperature = { celsiusToFahrenheit(it.toInt()).withSign() }
+            convertTemperature = { celsiusToFahrenheit(it) }
         if (windUnit == Wind.KILOMETERS_PER_HOUR)
-            convertWind = { metersPerSecToKilometersPerHour(it.toInt()).toString() }
+            convertWind = { metersPerSecToKilometersPerHour(it) }
         if (pressureUnit == Pressure.MILLIMETERS_OF_MERCURY)
-            convertPressure = { hectoPascalsToMmHg(it.toInt()).toString() }
+            convertPressure = { hectoPascalsToMmHg(it) }
 
         // Applying units to the forecast
-        this.currentForecast.apply {
+        currentForecast.apply {
             temperature = convertTemperature(temperature)
             feelsLike = convertTemperature(feelsLike)
             wind = convertWind(wind)
             pressure = convertPressure(pressure)
         }
-        this.hourForecastList.map {
-            it.apply { temperature = convertTemperature(temperature) }
+        hourForecastList.forEach {
+            it.temperature = convertTemperature(it.temperature)
+        }
+        dayForecastList.forEach {
+            it.highestTemp = convertTemperature(it.highestTemp)
+            it.lowestTemp = convertTemperature(it.lowestTemp)
         }
         return this
     }
 
-    @Ignore
-    private val millimeterOfMercury: Double = 133.3223684
+    @Ignore private val millimeterOfMercury: Double = 133.3223684
 
-    private fun hectoPascalsToMmHg(hectoPascals: Int): Int = (hectoPascals / millimeterOfMercury * 100).roundToInt()
+    private fun hectoPascalsToMmHg(hectoPascals: Int): Int =
+        (hectoPascals / millimeterOfMercury * 100).roundToInt()
 
     private fun celsiusToFahrenheit(celsius: Int): Int = (celsius * 1.8 + 32).roundToInt()
 
-    private fun metersPerSecToKilometersPerHour(metersPerSec: Int): Int = metersPerSec * 60 * 60 / 1000
+    private fun metersPerSecToKilometersPerHour(metersPerSec: Int): Int =
+        metersPerSec * 60 * 60 / 1000
 }

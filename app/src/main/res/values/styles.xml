@@ -69,6 +69,7 @@
     </style>
 
     <style name="CustomStyle.Text.Secondary" parent="CustomStyle.Text">
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">?android:textColorSecondary</item>
     </style>
 
@@ -83,7 +84,7 @@
     </style>
 
     <style name="CustomStyle.ImageView.CurrentWeather" parent="CustomStyle.ImageView">
-        <item name="android:layout_height">220dp</item>
+        <item name="android:layout_height">200dp</item>
         <item name="android:layout_width">match_parent</item>
     </style>
 

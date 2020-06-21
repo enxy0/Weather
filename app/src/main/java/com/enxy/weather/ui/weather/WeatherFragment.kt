@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL
+import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import com.enxy.weather.R
 import com.enxy.weather.base.BaseFragment
 import com.enxy.weather.data.AppSettings
@@ -23,10 +24,7 @@ import com.enxy.weather.utils.Wind
 import com.enxy.weather.utils.exception.Failure
 import com.enxy.weather.utils.exception.Failure.ConnectionError
 import com.enxy.weather.utils.exception.Failure.ServerError
-import com.enxy.weather.utils.extension.dpToPixels
-import com.enxy.weather.utils.extension.failure
-import com.enxy.weather.utils.extension.observe
-import com.enxy.weather.utils.extension.snackbarAction
+import com.enxy.weather.utils.extension.*
 import kotlinx.android.synthetic.main.main_fragment.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -35,6 +33,7 @@ class WeatherFragment : BaseFragment() {
     override val layoutId = R.layout.main_fragment
     private val viewModel: WeatherViewModel by sharedViewModel()
     private val hourAdapter: HourAdapter by inject()
+    private val dayAdapter: DayAdapter by inject()
 
     companion object {
         fun newInstance() = WeatherFragment()
@@ -135,6 +134,7 @@ class WeatherFragment : BaseFragment() {
         forecast?.let {
             renderCurrentForecast(it.currentForecast)
             hourAdapter.updateData(it.hourForecastList)
+            dayAdapter.updateData(it.dayForecastList)
             locationName.text = it.locationName
             favouriteToggle.isChecked = it.isFavourite
             if (mainContentLinearLayout.isInvisible)
@@ -145,11 +145,11 @@ class WeatherFragment : BaseFragment() {
     private fun renderCurrentForecast(currentForecast: CurrentForecast) {
         currentDescription.text = currentForecast.description
         currentDescriptionImage.setImageResource(currentForecast.imageId)
-        currentTemperature.text = currentForecast.temperature
-        currentFeelsLike.text = currentForecast.feelsLike
-        currentHumidityValue.text = currentForecast.humidity
-        currentWindValue.text = currentForecast.wind
-        currentPressureValue.text = currentForecast.pressure
+        currentTemperature.text = currentForecast.temperature.withSign()
+        currentFeelsLike.text = currentForecast.feelsLike.withSign()
+        currentHumidityValue.text = currentForecast.humidity.toString()
+        currentWindValue.text = currentForecast.wind.toString()
+        currentPressureValue.text = currentForecast.pressure.toString()
     }
 
     private fun renderCorrectUnits(settings: AppSettings?) {
@@ -173,6 +173,11 @@ class WeatherFragment : BaseFragment() {
         hourRecyclerView.apply {
             adapter = hourAdapter
             layoutManager = LinearLayoutManager(context, HORIZONTAL, false)
+            isNestedScrollingEnabled = false
+        }
+        dayList.apply {
+            adapter = dayAdapter
+            layoutManager = LinearLayoutManager(context, VERTICAL, false)
             isNestedScrollingEnabled = false
         }
     }

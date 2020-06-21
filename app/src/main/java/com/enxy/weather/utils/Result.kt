@@ -6,11 +6,17 @@ package com.enxy.weather.utils
  */
 sealed class Result<out E, out S> {
     data class Error<out E>(val error: E) : Result<E, Nothing>()
-    data class Success<out S>(val success: S) : Result<Nothing, S>()
+    data class Success<out S>(val data: S) : Result<Nothing, S>()
 
     fun <R> handle(fnE: (E) -> R, fnS: (S) -> R): R =
         when (this) {
             is Error -> fnE(error)
-            is Success -> fnS(success)
+            is Success -> fnS(data)
         }
+
+    inline fun applyIfSuccess(block: Success<S>.() -> Unit): Result<E, S> {
+        if (this is Success)
+            block()
+        return this
+    }
 }

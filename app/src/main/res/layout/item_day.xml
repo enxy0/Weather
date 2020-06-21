@@ -4,62 +4,56 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp">
+    android:padding="@dimen/day_margin">
+
+    <ImageView
+        android:id="@+id/weatherIcon"
+        style="@style/CustomStyle.ImageView"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/day_margin"
+        android:layout_marginEnd="@dimen/day_margin"
+        tools:src="@drawable/weather_clear_day" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/day_margin"
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/day"
-            style="@style/CustomStyle.Text.Primary"
-            android:text="@{dayWeatherModel.day}"
-            tools:text="Monday" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/day"
+                style="@style/CustomStyle.Text.Primary"
+                android:layout_gravity="center"
+                android:layout_marginEnd="4dp"
+                tools:text="Sunday" />
+
+            <TextView
+                android:id="@+id/date"
+                style="@style/CustomStyle.Text.Secondary"
+                android:layout_gravity="bottom"
+                tools:text=" · 20.06" />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/date"
+            android:id="@+id/temperature"
             style="@style/CustomStyle.Text.Secondary"
-            android:text="@{dayWeatherModel.date}"
-            android:textSize="14sp"
-            tools:text="03.09.2019" />
+            android:layout_gravity="start|center_vertical"
+            tools:text="+17° | +13°" />
+
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/description"
-        style="@style/CustomStyle.ImageView"
-        android:layout_gravity="center_vertical"
-        android:layout_marginEnd="28dp"
-        tools:srcCompat="@drawable/weather_scattered_clouds" />
-
-    <TextView
-        android:id="@+id/highestTemperature"
-        style="@style/CustomStyle.Text.Primary"
-        android:layout_gravity="end|center"
-        android:minWidth="30dp"
-        android:text="@{dayWeatherModel.temperatureHigh}"
-        android:textAlignment="textEnd"
-        tools:text="-10" />
-
-    <TextView
-        style="@style/CustomStyle.Text.Primary"
-        android:layout_gravity="end|center"
-        android:layout_marginEnd="25dp"
-        tools:text="°" />
-
-    <TextView
-        android:id="@+id/lowestTemperature"
-        style="@style/CustomStyle.Text.Secondary"
-        android:layout_gravity="end|center"
-        android:minWidth="30dp"
-        android:text="@{dayWeatherModel.temperatureLow}"
-        android:textAlignment="textEnd"
-        tools:text="-10" />
-
-    <TextView
-        style="@style/CustomStyle.Text.Secondary"
-        android:layout_gravity="end|center"
-        tools:text="°" />
+        android:id="@+id/expandButton"
+        style="@style/CustomStyle.Icon.Clickable"
+        android:layout_gravity="center"
+        android:layout_marginEnd="@dimen/day_margin"
+        android:src="@drawable/ic_arrow_down" />
 </LinearLayout>

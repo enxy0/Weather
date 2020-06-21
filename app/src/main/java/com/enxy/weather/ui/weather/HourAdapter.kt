@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.enxy.weather.R
 import com.enxy.weather.data.entity.HourForecast
+import com.enxy.weather.utils.extension.withSign
 import kotlinx.android.synthetic.main.item_hour.view.*
 
 class HourAdapter : RecyclerView.Adapter<HourAdapter.HourHolder>() {
@@ -34,7 +35,7 @@ class HourAdapter : RecyclerView.Adapter<HourAdapter.HourHolder>() {
     inner class HourHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(hourForecastList: HourForecast) {
             with(itemView) {
-                temperature.text = hourForecastList.temperature
+                temperature.text = hourForecastList.temperature.withSign()
                 time.text = hourForecastList.time
                 description.setImageResource(hourForecastList.imageId)
             }

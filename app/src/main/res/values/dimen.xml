@@ -28,4 +28,5 @@
     <dimen name="settings_name_margin">20dp</dimen>
     <dimen name="hint_text_margin">8dp</dimen>
     <dimen name="hint_layout_margin">24dp</dimen>
+    <dimen name="day_margin">12dp</dimen>
 </resources>

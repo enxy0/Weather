@@ -66,6 +66,7 @@
                     style="@style/CustomStyle.ImageView.CurrentWeather"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin"
                     tools:src="@drawable/weather_clear_day" />
 
                 <LinearLayout
@@ -98,12 +99,14 @@
                     <TextView
                         android:id="@+id/currentFeelsLikeValue"
                         style="@style/CustomStyle.Text.Secondary"
-                        android:text="@string/feels_like" />
+                        android:text="@string/feels_like"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/currentFeelsLike"
                         style="@style/CustomStyle.Text.Secondary"
                         android:layout_marginStart="@dimen/text_space_margin"
+                        android:textSize="16sp"
                         tools:text="+13" />
 
                     <TextView
@@ -300,6 +303,7 @@
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
                     android:text="@string/section_next_hours" />
 
+                <!-- TODO: Rename id-->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/hourRecyclerView"
                     android:layout_width="match_parent"
@@ -308,11 +312,28 @@
                     android:paddingStart="6dp"
                     android:paddingTop="@dimen/section_content_top_padding"
                     android:paddingEnd="6dp"
-                    android:paddingBottom="@dimen/activity_vertical_margin"
                     tools:itemCount="9"
                     tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_hour"
                     tools:orientation="horizontal" />
+
+                <TextView
+                    style="@style/CustomStyle.Text.Header"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/section_vertical_margin"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:text="@string/section_next_days" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/dayList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    tools:itemCount="7"
+                    tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_day"
+                    tools:orientation="vertical" />
+
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
@@ -322,12 +343,11 @@
             android:layout_height="@dimen/bottom_app_bar_height"
             android:layout_gravity="bottom"
             app:elevation="@dimen/bottom_app_bar_elevation"
-            app:menu="@menu/main_menu"
             app:layout_behavior="com.google.android.material.bottomappbar.BottomAppBar$Behavior"
+            app:menu="@menu/main_menu"
             app:navigationContentDescription="@string/menu_navigation_description"
-            app:navigationIcon="@drawable/ic_menu_black_24dp" />
-
+            app:navigationIcon="@drawable/ic_menu_black_24dp"
+            tools:visibility="gone" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

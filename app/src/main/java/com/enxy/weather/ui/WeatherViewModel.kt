@@ -1,6 +1,6 @@
 package com.enxy.weather.ui
 
-import androidx.lifecycle.*
+import  androidx.lifecycle.*
 import com.enxy.weather.data.AppSettings
 import com.enxy.weather.data.entity.Forecast
 import com.enxy.weather.data.entity.Location
@@ -8,7 +8,9 @@ import com.enxy.weather.data.repository.LocationRepository
 import com.enxy.weather.data.repository.WeatherRepository
 import com.enxy.weather.utils.Result
 import com.enxy.weather.utils.exception.Failure
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class WeatherViewModel(
     private val weatherRepository: WeatherRepository,
@@ -26,7 +28,9 @@ class WeatherViewModel(
         val result = !weatherRepository.hasCachedForecasts()
         emit(result)
     }
-    val settings = liveData { emit(appSettings) }
+    val settings = liveData {
+        emit(appSettings)
+    }
 
     init {
         fetchLastOpenedForecast()
@@ -35,7 +39,7 @@ class WeatherViewModel(
 
     private fun fetchLastOpenedForecast() = viewModelScope.launch {
         when (val result = weatherRepository.getLastOpenedForecast()) {
-            is Result.Success -> with(result.success) {
+            is Result.Success -> with(result.data) {
                 val locationInfo = Location(locationName, longitude, latitude)
                 fetchWeatherForecast(locationInfo)
                 handleForecastSuccess(this)
@@ -85,14 +89,16 @@ class WeatherViewModel(
         }
     }
 
-    private fun handleForecastSuccess(forecast: Forecast) {
-        this.forecast.value = forecast.inUnits(
-            appSettings.temperatureUnit,
-            appSettings.windUnit,
-            appSettings.pressureUnit
-        )
-        this.forecastFailure.value = null
-        this.isLoading.value = false
+    private fun handleForecastSuccess(forecast: Forecast) = viewModelScope.launch {
+        this@WeatherViewModel.forecast.value = withContext(Dispatchers.Default) {
+            forecast.inUnits(
+                appSettings.temperatureUnit,
+                appSettings.windUnit,
+                appSettings.pressureUnit
+            )
+        }
+        this@WeatherViewModel.forecastFailure.value = null
+        this@WeatherViewModel.isLoading.value = false
     }
 
     private fun handleForecastFailure(failure: Failure) {

@@ -7,11 +7,11 @@ import androidx.room.PrimaryKey
 data class CurrentForecast(
     @PrimaryKey(autoGenerate = true)
     var currentForecastId: Int = 0,
-    var temperature: String,
+    var temperature: Int,
+    var feelsLike: Int,
     val description: String,
-    var feelsLike: String,
-    var wind: String,
-    var pressure: String,
-    val humidity: String,
+    var wind: Int,
+    var pressure: Int,
+    val humidity: Int,
     val imageId: Int
 )

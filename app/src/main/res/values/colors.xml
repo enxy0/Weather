@@ -14,7 +14,7 @@
     <color name="dividerColor">#555555</color>
     <color name="dividerColorNight">#AEAEAE</color>
     <color name="colorTextPrimary">#000000</color>
-    <color name="colorTextSecondary">#606060</color>
+    <color name="colorTextSecondary">#808080</color>
     <color name="settingsHeaderColor">#8899AA</color>
 
 <!-- Forecast tiles colors -->

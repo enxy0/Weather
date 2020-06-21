@@ -1,29 +1,26 @@
 package com.enxy.weather.ui.weather
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.enxy.weather.R
-import com.enxy.weather.data.entity.DayWeather
+import com.enxy.weather.data.entity.DayForecast
+import com.enxy.weather.utils.extension.withSign
 import kotlinx.android.synthetic.main.item_day.view.*
 
 class DayAdapter : RecyclerView.Adapter<DayAdapter.DayHolder>() {
-    private val dayDataModelArrayList = ArrayList<DayWeather>()
+    private val dayDataModelArrayList = ArrayList<DayForecast>()
 
-    fun updateData(dayWeatherArrayList: ArrayList<DayWeather>) {
+    fun updateData(dayForecastList: ArrayList<DayForecast>) {
         this.dayDataModelArrayList.clear()
-        this.dayDataModelArrayList.addAll(dayWeatherArrayList)
+        this.dayDataModelArrayList.addAll(dayForecastList)
         notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayHolder {
-        return DayHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.item_day, parent, false
-            )
-        )
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_day, parent, false)
+        return DayHolder(view)
     }
 
     override fun getItemCount() = dayDataModelArrayList.size
@@ -33,15 +30,15 @@ class DayAdapter : RecyclerView.Adapter<DayAdapter.DayHolder>() {
     }
 
     inner class DayHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(dayWeather: DayWeather) {
-            with(itemView) {
-                Log.d("DayHolder", "bind: dayWeatherModel=$dayWeather")
-                day.text = dayWeather.dayName
-                date.text = dayWeather.date
-                highestTemperature.text = dayWeather.temperatureHigh
-                lowestTemperature.text = dayWeather.temperatureLow
-                description.setImageResource(dayWeather.imageId)
-            }
+        fun bind(dayForecast: DayForecast) = with(itemView) {
+            temperature.text = context.getString(
+                R.string.day_forecast_temperature,
+                dayForecast.highestTemp.withSign(),
+                dayForecast.lowestTemp.withSign()
+            )
+            date.text = context.getString(R.string.day_forecast_date, dayForecast.date)
+            day.text = dayForecast.day
+            weatherIcon.setImageResource(dayForecast.imageId)
         }
     }
 }

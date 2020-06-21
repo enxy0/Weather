@@ -58,4 +58,7 @@
     <string name="hint_title_no_internet">Couldn\'t load data.</string>
     <string name="hint_description_no_internet">Please, check your internet connection and try again.</string>
     <string name="hint_icon_web">🌐</string>
+    <string name="day_forecast_date">· %1$s</string>
+    <string name="day_forecast_temperature">%1$s° | %2$s°</string>
+    <string name="section_next_days">Next 7 days</string>
 </resources>
