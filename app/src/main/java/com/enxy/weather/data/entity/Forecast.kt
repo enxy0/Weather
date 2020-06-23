@@ -25,59 +25,65 @@ data class Forecast(
     @TypeConverters(Converters::class)
     val dayForecastList: ArrayList<DayForecast>
 ) {
-    /** Checks if data is valid to display to the user.
-     * Valid time: 2 hours (openweathermap for free forecast)
+    /**
+     * Checks if data is outdated or not.
+     * Update interval: 2 hours (openweathermap for free forecast)
      * @see <a href="https://openweathermap.org/price">https://openweathermap.org/price</a>
      * @return Returns true if data is valid
      */
-    fun isNotOutdated(): Boolean {
-        val twoHoursInMillis = 2 * 60 * 60 * 1000
+    fun isOutdated(): Boolean {
+        val twoHoursInMillis = 2 * 60 * 60 * 1000 // 2 hours
         val currentTimeInMillis = Calendar.getInstance().timeInMillis
-        return currentTimeInMillis - timestamp.timeInMillis < twoHoursInMillis
+        return currentTimeInMillis - timestamp.timeInMillis >= twoHoursInMillis
     }
 
     /**
-     * Applies units from the app settings to the forecast
+     * Applies given units to the forecast
+     *
      * Supported:
-     * Temperature - celsius, fahrenheit
-     * Wind - meters per second, kilometers per hour
-     * Pressure - millimeters of mercury, hectoPascals
+     * Temperature - celcius (default), fahrenheit
+     * Wind - meters per second (default), kilometers per hour
+     * Pressure - hectoPascals (default), millimeters of mercury
      * @return [Forecast] in new units of temperature, wind and pressure
      */
     fun inUnits(
         temperatureUnit: Temperature = Temperature.CELSIUS,
         windUnit: Wind = Wind.METERS_PER_SECOND,
         pressureUnit: Pressure = Pressure.MILLIMETERS_OF_MERCURY
-    ): Forecast {
-        // Functions to convert units
-        var convertTemperature: (Int) -> Int = { it } // celsius used by default
-        var convertWind: (Int) -> Int = { it } // mps used by default
-        var convertPressure: (Int) -> Int = { it } // hPa used by default
-
-        // Checking which units are used
-        if (temperatureUnit == Temperature.FAHRENHEIT)
-            convertTemperature = { celsiusToFahrenheit(it) }
-        if (windUnit == Wind.KILOMETERS_PER_HOUR)
-            convertWind = { metersPerSecToKilometersPerHour(it) }
-        if (pressureUnit == Pressure.MILLIMETERS_OF_MERCURY)
-            convertPressure = { hectoPascalsToMmHg(it) }
-
-        // Applying units to the forecast
-        currentForecast.apply {
-            temperature = convertTemperature(temperature)
-            feelsLike = convertTemperature(feelsLike)
-            wind = convertWind(wind)
-            pressure = convertPressure(pressure)
-        }
-        hourForecastList.forEach {
-            it.temperature = convertTemperature(it.temperature)
-        }
-        dayForecastList.forEach {
-            it.highestTemp = convertTemperature(it.highestTemp)
-            it.lowestTemp = convertTemperature(it.lowestTemp)
-        }
-        return this
-    }
+    ): Forecast = copy(
+        currentForecast = currentForecast.copy(
+            temperature = when (temperatureUnit) {
+                Temperature.FAHRENHEIT -> celsiusToFahrenheit(currentForecast.temperature)
+                else -> currentForecast.temperature
+            },
+            feelsLike = when (temperatureUnit) {
+                Temperature.FAHRENHEIT -> celsiusToFahrenheit(currentForecast.feelsLike)
+                else -> currentForecast.feelsLike
+            },
+            wind = when (windUnit) {
+                Wind.KILOMETERS_PER_HOUR -> metersPerSecToKilometersPerHour(currentForecast.wind)
+                else -> currentForecast.wind
+            },
+            pressure = when (pressureUnit) {
+                Pressure.MILLIMETERS_OF_MERCURY -> hectoPascalsToMmHg(currentForecast.pressure)
+                else -> currentForecast.pressure
+            }
+        ),
+        hourForecastList = hourForecastList.map { hourForecast ->
+            hourForecast.temperature = when (temperatureUnit) {
+                Temperature.FAHRENHEIT -> celsiusToFahrenheit(hourForecast.temperature)
+                else -> hourForecast.temperature
+            }
+            hourForecast
+        } as ArrayList,
+        dayForecastList = dayForecastList.map { dayForecast ->
+            if (temperatureUnit == Temperature.FAHRENHEIT) {
+                dayForecast.highestTemp = celsiusToFahrenheit(dayForecast.highestTemp)
+                dayForecast.lowestTemp = celsiusToFahrenheit(dayForecast.lowestTemp)
+            }
+            dayForecast
+        } as ArrayList
+    )
 
     @Ignore private val millimeterOfMercury: Double = 133.3223684
 

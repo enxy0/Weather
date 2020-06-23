@@ -37,7 +37,7 @@ class WeatherRepository(
         return if (isForecastCached) {
             val forecast: Forecast =
                 database.getForecastDao().getForecastByLocationName(location.locationName)
-            if (forecast.isNotOutdated())
+            if (!forecast.isOutdated())
                 Success(forecast)
             else
                 requestForecast(location).applyIfSuccess {
