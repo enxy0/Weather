@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="iconColor" format="reference"/>
-    <attr name="cardViewBackgroundColor" format="reference"/>
-    <attr name="sectionDividerColor" format="reference"/>
-    <attr name="dividerColor" format="reference"/>
+    <attr name="iconColor" format="reference" />
+    <attr name="cardViewBackgroundColor" format="reference" />
+    <attr name="sectionDividerColor" format="reference" />
+    <attr name="dividerColor" format="reference" />
+
+    <declare-styleable name="PrecipitationCard">
+        <attr name="prepIcon" format="reference" />
+        <attr name="prepTitle" format="string" />
+        <attr name="prepUnit" format="string" />
+        <attr name="prepValue" format="string" />
+        <attr name="prepTextColor" format="color" />
+    </declare-styleable>
 </resources>

@@ -26,6 +26,7 @@ import com.enxy.weather.utils.exception.Failure.ConnectionError
 import com.enxy.weather.utils.exception.Failure.ServerError
 import com.enxy.weather.utils.extension.*
 import kotlinx.android.synthetic.main.main_fragment.*
+import kotlinx.android.synthetic.main.precipitation_card_view.view.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
@@ -147,24 +148,24 @@ class WeatherFragment : BaseFragment() {
         currentDescriptionImage.setImageResource(currentForecast.imageId)
         currentTemperature.text = currentForecast.temperature.withSign()
         currentFeelsLike.text = currentForecast.feelsLike.withSign()
-        currentHumidityValue.text = currentForecast.humidity.toString()
-        currentWindValue.text = currentForecast.wind.toString()
-        currentPressureValue.text = currentForecast.pressure.toString()
+        humidityCard.value.text = currentForecast.humidity.toString()
+        windCard.value.text = currentForecast.wind.toString()
+        pressureCard.value.text = currentForecast.pressure.toString()
     }
 
     private fun renderCorrectUnits(settings: AppSettings?) {
         settings?.let {
             when (settings.windUnit) {
                 Wind.METERS_PER_SECOND ->
-                    currentWindUnit.setText(R.string.wind_value_meters_per_second)
+                    windCard.unit.setText(R.string.wind_value_meters_per_second)
                 Wind.KILOMETERS_PER_HOUR ->
-                    currentWindUnit.setText(R.string.wind_value_kilometers_per_hour)
+                    windCard.unit.setText(R.string.wind_value_kilometers_per_hour)
             }
             when (settings.pressureUnit) {
                 Pressure.MILLIMETERS_OF_MERCURY ->
-                    currentPressureUnit.setText(R.string.pressure_value_millimeters)
+                    pressureCard.unit.setText(R.string.pressure_value_millimeters)
                 Pressure.HECTO_PASCALS ->
-                    currentPressureUnit.setText(R.string.pressure_value_pascals)
+                    pressureCard.unit.setText(R.string.pressure_value_pascals)
             }
         }
     }

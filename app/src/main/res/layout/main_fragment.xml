@@ -134,165 +134,50 @@
                     android:paddingStart="@dimen/details_layout_padding"
                     android:paddingEnd="@dimen/details_layout_padding">
 
-                    <com.google.android.material.card.MaterialCardView
+                    <com.enxy.weather.views.PrecipitationCard
+                        android:id="@+id/humidityCard"
                         style="@style/CustomStyle.CardView"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_weight="1"
-                        app:cardBackgroundColor="@color/humidityTileColor">
+                        app:cardBackgroundColor="@color/humidityTileColor"
+                        app:prepIcon="@drawable/ic_humidity"
+                        app:prepTextColor="@color/humidityTextColor"
+                        app:prepTitle="@string/humidity"
+                        app:prepUnit="%"
+                        app:prepValue="70" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:paddingTop="@dimen/card_details_layout_padding"
-                            android:paddingBottom="@dimen/card_details_layout_padding">
-
-                            <ImageView
-                                style="@style/CustomStyle.Icon"
-                                android:layout_gravity="center_horizontal"
-                                android:src="@drawable/ic_humidity"
-                                android:tint="@color/humidityTextColor" />
-
-                            <TextView
-                                style="@style/CustomStyle.Text.Primary"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="@dimen/card_text_top_margin"
-                                android:layout_marginBottom="@dimen/card_text_bottom_margin"
-                                android:text="@string/humidity"
-                                android:textAlignment="center"
-                                android:textColor="@color/humidityTextColor" />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/currentHumidityValue"
-                                    style="@style/CustomStyle.Text.Primary"
-                                    android:textColor="@color/humidityTextColor"
-                                    tools:text="96" />
-
-                                <TextView
-                                    android:id="@+id/currentHumidityUnit"
-                                    style="@style/CustomStyle.Text.Primary"
-                                    android:layout_marginStart="@dimen/text_space_margin"
-                                    android:text="@string/sign_percent"
-                                    android:textColor="@color/humidityTextColor" />
-                            </LinearLayout>
-
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
+                    <com.enxy.weather.views.PrecipitationCard
+                        android:id="@+id/windCard"
                         style="@style/CustomStyle.CardView"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_weight="1"
-                        app:cardBackgroundColor="@color/windTileColor">
+                        app:cardBackgroundColor="@color/windTileColor"
+                        app:prepIcon="@drawable/ic_wind"
+                        app:prepTextColor="@color/windTextColor"
+                        app:prepTitle="@string/wind"
+                        app:prepUnit="@string/wind_value_meters_per_second"
+                        app:prepValue="4" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:paddingTop="@dimen/card_details_layout_padding"
-                            android:paddingBottom="@dimen/card_details_layout_padding">
-
-                            <ImageView
-                                style="@style/CustomStyle.Icon"
-                                android:layout_gravity="center_horizontal"
-                                android:src="@drawable/ic_wind"
-                                android:tint="@color/windTextColor" />
-
-                            <TextView
-                                style="@style/CustomStyle.Text.Primary"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="@dimen/card_text_top_margin"
-                                android:layout_marginBottom="@dimen/card_text_bottom_margin"
-                                android:text="@string/wind"
-                                android:textAlignment="center"
-                                android:textColor="@color/windTextColor" />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/currentWindValue"
-                                    style="@style/CustomStyle.Text.Primary"
-                                    android:textColor="@color/windTextColor"
-                                    tools:text="2" />
-
-                                <TextView
-                                    android:id="@+id/currentWindUnit"
-                                    style="@style/CustomStyle.Text.Primary"
-                                    android:layout_marginStart="@dimen/text_space_margin"
-                                    android:text="@string/wind_value_meters_per_second"
-                                    android:textColor="@color/windTextColor" />
-                            </LinearLayout>
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
+                    <com.enxy.weather.views.PrecipitationCard
+                        android:id="@+id/pressureCard"
                         style="@style/CustomStyle.CardView"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_weight="1"
-                        app:cardBackgroundColor="@color/pressureTileColor">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:paddingTop="@dimen/card_details_layout_padding"
-                            android:paddingBottom="@dimen/card_details_layout_padding">
-
-                            <ImageView
-                                style="@style/CustomStyle.Icon"
-                                android:layout_gravity="center_horizontal"
-                                android:src="@drawable/ic_pressure"
-                                android:tint="@color/pressureTextColor" />
-
-                            <TextView
-                                style="@style/CustomStyle.Text.Primary"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="@dimen/card_text_top_margin"
-                                android:layout_marginBottom="@dimen/card_text_bottom_margin"
-                                android:text="@string/pressure"
-                                android:textAlignment="center"
-                                android:textColor="@color/pressureTextColor" />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/currentPressureValue"
-                                    style="@style/CustomStyle.Text.Primary"
-                                    android:textColor="@color/pressureTextColor"
-                                    tools:text="1016" />
-
-                                <TextView
-                                    android:id="@+id/currentPressureUnit"
-                                    style="@style/CustomStyle.Text.Primary"
-                                    android:layout_marginStart="@dimen/text_space_margin"
-                                    android:text="@string/pressure_value_pascals"
-                                    android:textColor="@color/pressureTextColor" />
-                            </LinearLayout>
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
+                        app:cardBackgroundColor="@color/pressureTileColor"
+                        app:prepIcon="@drawable/ic_pressure"
+                        app:prepTextColor="@color/pressureTextColor"
+                        app:prepTitle="@string/pressure"
+                        app:prepUnit="@string/pressure_value_millimeters"
+                        app:prepValue="766" />
                 </LinearLayout>
 
                 <TextView
