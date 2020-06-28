@@ -13,7 +13,6 @@ import com.enxy.weather.R
 import com.enxy.weather.base.BaseFragment
 import com.enxy.weather.data.entity.Location
 import com.enxy.weather.ui.WeatherViewModel
-import com.enxy.weather.ui.search.LocationAdapter.LocationListener
 import com.enxy.weather.ui.weather.WeatherFragment
 import com.enxy.weather.utils.exception.Failure
 import com.enxy.weather.utils.extension.*
@@ -22,19 +21,16 @@ import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.core.parameter.parametersOf
 
-class SearchFragment : BaseFragment(), LocationListener {
+class SearchFragment : BaseFragment() {
     override val layoutId = R.layout.search_fragment
     private val viewModel: WeatherViewModel by sharedViewModel()
-    private val locationAdapter: LocationAdapter by inject { parametersOf(this) }
-
+    private val locationAdapter: LocationAdapter by inject {
+        parametersOf(::onLocationChange)
+    }
 
     companion object {
         const val TAG = "SearchFragment"
         fun newInstance() = SearchFragment()
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,7 +82,7 @@ class SearchFragment : BaseFragment(), LocationListener {
         }
     }
 
-    override fun onLocationChange(location: Location) {
+    private fun onLocationChange(location: Location) {
         viewModel.fetchWeatherForecast(location)
         hideKeyboard()
         if (isAppFirstLaunched())

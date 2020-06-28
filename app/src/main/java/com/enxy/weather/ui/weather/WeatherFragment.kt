@@ -5,7 +5,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import androidx.core.view.isInvisible
-import androidx.core.view.isVisible
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL
@@ -139,7 +138,7 @@ class WeatherFragment : BaseFragment() {
             locationName.text = it.locationName
             favouriteToggle.isChecked = it.isFavourite
             if (mainContentLinearLayout.isInvisible)
-                mainContentLinearLayout.isVisible = true
+                mainContentLinearLayout.show()
         }
     }
 

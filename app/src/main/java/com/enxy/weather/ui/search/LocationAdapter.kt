@@ -9,7 +9,7 @@ import com.enxy.weather.data.entity.Location
 import com.enxy.weather.ui.search.LocationAdapter.LocationHolder
 import kotlinx.android.synthetic.main.item_location.view.*
 
-class LocationAdapter(private val locationListener: LocationListener) :
+class LocationAdapter(private val onLocationChange: (Location) -> Unit) :
     RecyclerView.Adapter<LocationHolder>() {
     private val data = ArrayList<Location>()
 
@@ -23,7 +23,7 @@ class LocationAdapter(private val locationListener: LocationListener) :
         fun bind(location: Location) {
             itemView.locationName.text = location.locationName
             itemView.locationName.setOnClickListener {
-                locationListener.onLocationChange(location)
+                onLocationChange(location)
             }
         }
     }
@@ -38,9 +38,5 @@ class LocationAdapter(private val locationListener: LocationListener) :
 
     override fun onBindViewHolder(holder: LocationHolder, position: Int) {
         holder.bind(data[position])
-    }
-
-    interface LocationListener {
-        fun onLocationChange(location: Location)
     }
 }

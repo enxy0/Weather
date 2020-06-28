@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import com.enxy.weather.R
 import com.enxy.weather.data.entity.Location
 import com.enxy.weather.ui.WeatherViewModel
-import com.enxy.weather.ui.favourite.FavouriteAdapter.FavouriteLocationListener
+import com.enxy.weather.ui.search.LocationAdapter
 import com.enxy.weather.ui.settings.SettingsFragment
 import com.enxy.weather.utils.exception.Failure
 import com.enxy.weather.utils.extension.failure
@@ -21,9 +21,11 @@ import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.core.parameter.parametersOf
 
-class FavouriteFragment : BottomSheetDialogFragment(), FavouriteLocationListener {
-    private val favouriteAdapter: FavouriteAdapter by inject { parametersOf(this) }
+class FavouriteFragment : BottomSheetDialogFragment() {
     private val viewModel: WeatherViewModel by sharedViewModel()
+    private val favouriteAdapter: LocationAdapter by inject {
+        parametersOf(::onLocationChange)
+    }
 
     override fun getTheme(): Int = R.style.CustomStyle_BottomSheetDialog
 
@@ -80,7 +82,7 @@ class FavouriteFragment : BottomSheetDialogFragment(), FavouriteLocationListener
         }
     }
 
-    override fun onLocationClick(location: Location) {
+    private fun onLocationChange(location: Location) {
         viewModel.fetchWeatherForecast(location)
         runDelayed(FORECAST_RIPPLE_DELAY) {
             dismiss()
