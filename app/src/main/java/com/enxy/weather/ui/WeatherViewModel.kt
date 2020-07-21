@@ -35,13 +35,12 @@ class WeatherViewModel(
     }
 
     private fun fetchLastOpenedForecast() = viewModelScope.launch {
-        when (val result = weatherRepository.getLastOpenedForecast()) {
-            is Result.Success -> with(result.data) {
-                val locationInfo = Location(locationName, longitude, latitude)
-                fetchWeatherForecast(locationInfo)
-                handleForecastSuccess(this)
-            }
-            is Result.Error -> handleForecastFailure(result.error)
+        weatherRepository.getLastOpenedForecast().onSuccess {
+            val locationInfo = Location(data.locationName, data.longitude, data.latitude)
+            fetchWeatherForecast(locationInfo)
+            handleForecastSuccess(data)
+        }.onFailure {
+            handleForecastFailure(error)
         }
     }
 
