@@ -6,7 +6,6 @@ import com.enxy.weather.data.entity.Forecast
 import com.enxy.weather.data.entity.Location
 import com.enxy.weather.data.repository.LocationRepository
 import com.enxy.weather.data.repository.WeatherRepository
-import com.enxy.weather.utils.Result
 import com.enxy.weather.utils.exception.Failure
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,11 +16,24 @@ class WeatherViewModel(
     private val locationRepository: LocationRepository,
     private val appSettings: AppSettings
 ) : ViewModel() {
-    val forecast = MutableLiveData<Forecast>()
-    val forecastFailure = MutableLiveData<Failure>()
-    val searchedLocations = MutableLiveData<ArrayList<Location>>()
-    val searchedLocationsFailure = MutableLiveData<Failure>()
-    val isLoading = MutableLiveData<Boolean>(false)
+
+    private val _forecast = MutableLiveData<Forecast>()
+    val forecast: LiveData<Forecast>
+        get() = _forecast
+
+    private val _forecastFailure = MutableLiveData<Failure>()
+    val forecastFailure: LiveData<Failure>
+        get() = _forecastFailure
+
+    private val _searchedLocations = MutableLiveData<ArrayList<Location>>()
+    val searchedLocations: LiveData<ArrayList<Location>> = _searchedLocations
+
+    private val _searchedLocationsFailure = MutableLiveData<Failure>()
+    val searchedLocationsFailure: LiveData<Failure> = _searchedLocationsFailure
+
+    private val _isLoading = MutableLiveData<Boolean>(false)
+    val isLoading: LiveData<Boolean> = _isLoading
+
     val isAppFirstLaunched: LiveData<Boolean> = liveData {
         val result = !weatherRepository.hasCachedForecasts()
         emit(result)
@@ -45,20 +57,20 @@ class WeatherViewModel(
     }
 
     fun fetchWeatherForecast(location: Location) = viewModelScope.launch {
-        isLoading.value = true
+        _isLoading.value = true
         weatherRepository.getForecast(location)
             .handle(::handleForecastFailure, ::handleForecastSuccess)
     }
 
     fun updateWeatherForecast() = viewModelScope.launch {
-        forecast.value?.let {
+        _forecast.value?.let {
             weatherRepository.updateForecast(it)
                 .handle(::handleForecastFailure, ::handleForecastSuccess)
         }
     }
 
     fun changeForecastFavouriteStatus(isFavourite: Boolean) = viewModelScope.launch {
-        forecast.value?.let {
+        _forecast.value?.let {
             it.isFavourite = isFavourite
             weatherRepository.changeForecastFavouriteStatus(it)
         }
@@ -74,34 +86,34 @@ class WeatherViewModel(
      * [handleForecastSuccess] invokes [Forecast.inUnits] to update units
      */
     fun updateForecastUnits() {
-        forecast.value?.let {
+        _forecast.value?.let {
             fetchWeatherForecast(Location(it.locationName, it.longitude, it.latitude))
         }
     }
 
     private fun handleForecastSuccess(forecast: Forecast) = viewModelScope.launch {
-        this@WeatherViewModel.forecast.value = withContext(Dispatchers.Default) {
+        _forecast.value = withContext(Dispatchers.Default) {
             forecast.inUnits(
                 appSettings.temperatureUnit,
                 appSettings.windUnit,
                 appSettings.pressureUnit
             )
         }
-        this@WeatherViewModel.forecastFailure.value = null
-        this@WeatherViewModel.isLoading.value = false
+        _forecastFailure.value = null
+        _isLoading.value = false
     }
 
     private fun handleForecastFailure(failure: Failure) {
-        this.forecastFailure.value = failure
-        this.isLoading.value = false
+        _forecastFailure.value = failure
+        _isLoading.value = false
     }
 
     private fun handleLocationSuccess(locationList: ArrayList<Location>) {
-        searchedLocations.value = locationList
-        searchedLocationsFailure.value = null
+        _searchedLocations.value = locationList
+        _searchedLocationsFailure.value = null
     }
 
     private fun handleLocationFailure(failure: Failure) {
-        searchedLocationsFailure.value = failure
+        _searchedLocationsFailure.value = failure
     }
 }
