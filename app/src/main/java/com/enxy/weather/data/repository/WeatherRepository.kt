@@ -40,19 +40,19 @@ class WeatherRepository(
             if (!forecast.isOutdated())
                 Success(forecast)
             else
-                requestForecast(location).applyIfSuccess {
+                requestForecast(location).onSuccess {
                     database.getForecastDao().updateForecast(data)
                     data.isFavourite = forecast.isFavourite
                 }
         } else
-            requestForecast(location).applyIfSuccess {
+            requestForecast(location).onSuccess {
                 database.getForecastDao().insertForecast(data)
             }
     }
 
     suspend fun updateForecast(forecast: Forecast): Result<Failure, Forecast> {
         val location = Location(forecast.locationName, forecast.longitude, forecast.latitude)
-        return requestForecast(location).applyIfSuccess {
+        return requestForecast(location).onSuccess {
             database.getForecastDao().updateForecast(data)
             data.isFavourite = forecast.isFavourite
         }
@@ -102,7 +102,7 @@ class WeatherRepository(
                 )
             },
             transform = ::responseToForecast
-        ).applyIfSuccess { data.locationName = location.locationName }
+        ).onSuccess { data.locationName = location.locationName }
 
     private fun responseToForecast(response: WeatherResponse) = Forecast(
         locationName = response.timezone, // temporary name that will be changed

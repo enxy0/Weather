@@ -14,8 +14,14 @@ sealed class Result<out E, out S> {
             is Success -> fnS(data)
         }
 
-    inline fun applyIfSuccess(block: Success<S>.() -> Unit): Result<E, S> {
+    inline fun onSuccess(block: Success<S>.() -> Unit): Result<E, S> {
         if (this is Success)
+            block()
+        return this
+    }
+
+    inline fun onFailure(block: Error<E>.() -> Unit): Result<E, S> {
+        if (this is Error)
             block()
         return this
     }
