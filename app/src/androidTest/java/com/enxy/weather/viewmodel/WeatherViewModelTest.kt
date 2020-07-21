@@ -26,7 +26,6 @@ class WeatherViewModelTest {
     @Test fun testDefaultValues() {
         assertTrue(getValue(viewModel.isAppFirstLaunched))
         assertFalse(getValue(viewModel.isLoading))
-        assertTrue(getValue(viewModel.favouriteLocationsList).isEmpty())
         assertNull(getValue(viewModel.forecast))
         assertNull(getValue(viewModel.searchedLocations))
     }

@@ -22,7 +22,8 @@ import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.core.parameter.parametersOf
 
 class FavouriteFragment : BottomSheetDialogFragment() {
-    private val viewModel: WeatherViewModel by sharedViewModel()
+    private val activityViewModel: WeatherViewModel by sharedViewModel()
+    private val viewModel: FavouriteViewModel by inject()
     private val favouriteAdapter: LocationAdapter by inject {
         parametersOf(::onLocationChange)
     }
@@ -53,7 +54,7 @@ class FavouriteFragment : BottomSheetDialogFragment() {
             setHasFixedSize(true)
         }
         with(viewModel) {
-            observe(favouriteLocationsList, ::renderData)
+            observe(favouriteLocations, ::renderData)
             failure(favouriteLocationsFailure, ::handleFailure)
         }
     }
@@ -83,7 +84,7 @@ class FavouriteFragment : BottomSheetDialogFragment() {
     }
 
     private fun onLocationChange(location: Location) {
-        viewModel.fetchWeatherForecast(location)
+        activityViewModel.fetchWeatherForecast(location)
         runDelayed(FORECAST_RIPPLE_DELAY) {
             dismiss()
         }

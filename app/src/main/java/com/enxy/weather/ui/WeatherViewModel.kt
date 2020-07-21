@@ -21,8 +21,6 @@ class WeatherViewModel(
     val forecastFailure = MutableLiveData<Failure>()
     val searchedLocations = MutableLiveData<ArrayList<Location>>()
     val searchedLocationsFailure = MutableLiveData<Failure>()
-    val favouriteLocationsList = MutableLiveData<ArrayList<Location>>()
-    val favouriteLocationsFailure = MutableLiveData<Failure>()
     val isLoading = MutableLiveData<Boolean>(false)
     val isAppFirstLaunched: LiveData<Boolean> = liveData {
         val result = !weatherRepository.hasCachedForecasts()
@@ -34,7 +32,6 @@ class WeatherViewModel(
 
     init {
         fetchLastOpenedForecast()
-        fetchFavouriteLocations()
     }
 
     private fun fetchLastOpenedForecast() = viewModelScope.launch {
@@ -46,11 +43,6 @@ class WeatherViewModel(
             }
             is Result.Error -> handleForecastFailure(result.error)
         }
-    }
-
-    private fun fetchFavouriteLocations() = viewModelScope.launch {
-        weatherRepository.getFavouriteLocationsList()
-            .handle(::handleFavouriteLocationsFailure, ::handleFavouriteLocationsSuccess)
     }
 
     fun fetchWeatherForecast(location: Location) = viewModelScope.launch {
@@ -71,7 +63,6 @@ class WeatherViewModel(
             it.isFavourite = isFavourite
             weatherRepository.changeForecastFavouriteStatus(it)
         }
-        fetchFavouriteLocations()
     }
 
     fun fetchListOfLocationsByName(locationName: String) = viewModelScope.launch {
@@ -113,14 +104,5 @@ class WeatherViewModel(
 
     private fun handleLocationFailure(failure: Failure) {
         searchedLocationsFailure.value = failure
-    }
-
-    private fun handleFavouriteLocationsSuccess(locationList: ArrayList<Location>) {
-        favouriteLocationsList.value = locationList
-        favouriteLocationsFailure.value = null
-    }
-
-    private fun handleFavouriteLocationsFailure(failure: Failure) {
-        favouriteLocationsFailure.value = failure
     }
 }
