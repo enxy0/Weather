@@ -21,10 +21,10 @@ class FavouriteViewModel(private val weatherRepository: WeatherRepository) : Vie
 
     init {
         viewModelScope.launch {
-            weatherRepository.getFavouriteLocationsList().onSuccess {
-                _favouriteLocations.value = data
+            weatherRepository.getFavouriteLocations().onSuccess {
+                _favouriteLocations.value = it
             }.onFailure {
-                _favouriteLocationsFailure.value = error
+                _favouriteLocationsFailure.value = it
             }
         }
     }

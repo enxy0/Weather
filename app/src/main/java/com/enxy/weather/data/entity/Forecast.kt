@@ -5,6 +5,8 @@ import com.enxy.weather.data.db.Converters
 import com.enxy.weather.utils.Pressure
 import com.enxy.weather.utils.Temperature
 import com.enxy.weather.utils.Wind
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -46,44 +48,46 @@ data class Forecast(
      * Pressure - hectoPascals (default), millimeters of mercury
      * @return [Forecast] in new units of temperature, wind and pressure
      */
-    fun inUnits(
+    suspend fun inUnits(
         temperatureUnit: Temperature = Temperature.CELSIUS,
         windUnit: Wind = Wind.METERS_PER_SECOND,
         pressureUnit: Pressure = Pressure.MILLIMETERS_OF_MERCURY
-    ): Forecast = copy(
-        currentForecast = currentForecast.copy(
-            temperature = when (temperatureUnit) {
-                Temperature.FAHRENHEIT -> celsiusToFahrenheit(currentForecast.temperature)
-                else -> currentForecast.temperature
-            },
-            feelsLike = when (temperatureUnit) {
-                Temperature.FAHRENHEIT -> celsiusToFahrenheit(currentForecast.feelsLike)
-                else -> currentForecast.feelsLike
-            },
-            wind = when (windUnit) {
-                Wind.KILOMETERS_PER_HOUR -> metersPerSecToKilometersPerHour(currentForecast.wind)
-                else -> currentForecast.wind
-            },
-            pressure = when (pressureUnit) {
-                Pressure.MILLIMETERS_OF_MERCURY -> hectoPascalsToMmHg(currentForecast.pressure)
-                else -> currentForecast.pressure
-            }
-        ),
-        hourForecastList = hourForecastList.map { hourForecast ->
-            hourForecast.temperature = when (temperatureUnit) {
-                Temperature.FAHRENHEIT -> celsiusToFahrenheit(hourForecast.temperature)
-                else -> hourForecast.temperature
-            }
-            hourForecast
-        } as ArrayList,
-        dayForecastList = dayForecastList.map { dayForecast ->
-            if (temperatureUnit == Temperature.FAHRENHEIT) {
-                dayForecast.highestTemp = celsiusToFahrenheit(dayForecast.highestTemp)
-                dayForecast.lowestTemp = celsiusToFahrenheit(dayForecast.lowestTemp)
-            }
-            dayForecast
-        } as ArrayList
-    )
+    ): Forecast = withContext(Dispatchers.Default) {
+        copy(
+            currentForecast = currentForecast.copy(
+                temperature = when (temperatureUnit) {
+                    Temperature.FAHRENHEIT -> celsiusToFahrenheit(currentForecast.temperature)
+                    else -> currentForecast.temperature
+                },
+                feelsLike = when (temperatureUnit) {
+                    Temperature.FAHRENHEIT -> celsiusToFahrenheit(currentForecast.feelsLike)
+                    else -> currentForecast.feelsLike
+                },
+                wind = when (windUnit) {
+                    Wind.KILOMETERS_PER_HOUR -> metersPerSecToKilometersPerHour(currentForecast.wind)
+                    else -> currentForecast.wind
+                },
+                pressure = when (pressureUnit) {
+                    Pressure.MILLIMETERS_OF_MERCURY -> hectoPascalsToMmHg(currentForecast.pressure)
+                    else -> currentForecast.pressure
+                }
+            ),
+            hourForecastList = hourForecastList.map { hourForecast ->
+                hourForecast.temperature = when (temperatureUnit) {
+                    Temperature.FAHRENHEIT -> celsiusToFahrenheit(hourForecast.temperature)
+                    else -> hourForecast.temperature
+                }
+                hourForecast
+            } as ArrayList,
+            dayForecastList = dayForecastList.map { dayForecast ->
+                if (temperatureUnit == Temperature.FAHRENHEIT) {
+                    dayForecast.highestTemp = celsiusToFahrenheit(dayForecast.highestTemp)
+                    dayForecast.lowestTemp = celsiusToFahrenheit(dayForecast.lowestTemp)
+                }
+                dayForecast
+            } as ArrayList
+        )
+    }
 
     @Ignore private val millimeterOfMercury: Double = 133.3223684
 

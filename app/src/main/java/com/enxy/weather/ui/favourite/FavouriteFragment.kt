@@ -12,9 +12,9 @@ import com.enxy.weather.ui.WeatherViewModel
 import com.enxy.weather.ui.search.LocationAdapter
 import com.enxy.weather.ui.settings.SettingsFragment
 import com.enxy.weather.utils.exception.Failure
+import com.enxy.weather.utils.extension.dismiss
 import com.enxy.weather.utils.extension.failure
 import com.enxy.weather.utils.extension.observe
-import com.enxy.weather.utils.extension.runDelayed
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.favourite_fragment.*
 import org.koin.android.ext.android.inject
@@ -73,20 +73,17 @@ class FavouriteFragment : BottomSheetDialogFragment() {
 
     private fun setUpListeners() {
         settings.setOnClickListener {
-            runDelayed(SETTINGS_RIPPLE_DELAY) {
+            dismiss(SETTINGS_RIPPLE_DELAY) {
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.mainContainer, SettingsFragment.newInstance())
                     .addToBackStack(SettingsFragment.TAG)
                     .commit()
-                dismiss()
             }
         }
     }
 
     private fun onLocationChange(location: Location) {
         activityViewModel.fetchWeatherForecast(location)
-        runDelayed(FORECAST_RIPPLE_DELAY) {
-            dismiss()
-        }
+        dismiss(delay = FORECAST_RIPPLE_DELAY)
     }
 }

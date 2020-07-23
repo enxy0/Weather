@@ -13,6 +13,7 @@ import com.enxy.weather.utils.Result.Error
 import com.enxy.weather.utils.Result.Success
 import com.enxy.weather.utils.exception.Failure
 import com.enxy.weather.utils.extension.formatTo
+import com.enxy.weather.utils.extension.toLocation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.*
@@ -33,61 +34,58 @@ class WeatherRepository(
 
     suspend fun getForecast(location: Location): Result<Failure, Forecast> {
         database.getForecastDao().updateLastOpenedForecast(location.locationName)
-        val isForecastCached = database.getForecastDao().isForecastCached(location.locationName)
-        return if (isForecastCached) {
-            val forecast: Forecast =
-                database.getForecastDao().getForecastByLocationName(location.locationName)
-            if (!forecast.isOutdated())
-                Success(forecast)
-            else
-                requestForecast(location).onSuccess {
-                    database.getForecastDao().updateForecast(data)
-                    data.isFavourite = forecast.isFavourite
-                }
-        } else
-            requestForecast(location).onSuccess {
-                database.getForecastDao().insertForecast(data)
-            }
-    }
+        val isForecastCached = database.getForecastDao().isForecastSaved(location.locationName)
 
-    suspend fun updateForecast(forecast: Forecast): Result<Failure, Forecast> {
-        val location = Location(forecast.locationName, forecast.longitude, forecast.latitude)
-        return requestForecast(location).onSuccess {
-            database.getForecastDao().updateForecast(data)
-            data.isFavourite = forecast.isFavourite
+        return if (isForecastCached) {
+            val forecast: Forecast = database
+                .getForecastDao()
+                .getForecastByLocationName(location.locationName)
+
+            if (!forecast.isOutdated()) {
+                Success(forecast)
+            } else {
+                requestForecast(location).onSuccess {
+                    database.getForecastDao().updateForecast(it)
+                    it.isFavourite = forecast.isFavourite
+                }
+            }
+        } else {
+            requestForecast(location).onSuccess {
+                database.getForecastDao().insertForecast(it)
+            }
         }
     }
 
+    suspend fun updateForecast(forecast: Forecast): Result<Failure, Forecast> =
+        requestForecast(forecast.toLocation()).onSuccess {
+            it.isFavourite = forecast.isFavourite
+            database.getForecastDao().updateForecast(it)
+        }
+
+
     suspend fun getLastOpenedForecast(): Result<Failure, Forecast> {
-        return if (hasCachedForecasts())
+        return if (isDatabaseEmpty()) {
+            Error(Failure.DataNotFound)
+        } else {
             Success(database.getForecastDao().getLastOpenedForecast())
-        else
-            Error(Failure.DataNotFoundInCache)
+        }
     }
 
-    suspend fun hasCachedForecasts(): Boolean = database.getForecastDao().hasCachedForecasts()
+    suspend fun isDatabaseEmpty(): Boolean = database.getForecastDao().isDatabaseEmpty()
 
-    suspend fun getFavouriteLocationsList(): Result<Failure, ArrayList<Location>> {
-        val favouriteForecasts = database.getForecastDao().getFavouriteForecastList()
-        return if (favouriteForecasts != null)
-            withContext(Dispatchers.Default) {
-                Success(
-                    favouriteForecasts.map {
-                        Location(
-                            locationName = it.locationName,
-                            latitude = it.latitude,
-                            longitude = it.longitude
-                        )
-                    } as ArrayList
-                )
+    suspend fun getFavouriteLocations(): Result<Failure, ArrayList<Location>> =
+        withContext(Dispatchers.IO) {
+            val favouriteForecasts = database.getForecastDao().getFavouriteForecastList()
+            if (favouriteForecasts != null) {
+                Success(favouriteForecasts.map { it.toLocation() } as ArrayList)
+            } else {
+                Error(Failure.DataNotFound)
             }
-        else
-            Error(Failure.DataNotFoundInCache)
-    }
+        }
 
-    suspend fun changeForecastFavouriteStatus(forecast: Forecast) {
+    suspend fun changeForecastFavouriteStatus(forecast: Forecast, isFavourite: Boolean) {
         database.getForecastDao()
-            .setForecastFavouriteStatus(forecast.longitude, forecast.latitude, forecast.isFavourite)
+            .setForecastFavouriteStatus(forecast.locationName, isFavourite)
     }
 
     private suspend fun requestForecast(location: Location): Result<Failure, Forecast> =
@@ -102,7 +100,7 @@ class WeatherRepository(
                 )
             },
             transform = ::responseToForecast
-        ).onSuccess { data.locationName = location.locationName }
+        ).onSuccess { it.locationName = location.locationName }
 
     private fun responseToForecast(response: WeatherResponse) = Forecast(
         locationName = response.timezone, // temporary name that will be changed

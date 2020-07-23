@@ -13,13 +13,3 @@ fun <T : Any, L : LiveData<T>> LifecycleOwner.observe(liveData: L, body: (T?) ->
 
 fun <L : LiveData<Failure>> LifecycleOwner.failure(liveData: L, body: (Failure?) -> Unit) =
     liveData.observe(this, Observer(body))
-
-/**
- * Runs (invokes) function after the delay
- */
-inline fun LifecycleOwner.runDelayed(delayTime: Long, crossinline fn: () -> Unit) {
-    lifecycleScope.launch {
-        delay(delayTime)
-        fn()
-    }
-}

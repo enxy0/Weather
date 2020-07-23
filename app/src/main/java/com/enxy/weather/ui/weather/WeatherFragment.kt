@@ -21,8 +21,8 @@ import com.enxy.weather.ui.search.SearchFragment
 import com.enxy.weather.utils.Pressure
 import com.enxy.weather.utils.Wind
 import com.enxy.weather.utils.exception.Failure
-import com.enxy.weather.utils.exception.Failure.ConnectionError
-import com.enxy.weather.utils.exception.Failure.ServerError
+import com.enxy.weather.utils.exception.Failure.NoConnection
+import com.enxy.weather.utils.exception.Failure.BadServerResponse
 import com.enxy.weather.utils.extension.*
 import kotlinx.android.synthetic.main.main_fragment.*
 import kotlinx.android.synthetic.main.precipitation_card_view.view.*
@@ -96,7 +96,7 @@ class WeatherFragment : BaseFragment() {
 
     private fun handleFailure(failure: Failure?) {
         when (failure) {
-            is ConnectionError -> {
+            is NoConnection -> {
                 snackbarAction(
                     coordinatorLayout,
                     bottomAppBar,
@@ -107,7 +107,7 @@ class WeatherFragment : BaseFragment() {
                     swipeRefreshLayout.isRefreshing = true
                 }
             }
-            is ServerError -> {
+            is BadServerResponse -> {
                 snackbarAction(
                     coordinatorLayout,
                     bottomAppBar,

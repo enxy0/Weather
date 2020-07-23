@@ -8,4 +8,4 @@ import java.util.*
  * Don't forget that timestamp = unixTimestamp * 1000L
  */
 infix fun Long.formatTo(pattern: String): String =
-    SimpleDateFormat(pattern, Locale.getDefault()).format(Date(this * 1000L))
+    SimpleDateFormat(pattern, Locale.US).format(Date(this * 1000L))

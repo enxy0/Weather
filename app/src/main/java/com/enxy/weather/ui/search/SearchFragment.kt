@@ -15,6 +15,7 @@ import com.enxy.weather.data.entity.Location
 import com.enxy.weather.ui.WeatherViewModel
 import com.enxy.weather.ui.weather.WeatherFragment
 import com.enxy.weather.utils.exception.Failure
+import com.enxy.weather.utils.exception.Failure.*
 import com.enxy.weather.utils.extension.*
 import kotlinx.android.synthetic.main.search_fragment.*
 import org.koin.android.ext.android.inject
@@ -54,7 +55,7 @@ class SearchFragment : BaseFragment() {
     private fun renderData(locations: ArrayList<Location>?) {
         locations?.let {
             if (locations.isEmpty()) {
-                handleFailure(Failure.NoLocationsFound)
+                handleFailure(LocationsNotFound)
             } else {
                 hints.hide()
                 locationList.show()
@@ -66,7 +67,7 @@ class SearchFragment : BaseFragment() {
     private fun showHint(hintToShow: View) {
         locationList.hide()
         hints.show()
-        hints.children.iterator().forEach {
+        hints.children.forEach {
             if (it != hintToShow)
                 it.hide()
             else
@@ -76,19 +77,20 @@ class SearchFragment : BaseFragment() {
 
     private fun handleFailure(failure: Failure?) {
         when (failure) {
-            is Failure.NoLocationsFound -> showHint(noLocationsHint)
-            is Failure.ConnectionError -> showHint(noInternetHint)
-            is Failure.ServerError -> snackbarShort(rootLayout, R.string.failure_server_error)
+            is LocationsNotFound -> showHint(noLocationsHint)
+            is NoConnection -> showHint(noInternetHint)
+            is BadServerResponse -> snackbarShort(rootLayout, R.string.failure_server_error)
         }
     }
 
     private fun onLocationChange(location: Location) {
         viewModel.fetchWeatherForecast(location)
         hideKeyboard()
-        if (isAppFirstLaunched())
+        if (isAppFirstLaunched()) {
             showMainScreen()
-        else
+        } else {
             parentFragmentManager.popBackStack()
+        }
     }
 
     private fun setUpRecyclerView() {

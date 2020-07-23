@@ -8,21 +8,21 @@ sealed class Result<out E, out S> {
     data class Error<out E>(val error: E) : Result<E, Nothing>()
     data class Success<out S>(val data: S) : Result<Nothing, S>()
 
-    fun <R> handle(fnE: (E) -> R, fnS: (S) -> R): R =
+    fun <R> handle(onFailure: (E) -> R, onSuccess: (S) -> R): R =
         when (this) {
-            is Error -> fnE(error)
-            is Success -> fnS(data)
+            is Error -> onFailure(error)
+            is Success -> onSuccess(data)
         }
 
-    inline fun onSuccess(block: Success<S>.() -> Unit): Result<E, S> {
+    inline fun onSuccess(block: (S) -> Unit): Result<E, S> {
         if (this is Success)
-            block()
+            block(data)
         return this
     }
 
-    inline fun onFailure(block: Error<E>.() -> Unit): Result<E, S> {
+    inline fun onFailure(block: (E) -> Unit): Result<E, S> {
         if (this is Error)
-            block()
+            block(error)
         return this
     }
 }
