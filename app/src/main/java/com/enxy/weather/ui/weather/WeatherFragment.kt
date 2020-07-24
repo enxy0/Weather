@@ -88,7 +88,7 @@ class WeatherFragment : BaseFragment() {
     }
 
     private fun setUpSwipeRefreshLayout() {
-        swipeRefreshLayout.setProgressViewOffset(true, 0, 55.dpToPixels)
+        swipeRefreshLayout.setProgressViewOffset(true, 0, 55.dp)
         swipeRefreshLayout.setOnRefreshListener {
             viewModel.updateWeatherForecast()
         }

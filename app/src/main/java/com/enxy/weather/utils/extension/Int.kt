@@ -2,10 +2,10 @@ package com.enxy.weather.utils.extension
 
 import android.content.res.Resources
 
-val Int.pixelsToDp: Int
+val Int.px: Int
     get() = (this / Resources.getSystem().displayMetrics.density).toInt()
 
-val Int.dpToPixels: Int
+val Int.dp: Int
     get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 
 fun Int.withSign(): String = when {

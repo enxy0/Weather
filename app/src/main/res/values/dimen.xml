@@ -29,4 +29,5 @@
     <dimen name="hint_text_margin">8dp</dimen>
     <dimen name="hint_layout_margin">24dp</dimen>
     <dimen name="day_margin">12dp</dimen>
+    <dimen name="day_details_icon_size">26dp</dimen>
 </resources>
