@@ -1,8 +1,6 @@
 package com.enxy.weather.data.db
 
-import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.enxy.weather.data.entity.CurrentForecast
@@ -15,14 +13,5 @@ abstract class AppDataBase : RoomDatabase() {
 
     companion object {
         const val DATABASE_NAME = "weather-db"
-
-        @Volatile private var instance: AppDataBase? = null
-
-        fun getInstance(context: Context): AppDataBase {
-            return instance ?: synchronized(this) {
-                instance ?: Room.databaseBuilder(context, AppDataBase::class.java, DATABASE_NAME)
-                    .build()
-            }
-        }
     }
 }

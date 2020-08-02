@@ -1,8 +1,10 @@
 package com.enxy.weather.di
 
+import androidx.room.Room
 import com.enxy.weather.data.AppSettings
 import com.enxy.weather.data.AppSettingsImpl
 import com.enxy.weather.data.db.AppDataBase
+import com.enxy.weather.data.db.AppDataBase.Companion.DATABASE_NAME
 import com.enxy.weather.data.repository.LocationRepository
 import com.enxy.weather.data.repository.WeatherRepository
 import com.enxy.weather.ui.WeatherViewModel
@@ -18,6 +20,9 @@ val appModule = module {
     viewModel { FavouriteViewModel(get()) }
     single { WeatherRepository(get(), get()) }
     single { LocationRepository(get()) }
-    single { AppDataBase.getInstance(androidApplication()) }
+    single {
+        Room.databaseBuilder(androidApplication(), AppDataBase::class.java, DATABASE_NAME)
+            .build()
+    }
     single { AppSettingsImpl(androidApplication()) as AppSettings }
 }
