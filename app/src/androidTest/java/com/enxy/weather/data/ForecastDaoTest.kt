@@ -1,8 +1,7 @@
 package com.enxy.weather.data
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.enxy.weather.utils.appDatabase
-import com.enxy.weather.utils.forecasts
+import com.enxy.weather.utils.*
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.*
@@ -24,41 +23,64 @@ class ForecastDaoTest {
         database.close()
     }
 
-    @Test fun testSavedForecasts() = runBlocking {
-        assertFalse(forecastDao.isDatabaseEmpty())
+    @Test fun testAddedForecasts() = runBlocking {
+        assertFalse(forecastDao.getForecasts().isEmpty())
+        assertEquals(3, forecastDao.getForecasts().size)
     }
 
     @Test fun testFavouriteForecasts() = runBlocking {
-        assertEquals(2, forecastDao.getFavouriteForecasts()!!.size)
-        assertTrue(forecastDao.getFavouriteForecasts()!![0].isFavourite)
-        assertTrue(forecastDao.getFavouriteForecasts()!![1].isFavourite)
-    }
+        val savedForecasts = forecastDao.getFavouriteForecasts()
 
-    @Test fun testIsForecastCached() = runBlocking {
-        assertTrue(forecastDao.isForecastSaved(forecasts[0].locationName))
-        assertTrue(forecastDao.isForecastSaved(forecasts[1].locationName))
-        assertTrue(forecastDao.isForecastSaved(forecasts[2].locationName))
+        // Size of favourite forecasts pre-defined: 2
+        assertEquals(2, savedForecasts.size)
+
+        // Checking each value of isFavourite
+        assertTrue(savedForecasts[0].isFavourite)
+        assertTrue(savedForecasts[1].isFavourite)
     }
 
     @Test fun testLastOpenedForecast() = runBlocking {
-        assertTrue(forecastDao.getCurrentForecast().wasOpenedLast)
+        // Checking that Saint-Petersburg forecast is the current forecast (wasOpenedLast=true)
+        assertEquals(spbForecast.locationName, forecastDao.getCurrentForecast()!!.locationName)
     }
 
     @Test fun testUpdateLastOpenedForecast() = runBlocking {
-        forecastDao.updateCurrentForecast("Paris, France")
-        assertFalse(forecastDao.getForecastByLocationName("Saint-Petersburg, Russia").wasOpenedLast)
-        assertEquals("Paris, France", forecastDao.getCurrentForecast().locationName)
+        // Changing current forecast to Paris
+        forecastDao.updateCurrentForecast(parisForecast.locationName)
+
+        // Getting Saint-Petersburg forecast from Dao
+        val spb = forecastDao.getForecasts().find {
+            it.locationName == spbForecast.locationName
+        }
+
+        // Checking wasOpenedLast of SPb, since Paris is current now (wasOpenedLast=true)
+        assertFalse(spb!!.wasOpenedLast)
+
+        // Making sure Paris is the current forecast
+        assertEquals(parisForecast.locationName, forecastDao.getCurrentForecast()!!.locationName)
     }
 
-    @Test fun testChangeIsFavouriteStatus() = runBlocking {
-        forecastDao.setForecastFavouriteStatus("Moscow, Central Administrative Okrug, Russia", true)
-        assertTrue(forecastDao.getForecastByLocationName("Moscow, Central Administrative Okrug, Russia").isFavourite)
-        forecastDao.setForecastFavouriteStatus("Paris, France", false)
-        assertFalse(forecastDao.getForecastByLocationName("Paris, France").isFavourite)
-    }
+    @Test fun testChangeFavouriteForecast() = runBlocking {
+        // Changing favourite status of Moscow to true
+        forecastDao.setForecastFavouriteStatus(moscowForecast.locationName, true)
 
-    @Test fun testDeleteForecast() = runBlocking {
-        forecastDao.deleteForecast(forecasts[0])
-        assertNull(forecastDao.getForecastByLocationName("Moscow, Central Administrative Okrug, Russia"))
+        // Getting Moscow forecast from Dao
+        val moscow = forecastDao.getForecasts().find {
+            it.locationName == moscowForecast.locationName
+        }
+
+        // Checking that isFavourite value changed
+        assertTrue(moscow!!.isFavourite)
+
+        // Changing favourite status of Paris to false
+        forecastDao.setForecastFavouriteStatus(parisForecast.locationName, false)
+
+        // Getting Paris forecast from Dao
+        val paris = forecastDao.getForecasts().find {
+            it.locationName == parisForecast.locationName
+        }
+
+        // Checking that isFavourite value changed
+        assertFalse(paris!!.isFavourite)
     }
 }

@@ -1,0 +1,88 @@
+package com.enxy.weather.utils
+
+import com.enxy.weather.R
+import com.enxy.weather.data.entity.*
+import java.util.*
+
+/**
+ * [Forecast] object used for tests
+ */
+val fakeForecast = Forecast(
+    id = -1,
+    locationName = "Moscow, Central Administrative Okrug, Russia",
+    longitude = 37.6174943,
+    latitude = 55.7504461,
+    timestamp = Calendar.getInstance(),
+    wasOpenedLast = false,
+    isFavourite = false,
+    currentForecast = CurrentForecast(
+        currentForecastId = 0,
+        temperature = Units.Temperature(21),
+        description = "Broken clouds",
+        feelsLike = Units.Temperature(18),
+        wind = Units.Wind(5),
+        pressure = Units.Pressure(1022),
+        humidity = 56,
+        imageId = 2131230822
+    ),
+    hourForecastList = arrayListOf(
+        HourForecast(0, Units.Temperature(21), "15:00", 1),
+        HourForecast(1, Units.Temperature(19), "18:00", 2),
+        HourForecast(2, Units.Temperature(16), "21:00", 3),
+        HourForecast(3, Units.Temperature(15), "23:00", 4)
+    ),
+    dayForecastList = arrayListOf(
+        DayForecast(Units.Temperature(21), Units.Temperature(16), "Thursday", "25.06", R.drawable.current_weather_thunderstorm_rain_heavy),
+        DayForecast(Units.Temperature(20), Units.Temperature(15), "Friday", "26.06", R.drawable.current_weather_broken_clouds),
+        DayForecast(Units.Temperature(23), Units.Temperature(17), "Saturday", "27.06", R.drawable.weather_clear_day),
+        DayForecast(Units.Temperature(17), Units.Temperature(9), "Sunday", "28.06", R.drawable.current_weather_snow_middle),
+        DayForecast(Units.Temperature(10), Units.Temperature(3), "Monday", "29.06", R.drawable.current_weather_mist),
+        DayForecast(Units.Temperature(22), Units.Temperature(16), "Tuesday", "30.06", R.drawable.current_weather_scattered_clouds),
+        DayForecast(Units.Temperature(22), Units.Temperature(17), "Wednesday", "01.07", R.drawable.current_weather_rain_light)
+    )
+)
+
+/**
+ * Moscow [Forecast] object used for tests
+ */
+val moscowForecast = fakeForecast.copy(
+    id = 1,
+    locationName = "Moscow, Central Administrative Okrug, Russia",
+    longitude = 37.6174943,
+    latitude = 55.7504461,
+    wasOpenedLast = false,
+    isFavourite = false
+)
+
+/**
+ * Saint-Petersburg [Forecast] object used for tests
+ */
+val spbForecast = fakeForecast.copy(
+    id = 2,
+    locationName = "Saint-Petersburg, Russia",
+    longitude = 30.3350986,
+    latitude = 59.9342802,
+    wasOpenedLast = true,
+    isFavourite = true
+)
+
+/**
+ * Paris [Forecast] object used for tests
+ */
+val parisForecast = fakeForecast.copy(
+    id = 3,
+    locationName = "Paris, France",
+    longitude = 2.3522219,
+    latitude = 48.856614,
+    wasOpenedLast = false,
+    isFavourite = true
+)
+
+/**
+ * List of forecasts used for tests
+ */
+val forecasts = listOf(
+    moscowForecast,
+    spbForecast,
+    parisForecast
+)
