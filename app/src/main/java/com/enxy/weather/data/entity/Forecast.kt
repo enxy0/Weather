@@ -1,18 +1,19 @@
 package com.enxy.weather.data.entity
 
-import androidx.room.*
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import com.enxy.weather.data.db.Converters
-import com.enxy.weather.utils.Pressure
-import com.enxy.weather.utils.Temperature
-import com.enxy.weather.utils.Wind
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.enxy.weather.utils.PressureUnit
+import com.enxy.weather.utils.TemperatureUnit
+import com.enxy.weather.utils.WindUnit
 import java.util.*
-import kotlin.math.roundToInt
 
 @Entity(tableName = "forecast")
 data class Forecast(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0,
     var locationName: String,
     val longitude: Double,
     val latitude: Double,
@@ -39,63 +40,29 @@ data class Forecast(
         return currentTimeInMillis - timestamp.timeInMillis >= twoHoursInMillis
     }
 
-    /**
-     * Applies given units to the forecast
-     *
-     * Supported:
-     * Temperature - celcius (default), fahrenheit
-     * Wind - meters per second (default), kilometers per hour
-     * Pressure - hectoPascals (default), millimeters of mercury
-     * @return [Forecast] in new units of temperature, wind and pressure
-     */
-    suspend fun inUnits(
-        temperatureUnit: Temperature = Temperature.CELSIUS,
-        windUnit: Wind = Wind.METERS_PER_SECOND,
-        pressureUnit: Pressure = Pressure.MILLIMETERS_OF_MERCURY
-    ): Forecast = withContext(Dispatchers.Default) {
-        copy(
-            currentForecast = currentForecast.copy(
-                temperature = when (temperatureUnit) {
-                    Temperature.FAHRENHEIT -> celsiusToFahrenheit(currentForecast.temperature)
-                    else -> currentForecast.temperature
-                },
-                feelsLike = when (temperatureUnit) {
-                    Temperature.FAHRENHEIT -> celsiusToFahrenheit(currentForecast.feelsLike)
-                    else -> currentForecast.feelsLike
-                },
-                wind = when (windUnit) {
-                    Wind.KILOMETERS_PER_HOUR -> metersPerSecToKilometersPerHour(currentForecast.wind)
-                    else -> currentForecast.wind
-                },
-                pressure = when (pressureUnit) {
-                    Pressure.MILLIMETERS_OF_MERCURY -> hectoPascalsToMmHg(currentForecast.pressure)
-                    else -> currentForecast.pressure
-                }
-            ),
-            hourForecastList = hourForecastList.map { hourForecast ->
-                hourForecast.temperature = when (temperatureUnit) {
-                    Temperature.FAHRENHEIT -> celsiusToFahrenheit(hourForecast.temperature)
-                    else -> hourForecast.temperature
-                }
-                hourForecast
-            } as ArrayList,
-            dayForecastList = dayForecastList.map { dayForecast ->
-                if (temperatureUnit == Temperature.FAHRENHEIT) {
-                    dayForecast.highestTemp = celsiusToFahrenheit(dayForecast.highestTemp)
-                    dayForecast.lowestTemp = celsiusToFahrenheit(dayForecast.lowestTemp)
-                }
-                dayForecast
-            } as ArrayList
-        )
+    fun updateTemperatureUnit(unit: TemperatureUnit) {
+        currentForecast.temperature.updateUnit(unit)
+        currentForecast.feelsLike.updateUnit(unit)
+        hourForecastList.forEach {
+            it.temperature.updateUnit(unit)
+        }
+        dayForecastList.forEach {
+            it.highestTemp.updateUnit(unit)
+            it.lowestTemp.updateUnit(unit)
+        }
     }
 
-    @Ignore private val millimeterOfMercury: Double = 133.3223684
+    fun updatePressureUnit(unit: PressureUnit) {
+        currentForecast.pressure.updateUnit(unit)
+//        dayForecastList.forEach {
+//            it.pressure.updateUnit(type)
+//        }
+    }
 
-    private fun hectoPascalsToMmHg(hectoPascals: Int): Int =
-        (hectoPascals / millimeterOfMercury * 100).roundToInt()
-
-    private fun celsiusToFahrenheit(celsius: Int): Int = (celsius * 1.8 + 32).roundToInt()
-
-    private fun metersPerSecToKilometersPerHour(metersPerSec: Int): Int =
-        metersPerSec * 60 * 60 / 1000
+    fun updateWindUnit(unit: WindUnit) {
+        currentForecast.wind.updateUnit(unit)
+//        dayForecastList.forEach {
+//            it.wind.updateUnit(type)
+//        }
+    }
 }

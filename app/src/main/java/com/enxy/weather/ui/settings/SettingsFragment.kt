@@ -8,9 +8,9 @@ import com.enxy.weather.BuildConfig
 import com.enxy.weather.R
 import com.enxy.weather.base.BaseFragment
 import com.enxy.weather.ui.WeatherViewModel
-import com.enxy.weather.utils.Pressure
-import com.enxy.weather.utils.Temperature
-import com.enxy.weather.utils.Wind
+import com.enxy.weather.utils.PressureUnit
+import com.enxy.weather.utils.TemperatureUnit
+import com.enxy.weather.utils.WindUnit
 import com.enxy.weather.utils.extension.observe
 import com.enxy.weather.utils.extension.openLink
 import kotlinx.android.synthetic.main.settings_fragment.*
@@ -42,46 +42,40 @@ class SettingsFragment : BaseFragment() {
         }
     }
 
-    private fun setAvailableTemperatureUnits(temperatureUnits: Array<Temperature>?) {
-        temperatureUnits?.let {
-            temperatureLayout.setOnClickListener {
-                MaterialDialog(requireContext()).show {
-                    title(R.string.temperature_title)
-                    listItems(items = temperatureUnits.map { it.displayedName }) { _, index, text ->
-                        this@SettingsFragment.temperature.text = text
-                        viewModel.updateTemperatureUnit(temperatureUnits[index])
-                        activityViewModel.updateForecastUnits()
-                    }
+    private fun setAvailableTemperatureUnits(temperatureUnits: Array<TemperatureUnit>) {
+        temperatureLayout.setOnClickListener {
+            MaterialDialog(requireContext()).show {
+                title(R.string.temperature_title)
+                listItems(items = temperatureUnits.map { it.displayedName }) { _, index, text ->
+                    this@SettingsFragment.temperature.text = text
+                    viewModel.updateTemperatureUnit(temperatureUnits[index])
+                    activityViewModel.applyNewUnits()
                 }
             }
         }
     }
 
-    private fun setAvailableWindUnits(windUnits: Array<Wind>?) {
-        windUnits?.let {
-            windLayout.setOnClickListener {
-                MaterialDialog(requireContext()).show {
-                    title(R.string.wind_title)
-                    listItems(items = windUnits.map { it.displayedName }) { _, index, text ->
-                        this@SettingsFragment.wind.text = text
-                        viewModel.updateWindUnit(windUnits[index])
-                        activityViewModel.updateForecastUnits()
-                    }
+    private fun setAvailableWindUnits(windUnits: Array<WindUnit>) {
+        windLayout.setOnClickListener {
+            MaterialDialog(requireContext()).show {
+                title(R.string.wind_title)
+                listItems(items = windUnits.map { it.displayedName }) { _, index, text ->
+                    this@SettingsFragment.wind.text = text
+                    viewModel.updateWindUnit(windUnits[index])
+                    activityViewModel.applyNewUnits()
                 }
             }
         }
     }
 
-    private fun setAvailablePressureUnits(pressureUnits: Array<Pressure>?) {
-        pressureUnits?.let {
-            pressureLayout.setOnClickListener {
-                MaterialDialog(requireContext()).show {
-                    title(R.string.pressure_title)
-                    listItems(items = pressureUnits.map { it.displayedName }) { _, index, text ->
-                        this@SettingsFragment.pressure.text = text
-                        viewModel.updatePressureUnit(pressureUnits[index])
-                        activityViewModel.updateForecastUnits()
-                    }
+    private fun setAvailablePressureUnits(pressureUnits: Array<PressureUnit>) {
+        pressureLayout.setOnClickListener {
+            MaterialDialog(requireContext()).show {
+                title(R.string.pressure_title)
+                listItems(items = pressureUnits.map { it.displayedName }) { _, index, text ->
+                    this@SettingsFragment.pressure.text = text
+                    viewModel.updatePressureUnit(pressureUnits[index])
+                    activityViewModel.applyNewUnits()
                 }
             }
         }

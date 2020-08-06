@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.enxy.weather.R
 import com.enxy.weather.data.entity.Location
-import com.enxy.weather.ui.search.LocationAdapter.LocationHolder
+import com.enxy.weather.ui.search.SearchAdapter.LocationHolder
 import kotlinx.android.synthetic.main.item_location.view.*
 
-class LocationAdapter(private val onLocationChange: (Location) -> Unit) :
+class SearchAdapter(private val onLocationChange: (Location) -> Unit) :
     RecyclerView.Adapter<LocationHolder>() {
     private val data = ArrayList<Location>()
 

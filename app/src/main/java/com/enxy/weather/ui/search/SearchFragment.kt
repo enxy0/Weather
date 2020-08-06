@@ -14,9 +14,13 @@ import com.enxy.weather.base.BaseFragment
 import com.enxy.weather.data.entity.Location
 import com.enxy.weather.ui.WeatherViewModel
 import com.enxy.weather.ui.weather.WeatherFragment
-import com.enxy.weather.utils.exception.Failure
-import com.enxy.weather.utils.exception.Failure.*
-import com.enxy.weather.utils.extension.*
+import com.enxy.weather.utils.exception.BadServerResponse
+import com.enxy.weather.utils.exception.LocationsNotFound
+import com.enxy.weather.utils.exception.NoConnection
+import com.enxy.weather.utils.extension.hide
+import com.enxy.weather.utils.extension.observe
+import com.enxy.weather.utils.extension.show
+import com.enxy.weather.utils.extension.snackbarShort
 import kotlinx.android.synthetic.main.search_fragment.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -24,8 +28,9 @@ import org.koin.core.parameter.parametersOf
 
 class SearchFragment : BaseFragment() {
     override val layoutId = R.layout.search_fragment
-    private val viewModel: WeatherViewModel by sharedViewModel()
-    private val locationAdapter: LocationAdapter by inject {
+    private val viewModel: SearchViewModel by inject()
+    private val activityViewModel: WeatherViewModel by sharedViewModel()
+    private val searchAdapter: SearchAdapter by inject {
         parametersOf(::onLocationChange)
     }
 
@@ -38,7 +43,7 @@ class SearchFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         with(viewModel) {
             observe(searchedLocations, ::renderData)
-            failure(searchedLocationsFailure, ::handleFailure)
+            observe(failure, ::handleFailure)
         }
     }
 
@@ -48,19 +53,18 @@ class SearchFragment : BaseFragment() {
         setFocusOnInput()
         showHint(enterHint)
         searchCityEditText.doOnTextChanged { text, _, _, _ ->
-            text?.let { if (it.length > 1) viewModel.fetchListOfLocationsByName(it.toString()) }
+            if (text != null && text.length > 1)
+                viewModel.getLocationsByName(text.toString())
         }
     }
 
-    private fun renderData(locations: ArrayList<Location>?) {
-        locations?.let {
-            if (locations.isEmpty()) {
-                handleFailure(LocationsNotFound)
-            } else {
-                hints.hide()
-                locationList.show()
-                locationAdapter.updateData(locations)
-            }
+    private fun renderData(locations: ArrayList<Location>) {
+        if (locations.isEmpty()) {
+            handleFailure(LocationsNotFound)
+        } else {
+            hints.hide()
+            locationList.show()
+            searchAdapter.updateData(locations)
         }
     }
 
@@ -75,7 +79,7 @@ class SearchFragment : BaseFragment() {
         }
     }
 
-    private fun handleFailure(failure: Failure?) {
+    private fun handleFailure(failure: Exception) {
         when (failure) {
             is LocationsNotFound -> showHint(noLocationsHint)
             is NoConnection -> showHint(noInternetHint)
@@ -84,7 +88,7 @@ class SearchFragment : BaseFragment() {
     }
 
     private fun onLocationChange(location: Location) {
-        viewModel.fetchWeatherForecast(location)
+        activityViewModel.fetchForecast(location)
         hideKeyboard()
         if (isAppFirstLaunched()) {
             showMainScreen()
@@ -96,7 +100,7 @@ class SearchFragment : BaseFragment() {
     private fun setUpRecyclerView() {
         locationList.apply {
             layoutManager = LinearLayoutManager(context, VERTICAL, false)
-            adapter = locationAdapter
+            adapter = searchAdapter
             setHasFixedSize(true)
         }
     }

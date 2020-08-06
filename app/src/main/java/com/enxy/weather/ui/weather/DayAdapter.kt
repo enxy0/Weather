@@ -86,8 +86,8 @@ class DayAdapter : RecyclerView.Adapter<DayAdapter.DayHolder>() {
         fun bind(dayForecast: DayForecast) = with(itemView) {
             temperature.text = context.getString(
                 R.string.day_forecast_temperature,
-                dayForecast.highestTemp.withSign(),
-                dayForecast.lowestTemp.withSign()
+                dayForecast.highestTemp.value.withSign(),
+                dayForecast.lowestTemp.value.withSign()
             )
             date.text = context.getString(R.string.day_forecast_date, dayForecast.date)
             day.text = dayForecast.day

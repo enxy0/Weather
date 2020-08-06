@@ -4,28 +4,27 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.enxy.weather.data.entity.Location
+import com.enxy.weather.data.entity.MiniForecast
 import com.enxy.weather.data.repository.WeatherRepository
-import com.enxy.weather.utils.exception.Failure
 import kotlinx.coroutines.launch
 
-class FavouriteViewModel(private val weatherRepository: WeatherRepository) : ViewModel() {
+class FavouriteViewModel(weatherRepository: WeatherRepository) : ViewModel() {
 
-    private val _favouriteLocations = MutableLiveData<ArrayList<Location>>()
-    val favouriteLocations: LiveData<ArrayList<Location>>
+    private val _favouriteLocations: MutableLiveData<List<MiniForecast>> = MutableLiveData()
+    val favouriteLocations: LiveData<List<MiniForecast>>
         get() = _favouriteLocations
 
-    private val _favouriteLocationsFailure: MutableLiveData<Failure> = MutableLiveData()
-    val favouriteLocationsFailure: LiveData<Failure>
-        get() = _favouriteLocationsFailure
+    private val _failure: MutableLiveData<Exception> = MutableLiveData()
+    val failure: LiveData<Exception>
+        get() = _failure
+
 
     init {
         viewModelScope.launch {
-            weatherRepository.getFavouriteLocations().onSuccess {
-                _favouriteLocations.value = it
-            }.onFailure {
-                _favouriteLocationsFailure.value = it
-            }
+            weatherRepository.getFavouriteLocations().fold(
+                onSuccess = { _favouriteLocations.value = it },
+                onFailure = { _failure.value = it }
+            )
         }
     }
 }

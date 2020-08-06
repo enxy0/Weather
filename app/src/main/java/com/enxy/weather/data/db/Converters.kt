@@ -3,6 +3,7 @@ package com.enxy.weather.data.db
 import androidx.room.TypeConverter
 import com.enxy.weather.data.entity.DayForecast
 import com.enxy.weather.data.entity.HourForecast
+import com.enxy.weather.data.entity.Units.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
@@ -33,4 +34,16 @@ class Converters {
 
     @TypeConverter fun longToCalendar(value: Long): Calendar =
         Calendar.getInstance().apply { timeInMillis = value }
+
+    @TypeConverter fun temperatureToInt(temperature: Temperature) = temperature.raw
+
+    @TypeConverter fun windToInt(wind: Wind) = wind.raw
+
+    @TypeConverter fun pressureToInt(pressure: Pressure) = pressure.raw
+
+    @TypeConverter fun intToTemperature(value: Int) = Temperature(value)
+
+    @TypeConverter fun intToWind(value: Int) = Wind(value)
+
+    @TypeConverter fun intToPressure(value: Int) = Pressure(value)
 }

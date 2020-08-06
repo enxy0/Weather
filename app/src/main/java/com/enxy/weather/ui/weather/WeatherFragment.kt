@@ -18,11 +18,12 @@ import com.enxy.weather.ui.WeatherActivity
 import com.enxy.weather.ui.WeatherViewModel
 import com.enxy.weather.ui.favourite.FavouriteFragment
 import com.enxy.weather.ui.search.SearchFragment
-import com.enxy.weather.utils.Pressure
-import com.enxy.weather.utils.Wind
-import com.enxy.weather.utils.exception.Failure
-import com.enxy.weather.utils.exception.Failure.NoConnection
-import com.enxy.weather.utils.exception.Failure.BadServerResponse
+import com.enxy.weather.utils.PressureUnit.HECTO_PASCALS
+import com.enxy.weather.utils.PressureUnit.MILLIMETERS_OF_MERCURY
+import com.enxy.weather.utils.WindUnit.KILOMETERS_PER_HOUR
+import com.enxy.weather.utils.WindUnit.METERS_PER_SECOND
+import com.enxy.weather.utils.exception.BadServerResponse
+import com.enxy.weather.utils.exception.NoConnection
 import com.enxy.weather.utils.extension.*
 import kotlinx.android.synthetic.main.main_fragment.*
 import kotlinx.android.synthetic.main.precipitation_card_view.view.*
@@ -42,10 +43,10 @@ class WeatherFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         with(viewModel) {
+            renderCorrectUnits(appSettings)
             observe(forecast, ::renderForecast)
-            observe(settings, ::renderCorrectUnits)
-            observe(isLoading, ::showLoading)
-            failure(forecastFailure, ::handleFailure)
+            observe(forecastFailure, ::handleFailure)
+            observe(isLoading, ::onLoading)
         }
     }
 
@@ -58,6 +59,75 @@ class WeatherFragment : BaseFragment() {
         favouriteToggle.setOnClickListener {
             viewModel.changeForecastFavouriteStatus(favouriteToggle.isChecked)
         }
+    }
+
+    private fun renderForecast(forecast: Forecast) {
+        renderCurrentForecast(forecast.currentForecast)
+        hourAdapter.updateData(forecast.hourForecastList)
+        dayAdapter.updateData(forecast.dayForecastList)
+        locationName.text = forecast.locationName
+        favouriteToggle.isChecked = forecast.isFavourite
+        if (mainContentLinearLayout.isInvisible)
+            mainContentLinearLayout.show()
+    }
+
+    private fun renderCurrentForecast(currentForecast: CurrentForecast) {
+        currentDescription.text = currentForecast.description
+        currentDescriptionImage.setImageResource(currentForecast.imageId)
+        currentTemperature.text = currentForecast.temperature.value.withSign()
+        currentFeelsLike.text = currentForecast.feelsLike.value.withSign()
+        humidityCard.value.text = currentForecast.humidity.toString()
+        windCard.value.text = currentForecast.wind.value.toString()
+        pressureCard.value.text = currentForecast.pressure.value.toString()
+    }
+
+    private fun renderCorrectUnits(settings: AppSettings) {
+        when (settings.windUnit) {
+            METERS_PER_SECOND ->
+                windCard.unit.setText(R.string.wind_value_meters_per_second)
+            KILOMETERS_PER_HOUR ->
+                windCard.unit.setText(R.string.wind_value_kilometers_per_hour)
+        }
+        when (settings.pressureUnit) {
+            MILLIMETERS_OF_MERCURY ->
+                pressureCard.unit.setText(R.string.pressure_value_millimeters)
+            HECTO_PASCALS ->
+                pressureCard.unit.setText(R.string.pressure_value_pascals)
+        }
+    }
+
+    private fun handleFailure(failure: Exception?) {
+        when (failure) {
+            is NoConnection -> {
+                snackbarAction(
+                    coordinatorLayout,
+                    bottomAppBar,
+                    R.string.failure_connection_error,
+                    R.string.button_try_again
+                ) {
+                    viewModel.updateForecast()
+                    swipeRefreshLayout.isRefreshing = true
+                }
+            }
+            is BadServerResponse -> {
+                snackbarAction(
+                    coordinatorLayout,
+                    bottomAppBar,
+                    R.string.failure_server_error,
+                    R.string.button_try_again
+                ) {
+                    viewModel.updateForecast()
+                    swipeRefreshLayout.isRefreshing = true
+                }
+            }
+            else -> {
+                // TODO: Handle other failures?
+            }
+        }
+    }
+
+    private fun onLoading(isLoading: Boolean) {
+        swipeRefreshLayout.isRefreshing = isLoading
     }
 
     private fun setUpBottomAppBar() {
@@ -90,92 +160,17 @@ class WeatherFragment : BaseFragment() {
     private fun setUpSwipeRefreshLayout() {
         swipeRefreshLayout.setProgressViewOffset(true, 0, 55.dp)
         swipeRefreshLayout.setOnRefreshListener {
-            viewModel.updateWeatherForecast()
-        }
-    }
-
-    private fun handleFailure(failure: Failure?) {
-        when (failure) {
-            is NoConnection -> {
-                snackbarAction(
-                    coordinatorLayout,
-                    bottomAppBar,
-                    R.string.failure_connection_error,
-                    R.string.button_try_again
-                ) {
-                    viewModel.updateWeatherForecast()
-                    swipeRefreshLayout.isRefreshing = true
-                }
-            }
-            is BadServerResponse -> {
-                snackbarAction(
-                    coordinatorLayout,
-                    bottomAppBar,
-                    R.string.failure_server_error,
-                    R.string.button_try_again
-                ) {
-                    viewModel.updateWeatherForecast()
-                    swipeRefreshLayout.isRefreshing = true
-                }
-            }
-            else -> {
-                /* TODO: Handle other failures? */
-            }
-        }
-    }
-
-    private fun showLoading(isLoading: Boolean?) {
-        isLoading?.let {
-            swipeRefreshLayout.isRefreshing = isLoading
-        }
-    }
-
-    private fun renderForecast(forecast: Forecast?) {
-        forecast?.let {
-            renderCurrentForecast(it.currentForecast)
-            hourAdapter.updateData(it.hourForecastList)
-            dayAdapter.updateData(it.dayForecastList)
-            locationName.text = it.locationName
-            favouriteToggle.isChecked = it.isFavourite
-            if (mainContentLinearLayout.isInvisible)
-                mainContentLinearLayout.show()
-        }
-    }
-
-    private fun renderCurrentForecast(currentForecast: CurrentForecast) {
-        currentDescription.text = currentForecast.description
-        currentDescriptionImage.setImageResource(currentForecast.imageId)
-        currentTemperature.text = currentForecast.temperature.withSign()
-        currentFeelsLike.text = currentForecast.feelsLike.withSign()
-        humidityCard.value.text = currentForecast.humidity.toString()
-        windCard.value.text = currentForecast.wind.toString()
-        pressureCard.value.text = currentForecast.pressure.toString()
-    }
-
-    private fun renderCorrectUnits(settings: AppSettings?) {
-        settings?.let {
-            when (settings.windUnit) {
-                Wind.METERS_PER_SECOND ->
-                    windCard.unit.setText(R.string.wind_value_meters_per_second)
-                Wind.KILOMETERS_PER_HOUR ->
-                    windCard.unit.setText(R.string.wind_value_kilometers_per_hour)
-            }
-            when (settings.pressureUnit) {
-                Pressure.MILLIMETERS_OF_MERCURY ->
-                    pressureCard.unit.setText(R.string.pressure_value_millimeters)
-                Pressure.HECTO_PASCALS ->
-                    pressureCard.unit.setText(R.string.pressure_value_pascals)
-            }
+            viewModel.updateForecast()
         }
     }
 
     private fun setUpRecyclerView() {
-        hourRecyclerView.apply {
+        hourRecyclerView.run {
             adapter = hourAdapter
             layoutManager = LinearLayoutManager(context, HORIZONTAL, false)
             isNestedScrollingEnabled = false
         }
-        dayList.apply {
+        dayList.run {
             adapter = dayAdapter
             layoutManager = LinearLayoutManager(context, VERTICAL, false)
             isNestedScrollingEnabled = false

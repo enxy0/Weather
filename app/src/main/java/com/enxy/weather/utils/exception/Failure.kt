@@ -3,12 +3,10 @@ package com.enxy.weather.utils.exception
 /**
  * Base Class for handling errors/failures/exceptions.
  */
-sealed class Failure {
-    object NoConnection: Failure()
+object NoConnection : Exception()
 
-    object BadServerResponse: Failure()
+object BadServerResponse : Exception()
 
-    object DataNotFound : Failure()
+object DataNotFound : Exception()
 
-    object LocationsNotFound : Failure()
-}
+object LocationsNotFound : Exception()

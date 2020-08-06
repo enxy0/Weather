@@ -29,9 +29,9 @@ class ForecastDaoTest {
     }
 
     @Test fun testFavouriteForecasts() = runBlocking {
-        assertEquals(2, forecastDao.getFavouriteForecastList()!!.size)
-        assertTrue(forecastDao.getFavouriteForecastList()!![0].isFavourite)
-        assertTrue(forecastDao.getFavouriteForecastList()!![1].isFavourite)
+        assertEquals(2, forecastDao.getFavouriteForecasts()!!.size)
+        assertTrue(forecastDao.getFavouriteForecasts()!![0].isFavourite)
+        assertTrue(forecastDao.getFavouriteForecasts()!![1].isFavourite)
     }
 
     @Test fun testIsForecastCached() = runBlocking {
@@ -41,13 +41,13 @@ class ForecastDaoTest {
     }
 
     @Test fun testLastOpenedForecast() = runBlocking {
-        assertTrue(forecastDao.getLastOpenedForecast().wasOpenedLast)
+        assertTrue(forecastDao.getCurrentForecast().wasOpenedLast)
     }
 
     @Test fun testUpdateLastOpenedForecast() = runBlocking {
-        forecastDao.updateLastOpenedForecast("Paris, France")
+        forecastDao.updateCurrentForecast("Paris, France")
         assertFalse(forecastDao.getForecastByLocationName("Saint-Petersburg, Russia").wasOpenedLast)
-        assertEquals("Paris, France", forecastDao.getLastOpenedForecast().locationName)
+        assertEquals("Paris, France", forecastDao.getCurrentForecast().locationName)
     }
 
     @Test fun testChangeIsFavouriteStatus() = runBlocking {

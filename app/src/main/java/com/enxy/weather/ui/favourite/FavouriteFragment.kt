@@ -7,13 +7,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import com.enxy.weather.R
-import com.enxy.weather.data.entity.Location
+import com.enxy.weather.data.entity.MiniForecast
 import com.enxy.weather.ui.WeatherViewModel
-import com.enxy.weather.ui.search.LocationAdapter
 import com.enxy.weather.ui.settings.SettingsFragment
-import com.enxy.weather.utils.exception.Failure
 import com.enxy.weather.utils.extension.dismiss
-import com.enxy.weather.utils.extension.failure
 import com.enxy.weather.utils.extension.observe
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.favourite_fragment.*
@@ -22,10 +19,10 @@ import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.core.parameter.parametersOf
 
 class FavouriteFragment : BottomSheetDialogFragment() {
-    private val activityViewModel: WeatherViewModel by sharedViewModel()
     private val viewModel: FavouriteViewModel by inject()
-    private val favouriteAdapter: LocationAdapter by inject {
-        parametersOf(::onLocationChange)
+    private val activityViewModel: WeatherViewModel by sharedViewModel()
+    private val favouriteAdapter: FavouriteAdapter by inject {
+        parametersOf(::onForecastChange)
     }
 
     override fun getTheme(): Int = R.style.CustomStyle_BottomSheetDialog
@@ -55,20 +52,16 @@ class FavouriteFragment : BottomSheetDialogFragment() {
         }
         with(viewModel) {
             observe(favouriteLocations, ::renderData)
-            failure(favouriteLocationsFailure, ::handleFailure)
+            observe(failure, ::handleFailure)
         }
     }
 
-    private fun renderData(favouriteLocations: ArrayList<Location>?) {
-        favouriteLocations?.let {
-            favouriteAdapter.updateData(favouriteLocations)
-        }
+    private fun renderData(favouriteLocations: List<MiniForecast>) {
+        favouriteAdapter.updateData(favouriteLocations)
     }
 
-    private fun handleFailure(failure: Failure?) {
-        failure?.let {
-            // TODO: Add image for error or when there is no data
-        }
+    private fun handleFailure(failure: Exception) {
+        // TODO: Add image for error or when there is no data
     }
 
     private fun setUpListeners() {
@@ -82,8 +75,9 @@ class FavouriteFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun onLocationChange(location: Location) {
-        activityViewModel.fetchWeatherForecast(location)
+    private fun onForecastChange(miniForecast: MiniForecast) {
+        activityViewModel.fetchForecast(miniForecast)
+        // Delay changing screen to show ripple effect
         dismiss(delay = FORECAST_RIPPLE_DELAY)
     }
 }

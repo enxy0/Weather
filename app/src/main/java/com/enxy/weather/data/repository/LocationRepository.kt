@@ -6,7 +6,6 @@ import com.enxy.weather.data.entity.Location
 import com.enxy.weather.data.network.LocationApi
 import com.enxy.weather.data.network.json.opencage.LocationResponse
 import com.enxy.weather.utils.Result
-import com.enxy.weather.utils.exception.Failure
 
 class LocationRepository(private val locationApi: LocationApi) :
     NetworkRepository {
@@ -14,7 +13,7 @@ class LocationRepository(private val locationApi: LocationApi) :
         const val OPEN_CAGE_API_KEY = BuildConfig.API_KEY_OPEN_CAGE
     }
 
-    suspend fun getLocationsByName(locationName: String): Result<Failure, ArrayList<Location>> {
+    suspend fun getLocationsByName(locationName: String): Result<ArrayList<Location>> {
         return safeApiCall(
             call = {
                 locationApi.getLocationsByNameAsync(
