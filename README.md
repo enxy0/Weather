@@ -2,10 +2,10 @@
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/34e655757758466dbb00961b0c79e7be)](https://app.codacy.com/manual/enxy0/Weather?utm_source=github.com&utm_medium=referral&utm_content=enxy0/Weather&utm_campaign=Badge_Grade_Dashboard)
 
-Minimalistic Android weather app written in Kotlin with MVVM architecture. This project is my attempt to make the code clean and readable.  
-Simple and light design makes easy to see the necessary data.
+**Weather** — Android App written in Kotlin with MVVM architecture. In this project I tried to write clean and readable code.  
+Minimalistic and light design makes it easy to see only the necessary data.
 
-**Status:** In development *(1.0.0-alpha-5)* ⚙️
+**Status:** In development *(1.0.0-beta-1)* ⚙️
 
 ## Goals
 -   [x] Display weather forecasts for different locations ☁️
@@ -13,6 +13,7 @@ Simple and light design makes easy to see the necessary data.
 -   [x] Support different units 📏
 -   [x] Add tests for UI and code 🛠️
 -   [x] Show 7-day forecast ⛅
+-   [x] Provide documentation 📚
 -   [ ] Display weather forecast based on user location 📍
 -   [ ] Add dark theme 🌙
 -   [ ] Add animations 🔥
