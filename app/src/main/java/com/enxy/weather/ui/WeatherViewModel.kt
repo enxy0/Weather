@@ -14,18 +14,32 @@ class WeatherViewModel(
     val appSettings: AppSettings
 ) : ViewModel() {
 
+    /**
+     * Holds displayed (current) forecast value
+     */
     private val _forecast: MutableLiveData<Forecast> = MutableLiveData()
     val forecast: LiveData<Forecast>
         get() = _forecast
 
+    /**
+     * Holds failure which may occur when loading data
+     */
     private val _forecastFailure: MutableLiveData<Exception> = MutableLiveData()
     val forecastFailure: LiveData<Exception>
         get() = _forecastFailure
 
+
+    /**
+     * Holds data loading status
+     */
     private val _isLoading = MutableLiveData<Boolean>(false)
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
+
+    /**
+     * Holds information about app launch
+     */
     val isAppFirstLaunched: LiveData<Boolean> = liveData {
         emit(weatherRepository.isDatabaseEmpty())
     }
@@ -40,6 +54,9 @@ class WeatherViewModel(
         }
     }
 
+    /**
+     * Loads forecast by given [location]
+     */
     fun fetchForecast(location: Location) {
         viewModelScope.launch {
             notifyLoadingStart()
@@ -50,6 +67,9 @@ class WeatherViewModel(
         }
     }
 
+    /**
+     * Loads forecast by given [miniForecast]
+     */
     fun fetchForecast(miniForecast: MiniForecast) {
         viewModelScope.launch {
             notifyLoadingStart()
@@ -60,6 +80,9 @@ class WeatherViewModel(
         }
     }
 
+    /**
+     * Force update of the current forecast
+     */
     fun updateForecast() {
         viewModelScope.launch {
             forecast.value?.let {
@@ -72,6 +95,9 @@ class WeatherViewModel(
         }
     }
 
+    /**
+     * Changes favourite status of the current forecast
+     */
     fun changeForecastFavouriteStatus(isFavourite: Boolean) {
         viewModelScope.launch {
             forecast.value?.let {
@@ -81,6 +107,11 @@ class WeatherViewModel(
         }
     }
 
+    /**
+     * Applies new units from the [AppSettings] to the given forecast.
+     *
+     * Applies to the [_forecast] by defult if parameter was not passed.
+     */
     fun applyNewUnits(forecast: Forecast? = _forecast.value) {
         viewModelScope.launch(Dispatchers.Default) {
             _forecast.postValue(forecast?.apply {
@@ -91,21 +122,35 @@ class WeatherViewModel(
         }
     }
 
+
+    /**
+     * Default handler for success loading of the [forecast]
+     */
     private fun handleFetchSuccess(forecast: Forecast) {
         applyNewUnits(forecast)
         _forecastFailure.value = null // removing old failure if it's not null
         notifyLoadingEnd()
     }
 
+    /**
+     * Default handler for failure occur when loading the [forecast]
+     */
     private fun handleFetchFailure(failure: Exception) {
         _forecastFailure.value = failure
         notifyLoadingEnd()
     }
 
+    /**
+     * Changes status when loading of data starts
+     */
     private fun notifyLoadingStart() {
         _isLoading.postValue(true)
     }
 
+
+    /**
+     * Changes status when loading of data ends
+     */
     private fun notifyLoadingEnd() {
         _isLoading.postValue(false)
     }

@@ -9,6 +9,9 @@ import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 import java.util.*
 
+/**
+ * Type converters to allow Room to reference complex data types.
+ */
 class Converters {
     val gson = Gson()
 

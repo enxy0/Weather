@@ -40,6 +40,9 @@ data class Forecast(
         return currentTimeInMillis - timestamp.timeInMillis >= twoHoursInMillis
     }
 
+    /**
+     * Updates all temperature units in [Forecast] according to new [unit]
+     */
     fun updateTemperatureUnit(unit: TemperatureUnit) {
         currentForecast.temperature.updateUnit(unit)
         currentForecast.feelsLike.updateUnit(unit)
@@ -52,6 +55,9 @@ data class Forecast(
         }
     }
 
+    /**
+     * Updates all pressure units in [Forecast] according to new [unit]
+     */
     fun updatePressureUnit(unit: PressureUnit) {
         currentForecast.pressure.updateUnit(unit)
 //        dayForecastList.forEach {
@@ -59,6 +65,9 @@ data class Forecast(
 //        }
     }
 
+    /**
+     * Updates all wind units in [Forecast] according to new [unit]
+     */
     fun updateWindUnit(unit: WindUnit) {
         currentForecast.wind.updateUnit(unit)
 //        dayForecastList.forEach {

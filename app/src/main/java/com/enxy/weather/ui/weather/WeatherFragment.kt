@@ -61,6 +61,9 @@ class WeatherFragment : BaseFragment() {
         }
     }
 
+    /**
+     * Handles with [forecast] data
+     */
     private fun renderForecast(forecast: Forecast) {
         renderCurrentForecast(forecast.currentForecast)
         hourAdapter.updateData(forecast.hourForecastList)
@@ -71,6 +74,9 @@ class WeatherFragment : BaseFragment() {
             mainContentLinearLayout.show()
     }
 
+    /**
+     * Displays [currentForecast] data
+     */
     private fun renderCurrentForecast(currentForecast: CurrentForecast) {
         currentDescription.text = currentForecast.description
         currentDescriptionImage.setImageResource(currentForecast.imageId)
@@ -81,6 +87,9 @@ class WeatherFragment : BaseFragment() {
         pressureCard.value.text = currentForecast.pressure.value.toString()
     }
 
+    /**
+     * Displays applied units from [AppSettings]
+     */
     private fun renderCorrectUnits(settings: AppSettings) {
         when (settings.windUnit) {
             METERS_PER_SECOND ->
@@ -96,6 +105,11 @@ class WeatherFragment : BaseFragment() {
         }
     }
 
+    /**
+     * Handles with failures that may occur while loading data.
+     *
+     * Notifies user via SnackBar about them.
+     */
     private fun handleFailure(failure: Exception?) {
         when (failure) {
             is NoConnection -> {
@@ -126,6 +140,9 @@ class WeatherFragment : BaseFragment() {
         }
     }
 
+    /**
+     * Changes [swipeRefreshLayout] loading status when loading data
+     */
     private fun onLoading(isLoading: Boolean) {
         swipeRefreshLayout.isRefreshing = isLoading
     }

@@ -26,7 +26,7 @@ class WeatherRepository(
     private val database: AppDataBase
 ) : NetworkRepository {
     companion object {
-        // OpenWeatherMap API URL queries
+        // OpenWeatherMap API default constants
         const val OPEN_WEATHER_MAP_APPID = BuildConfig.API_KEY_OPEN_WEATHER_MAP
         const val DEFAULT_LANGUAGE = "ENG"
         const val DEFAULT_UNITS = "metric"
@@ -94,7 +94,7 @@ class WeatherRepository(
         }
 
     /**
-     * Returns observable displayed (current) forecast
+     * Returns result of getting last opened (current) forecast from database
      */
     suspend fun getCurrentForecast(): Result<Forecast> {
         val currentForecast = database.getForecastDao().getCurrentForecast()
@@ -104,8 +104,16 @@ class WeatherRepository(
             Error(DataNotFound)
     }
 
+    /**
+     * Checks if database contains any data
+     *
+     */
     suspend fun isDatabaseEmpty(): Boolean = database.getForecastDao().getForecasts().isEmpty()
 
+
+    /**
+     *  Returns result of getting favourite locations from database
+     */
     suspend fun getFavouriteLocations(): Result<List<MiniForecast>> {
         val favouriteForecasts = database.getForecastDao().getFavouriteForecasts()
         return if (favouriteForecasts.isNotEmpty()) {
@@ -117,11 +125,21 @@ class WeatherRepository(
         }
     }
 
+
+    /**
+     * Changes forecast favourite status (isFavourite) in database
+     */
     suspend fun changeForecastFavouriteStatus(forecast: Forecast, isFavourite: Boolean) {
         database.getForecastDao()
             .setForecastFavouriteStatus(forecast.locationName, isFavourite)
     }
 
+    /**
+     * Performs GET request to the OpenWeatherMap API to fetch new [Forecast]
+     *
+     * Also applies old location name to the result (if it is success) because API fetches forecast by
+     * longitude and latitude and can return different location name
+     */
     private suspend fun requestForecast(location: Location): Result<Forecast> =
         safeApiCall(
             call = {
@@ -136,6 +154,10 @@ class WeatherRepository(
             transform = ::responseToForecast
         ).onSuccess { it.locationName = location.locationName }
 
+
+    /**
+     * Converts [WeatherResponse] to the [Forecast]
+     */
     private fun responseToForecast(response: WeatherResponse) = Forecast(
         locationName = response.timezone, // temporary name that will be changed
         longitude = response.lon,

@@ -18,6 +18,9 @@ class SearchViewModel(private val locationRepository: LocationRepository) : View
     val failure: LiveData<Exception>
         get() = _failure
 
+    /**
+     * Loads list of locations by given [locationName]
+     */
     fun getLocationsByName(locationName: String) {
         viewModelScope.launch {
             locationRepository.getLocationsByName(locationName).fold(

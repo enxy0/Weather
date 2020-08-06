@@ -75,6 +75,9 @@ class FavouriteFragment : BottomSheetDialogFragment() {
         }
     }
 
+    /**
+     * Changes displayed (current) forecast and closes BottomSheet
+     */
     private fun onForecastChange(miniForecast: MiniForecast) {
         activityViewModel.fetchForecast(miniForecast)
         // Delay changing screen to show ripple effect

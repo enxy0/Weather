@@ -13,6 +13,9 @@ class LocationRepository(private val locationApi: LocationApi) :
         const val OPEN_CAGE_API_KEY = BuildConfig.API_KEY_OPEN_CAGE
     }
 
+    /**
+     * Performs GET request to the OpenCage API to fetch locations by [locationName].
+     */
     suspend fun getLocationsByName(locationName: String): Result<ArrayList<Location>> {
         return safeApiCall(
             call = {
@@ -25,6 +28,9 @@ class LocationRepository(private val locationApi: LocationApi) :
         )
     }
 
+    /**
+     * Converts [LocationResponse] to the list of [Location]
+     */
     private fun transformLocationResponse(locationResponse: LocationResponse): ArrayList<Location> {
         val data = ArrayList<Location>()
         for (result in locationResponse.results) {

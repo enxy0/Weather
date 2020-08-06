@@ -10,7 +10,7 @@ const val NIGHT = 'n'
  * Returns an image (for Dark Surfaces) from [R.drawable] based on:
  * [id] (weather code, check the link)
  * [dayPart] ('n' - night, 'd' - day)
- * [link](https://openweathermap.org/weather-conditions)
+ * @see <a href="https://openweathermap.org/weather-conditions">OpenWeatherMap Conditions</a>
  */
 @DrawableRes fun getIconDarkSurface(id: Int, dayPart: Char): Int = when (id) {
     200 -> R.drawable.weather_thunderstorm_rain_light
@@ -74,7 +74,7 @@ const val NIGHT = 'n'
  * Returns an image (for Light Surfaces) from [R.drawable] based on:
  * [id] (weather code, check the link)
  * [dayPart] ('n' - night, 'd' - day)
- * [link](https://openweathermap.org/weather-conditions)
+ * @see <a href="https://openweathermap.org/weather-conditions">OpenWeatherMap Conditions</a>
  */
 @DrawableRes fun getIconLightSurface(id: Int, dayPart: Char): Int = when (id) {
     200 -> R.drawable.current_weather_thunderstorm_rain_light

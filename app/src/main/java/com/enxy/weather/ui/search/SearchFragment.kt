@@ -58,6 +58,9 @@ class SearchFragment : BaseFragment() {
         }
     }
 
+    /**
+     * Displays found locations
+     */
     private fun renderData(locations: ArrayList<Location>) {
         if (locations.isEmpty()) {
             handleFailure(LocationsNotFound)
@@ -68,6 +71,9 @@ class SearchFragment : BaseFragment() {
         }
     }
 
+    /**
+     * Shows [hintToShow] and hides previous data with other hints
+     */
     private fun showHint(hintToShow: View) {
         locationList.hide()
         hints.show()
@@ -79,6 +85,9 @@ class SearchFragment : BaseFragment() {
         }
     }
 
+    /**
+     * Handles with failures that may occur while loading data
+     */
     private fun handleFailure(failure: Exception) {
         when (failure) {
             is LocationsNotFound -> showHint(noLocationsHint)
@@ -87,6 +96,9 @@ class SearchFragment : BaseFragment() {
         }
     }
 
+    /**
+     * Loads new forecast by given [location], closes keyboard and opens new screen
+     */
     private fun onLocationChange(location: Location) {
         activityViewModel.fetchForecast(location)
         hideKeyboard()
@@ -105,6 +117,9 @@ class SearchFragment : BaseFragment() {
         }
     }
 
+    /**
+     * Sets focus on [searchCityEditText] and opens keyboard
+     */
     private fun setFocusOnInput() {
         searchCityEditText.requestFocus()
         val inputMethodManager =
