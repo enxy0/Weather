@@ -43,7 +43,7 @@ class WeatherFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         with(viewModel) {
-            renderCorrectUnits(appSettings)
+            renderUnits(appSettings)
             observe(forecast, ::renderForecast)
             observe(forecastFailure, ::handleFailure)
             observe(isLoading, ::onLoading)
@@ -70,27 +70,28 @@ class WeatherFragment : BaseFragment() {
         dayAdapter.updateData(forecast.dayForecastList)
         locationName.text = forecast.locationName
         favouriteToggle.isChecked = forecast.isFavourite
-        if (mainContentLinearLayout.isInvisible)
-            mainContentLinearLayout.show()
+        if (mainContentLinearLayout.isInvisible) {
+            mainContentLinearLayout.fadeIn()
+        }
     }
 
     /**
      * Displays [currentForecast] data
      */
-    private fun renderCurrentForecast(currentForecast: CurrentForecast) {
-        currentDescription.text = currentForecast.description
-        currentDescriptionImage.setImageResource(currentForecast.imageId)
-        currentTemperature.text = currentForecast.temperature.value.withSign()
-        currentFeelsLike.text = currentForecast.feelsLike.value.withSign()
-        humidityCard.value.text = currentForecast.humidity.toString()
-        windCard.value.text = currentForecast.wind.value.toString()
-        pressureCard.value.text = currentForecast.pressure.value.toString()
+    private fun renderCurrentForecast(currentForecast: CurrentForecast) = with(currentForecast) {
+        currentDescription.text = description
+        currentDescriptionImage.animateScaleFadeChange(imageId)
+        currentTemperature.animateNumberChange(newValue = temperature.value, isSignShown = true)
+        currentFeelsLike.animateNumberChange(newValue = feelsLike.value, isSignShown = true)
+        humidityCard.value.animateNumberChange(newValue = humidity)
+        windCard.value.animateNumberChange(newValue = wind.value)
+        pressureCard.value.animateNumberChange(newValue = pressure.value)
     }
 
     /**
      * Displays applied units from [AppSettings]
      */
-    private fun renderCorrectUnits(settings: AppSettings) {
+    private fun renderUnits(settings: AppSettings) {
         when (settings.windUnit) {
             METERS_PER_SECOND ->
                 windCard.unit.setText(R.string.wind_value_meters_per_second)

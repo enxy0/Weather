@@ -127,6 +127,7 @@
                     tools:text="Sunny" />
 
                 <LinearLayout
+                    android:id="@+id/precipitationsLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/section_vertical_margin"
