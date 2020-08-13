@@ -9,7 +9,6 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="iconColor">@color/iconColor</item>
         <item name="dividerColor">@color/dividerColor</item>
-        <item name="sectionDividerColor">@color/sectionDividerColor</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="colorSurface">@color/windowBackgroundColor</item>
         <item name="android:windowBackground">@color/windowBackgroundColor</item>

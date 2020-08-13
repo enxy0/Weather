@@ -10,5 +10,6 @@ fun Forecast.toMiniForecast() = MiniForecast(
     id = id,
     temperature = currentForecast.temperature,
     description = currentForecast.description,
-    locationName = locationName
+    locationName = locationName,
+    imageId = currentForecast.imageId
 )

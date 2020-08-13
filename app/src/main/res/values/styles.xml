@@ -106,7 +106,7 @@
     </style>
 
     <style name="CustomStyle.Divider">
-        <item name="android:background">?attr/sectionDividerColor</item>
+        <item name="android:background">?attr/dividerColor</item>
     </style>
 
     <style name="CustomStyle.Divider.Thick.Horizontal" parent="CustomStyle.Divider">

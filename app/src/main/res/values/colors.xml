@@ -9,10 +9,8 @@
     <color name="cardViewBackgroundColorDark">#2B2B2B</color>
     <color name="iconColorNight">#AEAEAE</color>
     <color name="iconColor">#FFFFFF</color>
-    <color name="sectionDividerColorNight">#151515</color>
-    <color name="sectionDividerColor">#EEEEEE</color>
-    <color name="dividerColor">#555555</color>
-    <color name="dividerColorNight">#AEAEAE</color>
+    <color name="dividerColor">#E8E8E8</color>
+    <color name="dividerColorNight">#151515</color>
     <color name="colorTextPrimary">#000000</color>
     <color name="colorTextSecondary">#808080</color>
     <color name="settingsHeaderColor">#8899AA</color>

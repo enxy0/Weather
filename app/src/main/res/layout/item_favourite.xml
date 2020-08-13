@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card"
+    style="@style/CustomStyle.CardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="12dp"
+    android:layout_marginTop="12dp"
+    android:layout_marginEnd="12dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    app:strokeColor="?attr/dividerColor"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/locationName"
+                style="@style/CustomStyle.Text.Primary"
+                android:ellipsize="end"
+                android:maxLines="1"
+                tools:text="Saint-Petersburg, Russia" />
+
+            <TextView
+                android:id="@+id/description"
+                style="@style/CustomStyle.Text.Secondary"
+                android:ellipsize="end"
+                android:maxLines="1"
+                tools:text="Clear" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/weatherIcon"
+            style="@style/CustomStyle.ImageView"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="15dp"
+            tools:src="@drawable/weather_sun" />
+
+        <TextView
+            android:id="@+id/temperature"
+            style="@style/CustomStyle.Text.Header"
+            android:layout_gravity="center"
+            tools:text="+22" />
+
+        <TextView
+            style="@style/CustomStyle.Text.Header"
+            android:layout_gravity="center"
+            android:text="@string/sign_degree" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

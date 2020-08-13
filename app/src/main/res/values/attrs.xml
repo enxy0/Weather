@@ -2,7 +2,6 @@
 <resources>
     <attr name="iconColor" format="reference" />
     <attr name="cardViewBackgroundColor" format="reference" />
-    <attr name="sectionDividerColor" format="reference" />
     <attr name="dividerColor" format="reference" />
 
     <declare-styleable name="PrecipitationCard">

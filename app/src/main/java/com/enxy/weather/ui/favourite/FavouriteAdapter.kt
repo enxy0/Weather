@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.enxy.weather.R
 import com.enxy.weather.data.entity.MiniForecast
 import com.enxy.weather.ui.favourite.FavouriteAdapter.MiniForecastHolder
-import kotlinx.android.synthetic.main.item_location.view.*
+import com.enxy.weather.utils.extension.withSign
+import kotlinx.android.synthetic.main.item_favourite.view.*
 
 class FavouriteAdapter(private val onLocationChange: (MiniForecast) -> Unit) :
     RecyclerView.Adapter<MiniForecastHolder>() {
@@ -20,9 +21,12 @@ class FavouriteAdapter(private val onLocationChange: (MiniForecast) -> Unit) :
     }
 
     inner class MiniForecastHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(miniForecast: MiniForecast) {
-            itemView.locationName.text = miniForecast.locationName
-            itemView.locationName.setOnClickListener {
+        fun bind(miniForecast: MiniForecast) = with(itemView) {
+            temperature.text = miniForecast.temperature.value.withSign()
+            description.text = miniForecast.description
+            locationName.text = miniForecast.locationName
+            weatherIcon.setImageResource(miniForecast.imageId)
+            card.setOnClickListener {
                 onLocationChange(miniForecast)
             }
         }
@@ -30,7 +34,7 @@ class FavouriteAdapter(private val onLocationChange: (MiniForecast) -> Unit) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MiniForecastHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_location, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_favourite, parent, false)
         return MiniForecastHolder(view)
     }
 
