@@ -66,8 +66,8 @@ class WeatherFragment : BaseFragment() {
      */
     private fun renderForecast(forecast: Forecast) {
         renderCurrentForecast(forecast.currentForecast)
-        hourAdapter.updateData(forecast.hourForecastList)
-        dayAdapter.updateData(forecast.dayForecastList)
+        hourAdapter.submitList(forecast.hourForecastList)
+        dayAdapter.submitList(forecast.dayForecastList)
         locationName.text = forecast.locationName
         favouriteToggle.isChecked = forecast.isFavourite
         if (mainContentLinearLayout.isInvisible) {

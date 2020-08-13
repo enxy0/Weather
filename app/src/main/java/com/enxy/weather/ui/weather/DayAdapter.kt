@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.enxy.weather.R
 import com.enxy.weather.data.entity.DayForecast
@@ -14,27 +16,20 @@ import com.enxy.weather.utils.extension.dp
 import com.enxy.weather.utils.extension.withSign
 import kotlinx.android.synthetic.main.item_day.view.*
 
-class DayAdapter : RecyclerView.Adapter<DayAdapter.DayHolder>() {
-    private val dayDataModelArrayList = ArrayList<DayForecast>()
+class DayAdapter : ListAdapter<DayForecast, DayAdapter.DayHolder>(DayForecastDiffCallback()) {
     companion object {
         private val EXPANDED_HEIGHT = 90.dp
     }
 
-    fun updateData(dayForecastList: ArrayList<DayForecast>) {
-        this.dayDataModelArrayList.clear()
-        this.dayDataModelArrayList.addAll(dayForecastList)
-        notifyDataSetChanged()
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_day, parent, false)
+        val view = LayoutInflater
+            .from(parent.context)
+            .inflate(R.layout.item_day, parent, false)
         return DayHolder(view)
     }
 
-    override fun getItemCount() = dayDataModelArrayList.size
-
     override fun onBindViewHolder(holder: DayHolder, position: Int) {
-        holder.bind(dayDataModelArrayList[position])
+        holder.bind(getItem(position))
     }
 
     /**
@@ -96,5 +91,15 @@ class DayAdapter : RecyclerView.Adapter<DayAdapter.DayHolder>() {
                 animateState(detailsLayout)
             }
         }
+    }
+}
+
+class DayForecastDiffCallback : DiffUtil.ItemCallback<DayForecast>() {
+    override fun areItemsTheSame(oldItem: DayForecast, newItem: DayForecast): Boolean {
+        return oldItem.date == newItem.date
+    }
+
+    override fun areContentsTheSame(oldItem: DayForecast, newItem: DayForecast): Boolean {
+        return oldItem == newItem
     }
 }

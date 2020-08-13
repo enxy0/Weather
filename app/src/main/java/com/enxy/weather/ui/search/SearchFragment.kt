@@ -67,7 +67,7 @@ class SearchFragment : BaseFragment() {
         } else {
             hints.hide()
             locationList.show()
-            searchAdapter.updateData(locations)
+            searchAdapter.submitList(locations)
         }
     }
 
