@@ -17,6 +17,10 @@ import com.enxy.weather.utils.extension.formatTo
 import com.enxy.weather.utils.extension.toLocation
 import com.enxy.weather.utils.extension.toMiniForecast
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
 import kotlin.math.roundToInt
@@ -47,7 +51,7 @@ class WeatherRepository(
         database.getForecastDao().updateCurrentForecast(forecast.locationName)
 
         // If data is outdated, then requesting new forecast
-        if (forecast.isOutdated()) {
+        if (forecast.isOutdated) {
             return requestForecast(forecast.toLocation()).onSuccess {
                 it.isFavourite = forecast.isFavourite
                 it.id = forecast.id
@@ -71,7 +75,7 @@ class WeatherRepository(
         database.getForecastDao().updateCurrentForecast(location.locationName)
 
         return if (forecast != null) {
-            if (!forecast.isOutdated()) {
+            if (!forecast.isOutdated) {
                 Success(forecast)
             } else {
                 getUpdatedForecast(forecast)
@@ -86,27 +90,33 @@ class WeatherRepository(
     /**
      * Returns result of requesting new forecast by given old [forecast] information
      */
-    suspend fun getUpdatedForecast(forecast: Forecast): Result<Forecast> =
-        requestForecast(forecast.toLocation()).onSuccess {
+    suspend fun getUpdatedForecast(forecast: Forecast): Result<Forecast> {
+        return requestForecast(forecast.toLocation()).onSuccess {
             it.id = forecast.id
             it.isFavourite = forecast.isFavourite
             database.getForecastDao().updateForecast(it)
         }
+    }
 
     /**
-     * Returns result of getting last opened (current) forecast from database
+     * Observable result of getting current forecast
+     *
+     * At first sends cached forecast, and then if it is outdated sends updated one
      */
-    suspend fun getCurrentForecast(): Result<Forecast> {
+    suspend fun getObservableCurrentForecast(): Flow<Result<Forecast>> = flow {
         val currentForecast = database.getForecastDao().getCurrentForecast()
-        return if (currentForecast != null)
-            Success(currentForecast)
-        else
+        if (currentForecast != null) {
+            emit(Success(currentForecast))
+            if (currentForecast.isOutdated) {
+                emit(getUpdatedForecast(currentForecast))
+            }
+        } else {
             Error(DataNotFound)
+        }
     }
 
     /**
      * Checks if database contains any data
-     *
      */
     suspend fun isDatabaseEmpty(): Boolean = database.getForecastDao().getForecasts().isEmpty()
 
@@ -125,6 +135,20 @@ class WeatherRepository(
         }
     }
 
+    /**
+     * Updates forecast for favourite locations asynchronously
+     */
+    suspend fun updateFavouriteForecasts() = coroutineScope {
+        val favouriteForecasts: List<Forecast> = database.getForecastDao().getFavouriteForecasts()
+        for (oldForecast in favouriteForecasts) {
+            if (oldForecast.isOutdated) {
+                launch {
+                    getUpdatedForecast(oldForecast)
+                }
+            }
+        }
+    }
+
 
     /**
      * Changes forecast favourite status (isFavourite) in database
@@ -137,8 +161,8 @@ class WeatherRepository(
     /**
      * Performs GET request to the OpenWeatherMap API to fetch new [Forecast]
      *
-     * Also applies old location name to the result (if it is success) because API fetches forecast by
-     * longitude and latitude and can return different location name
+     * Also applies old location name to the result (if it is success) because API requests forecast by
+     * longitude and latitude and may return with different location name
      */
     private suspend fun requestForecast(location: Location): Result<Forecast> =
         safeApiCall(

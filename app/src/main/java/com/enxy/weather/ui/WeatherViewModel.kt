@@ -7,6 +7,7 @@ import com.enxy.weather.data.entity.Location
 import com.enxy.weather.data.entity.MiniForecast
 import com.enxy.weather.data.repository.WeatherRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class WeatherViewModel(
@@ -45,12 +46,19 @@ class WeatherViewModel(
     }
 
     init {
+        // Loading current forecast from database
         viewModelScope.launch {
             notifyLoadingStart()
-            weatherRepository.getCurrentForecast().fold(
-                onSuccess = ::handleFetchSuccess,
-                onFailure = ::handleFetchFailure
-            )
+            weatherRepository.getObservableCurrentForecast().collect { result ->
+                result.fold(
+                    onSuccess = ::handleFetchSuccess,
+                    onFailure = ::handleFetchFailure
+                )
+            }
+        }
+        // Updating favourite locations forecasts
+        viewModelScope.launch {
+            weatherRepository.updateFavouriteForecasts()
         }
     }
 
@@ -81,17 +89,15 @@ class WeatherViewModel(
     }
 
     /**
-     * Force update of the current forecast
+     * Updates given forecast (uses current forecast by default)
      */
-    fun updateForecast() {
+    fun updateForecast(forecast: Forecast? = _forecast.value) = forecast?.let {
         viewModelScope.launch {
-            forecast.value?.let {
-                notifyLoadingStart()
-                weatherRepository.getUpdatedForecast(it).fold(
-                    onSuccess = ::handleFetchSuccess,
-                    onFailure = ::handleFetchFailure
-                )
-            }
+            notifyLoadingStart()
+            weatherRepository.getUpdatedForecast(it).fold(
+                onSuccess = ::handleFetchSuccess,
+                onFailure = ::handleFetchFailure
+            )
         }
     }
 
@@ -110,7 +116,7 @@ class WeatherViewModel(
     /**
      * Applies new units from the [AppSettings] to the given forecast.
      *
-     * Applies to the [_forecast] by defult if parameter was not passed.
+     * Applies to the [_forecast] by default if parameter was not passed.
      */
     fun applyNewUnits(forecast: Forecast? = _forecast.value) {
         viewModelScope.launch(Dispatchers.Default) {

@@ -34,11 +34,12 @@ data class Forecast(
      * @see <a href="https://openweathermap.org/price">https://openweathermap.org/price</a>
      * @return Returns true if data is valid
      */
-    fun isOutdated(): Boolean {
-        val twoHoursInMillis = 2 * 60 * 60 * 1000 // 2 hours
-        val currentTimeInMillis = Calendar.getInstance().timeInMillis
-        return currentTimeInMillis - timestamp.timeInMillis >= twoHoursInMillis
-    }
+    val isOutdated: Boolean
+        get() {
+            val twoHoursInMillis = 2 * 60 * 60 * 1000 // 2 hours
+            val currentTimeInMillis = Calendar.getInstance().timeInMillis
+            return currentTimeInMillis - timestamp.timeInMillis >= twoHoursInMillis
+        }
 
     /**
      * Updates all temperature units in [Forecast] according to new [unit]
