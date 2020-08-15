@@ -66,6 +66,7 @@ dependencies {
     implementation(Libs.APPCOMPAT)
     implementation(Libs.SWIPEREFRESH_LAYOUT)
     implementation(Libs.CONSTRAINT_LAYOUT)
+    implementation(Libs.INTERPOLATORS)
 
     // Tests
     testImplementation(Libs.JUNIT)

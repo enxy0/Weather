@@ -68,6 +68,7 @@ class FavouriteFragment : BottomSheetDialogFragment() {
         settings.setOnClickListener {
             dismiss(SETTINGS_RIPPLE_DELAY) {
                 parentFragmentManager.beginTransaction()
+                    .setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)
                     .replace(R.id.mainContainer, SettingsFragment.newInstance())
                     .addToBackStack(SettingsFragment.TAG)
                     .commit()

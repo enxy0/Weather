@@ -33,6 +33,7 @@ object Versions {
     const val APPCOMPAT = "1.1.0"
     const val SWIPEREFRESH_LAYOUT = "1.1.0"
     const val CONSTRAINT_LAYOUT = "1.1.3"
+    const val INTERPOLATORS = "1.0.0"
 }
 
 object Libs {
@@ -65,4 +66,5 @@ object Libs {
     const val APPCOMPAT = "androidx.appcompat:appcompat:${Versions.APPCOMPAT}"
     const val SWIPEREFRESH_LAYOUT = "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.SWIPEREFRESH_LAYOUT}"
     const val CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:${Versions.CONSTRAINT_LAYOUT}"
+    const val INTERPOLATORS = "androidx.interpolator:interpolator:${Versions.INTERPOLATORS}"
 }
