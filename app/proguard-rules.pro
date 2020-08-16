@@ -20,7 +20,13 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
+# Keeps SerializedName GSON annotation, because it may crash network calls
+# and throw BadServerResponse error.
 -keepclassmembers,allowobfuscation class * {
     @com.google.gson.annotations.SerializedName <fields>;
   }
--keep,allowobfuscation @interface com.google.gson.annotations.SerializedName
+-keep,allowobfuscation interface com.google.gson.annotations.SerializedName
+
+# Keeps enums for GSON, because app may crash with NoSuchFieldException
+# as GSON cannot find them.
+-keepclassmembers enum * { *; }
