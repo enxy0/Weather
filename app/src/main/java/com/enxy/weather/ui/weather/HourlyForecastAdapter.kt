@@ -8,10 +8,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.enxy.weather.R
 import com.enxy.weather.data.entity.HourForecast
-import com.enxy.weather.utils.extension.withSign
 import kotlinx.android.synthetic.main.item_hour.view.*
 
-class HourAdapter : ListAdapter<HourForecast, HourAdapter.HourHolder>(HourForecastDiffCallback()) {
+class HourlyForecastAdapter :
+    ListAdapter<HourForecast, HourlyForecastAdapter.HourHolder>(HourForecastDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HourHolder {
         return HourHolder(
@@ -28,7 +28,7 @@ class HourAdapter : ListAdapter<HourForecast, HourAdapter.HourHolder>(HourForeca
     inner class HourHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(hourForecastList: HourForecast) {
             with(itemView) {
-                temperature.text = hourForecastList.temperature.value.withSign()
+                temperature.text = hourForecastList.temperature.toString()
                 time.text = hourForecastList.time
                 description.setImageResource(hourForecastList.imageId)
             }
@@ -36,7 +36,7 @@ class HourAdapter : ListAdapter<HourForecast, HourAdapter.HourHolder>(HourForeca
     }
 }
 
-class HourForecastDiffCallback: DiffUtil.ItemCallback<HourForecast>() {
+class HourForecastDiffCallback : DiffUtil.ItemCallback<HourForecast>() {
     override fun areItemsTheSame(oldItem: HourForecast, newItem: HourForecast): Boolean {
         return oldItem.time == newItem.time
     }

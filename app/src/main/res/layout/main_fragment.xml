@@ -211,6 +211,7 @@
                     android:text="@string/section_next_days" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:paddingTop="6dp"
                     android:id="@+id/dayList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

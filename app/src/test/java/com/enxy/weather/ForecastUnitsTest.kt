@@ -93,7 +93,7 @@ class ForecastUnitsTest {
         val updatedForecast = forecast
 
         // New timestamp, forecast should be fresh and valid!
-        assertFalse(updatedForecast.isOutdated())
+        assertFalse(updatedForecast.isOutdated)
 
         // Changing timestamp to an old one (06.08.2020)
         updatedForecast.timestamp.timeInMillis = Calendar.getInstance().apply {
@@ -101,6 +101,6 @@ class ForecastUnitsTest {
         }.timeInMillis
 
         // Since timestamp is old, forecast should be outdated
-        assertFalse(updatedForecast.isOutdated())
+        assertFalse(updatedForecast.isOutdated)
     }
 }

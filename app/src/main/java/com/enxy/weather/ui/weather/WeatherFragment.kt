@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL
 import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import com.enxy.weather.R
 import com.enxy.weather.base.BaseFragment
-import com.enxy.weather.data.AppSettings
 import com.enxy.weather.data.entity.CurrentForecast
 import com.enxy.weather.data.entity.Forecast
 import com.enxy.weather.ui.WeatherActivity
@@ -33,8 +32,8 @@ import org.koin.android.viewmodel.ext.android.sharedViewModel
 class WeatherFragment : BaseFragment() {
     override val layoutId = R.layout.main_fragment
     private val viewModel: WeatherViewModel by sharedViewModel()
-    private val hourAdapter: HourAdapter by inject()
-    private val dayAdapter: DayAdapter by inject()
+    private val hourlyForecastAdapter: HourlyForecastAdapter by inject()
+    private val dailyForecastAdapter: DailyForecastAdapter by inject()
 
     companion object {
         fun newInstance() = WeatherFragment()
@@ -43,7 +42,6 @@ class WeatherFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         with(viewModel) {
-            renderUnits(appSettings)
             observe(forecast, ::renderForecast)
             observe(forecastFailure, ::handleFailure)
             observe(isLoading, ::onLoading)
@@ -66,8 +64,8 @@ class WeatherFragment : BaseFragment() {
      */
     private fun renderForecast(forecast: Forecast) {
         renderCurrentForecast(forecast.currentForecast)
-        hourAdapter.submitList(forecast.hourForecastList)
-        dayAdapter.submitList(forecast.dayForecastList)
+        hourlyForecastAdapter.submitList(forecast.hourForecastList)
+        dailyForecastAdapter.submitList(forecast.dayForecastList)
         locationName.text = forecast.locationName
         favouriteToggle.isChecked = forecast.isFavourite
         if (mainContentLinearLayout.isInvisible) {
@@ -79,26 +77,29 @@ class WeatherFragment : BaseFragment() {
      * Displays [currentForecast] data
      */
     private fun renderCurrentForecast(currentForecast: CurrentForecast) = with(currentForecast) {
+        // Forecast description
         currentDescription.text = description
         currentDescriptionImage.animateScaleFadeChange(imageId)
+
+        // Temperature
         currentTemperature.animateNumberChange(newValue = temperature.value, isSignShown = true)
         currentFeelsLike.animateNumberChange(newValue = feelsLike.value, isSignShown = true)
-        humidityCard.value.animateNumberChange(newValue = humidity)
-        windCard.value.animateNumberChange(newValue = wind.value)
-        pressureCard.value.animateNumberChange(newValue = pressure.value)
-    }
 
-    /**
-     * Displays applied units from [AppSettings]
-     */
-    private fun renderUnits(settings: AppSettings) {
-        when (settings.windUnit) {
+        // Humidity
+        humidityCard.value.animateNumberChange(newValue = humidity)
+
+        // Wind
+        windCard.value.animateNumberChange(newValue = wind.value)
+        when (currentForecast.wind.unit) {
             METERS_PER_SECOND ->
                 windCard.unit.setText(R.string.wind_value_meters_per_second)
             KILOMETERS_PER_HOUR ->
                 windCard.unit.setText(R.string.wind_value_kilometers_per_hour)
         }
-        when (settings.pressureUnit) {
+
+        // Pressure
+        pressureCard.value.animateNumberChange(newValue = pressure.value)
+        when (currentForecast.pressure.unit) {
             MILLIMETERS_OF_MERCURY ->
                 pressureCard.unit.setText(R.string.pressure_value_millimeters)
             HECTO_PASCALS ->
@@ -121,7 +122,6 @@ class WeatherFragment : BaseFragment() {
                     R.string.button_try_again
                 ) {
                     viewModel.updateForecast()
-                    swipeRefreshLayout.isRefreshing = true
                 }
             }
             is BadServerResponse -> {
@@ -132,7 +132,6 @@ class WeatherFragment : BaseFragment() {
                     R.string.button_try_again
                 ) {
                     viewModel.updateForecast()
-                    swipeRefreshLayout.isRefreshing = true
                 }
             }
             else -> {
@@ -184,12 +183,12 @@ class WeatherFragment : BaseFragment() {
 
     private fun setUpRecyclerView() {
         hourRecyclerView.run {
-            adapter = hourAdapter
+            adapter = hourlyForecastAdapter
             layoutManager = LinearLayoutManager(context, HORIZONTAL, false)
             isNestedScrollingEnabled = false
         }
         dayList.run {
-            adapter = dayAdapter
+            adapter = dailyForecastAdapter
             layoutManager = LinearLayoutManager(context, VERTICAL, false)
             isNestedScrollingEnabled = false
         }

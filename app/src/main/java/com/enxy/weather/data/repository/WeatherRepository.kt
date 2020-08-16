@@ -4,7 +4,6 @@ import com.enxy.weather.BuildConfig
 import com.enxy.weather.base.NetworkRepository
 import com.enxy.weather.data.db.AppDataBase
 import com.enxy.weather.data.entity.*
-import com.enxy.weather.data.entity.Units.*
 import com.enxy.weather.data.network.WeatherApi
 import com.enxy.weather.data.network.getIconDarkSurface
 import com.enxy.weather.data.network.getIconLightSurface
@@ -218,6 +217,9 @@ class WeatherRepository(
                     lowestTemp = Temperature(daily.temperature.min.roundToInt()),
                     day = (daily.timestamp formatTo "EEEE").capitalize(),
                     date = daily.timestamp formatTo "dd.MM",
+                    wind = Wind(daily.windSpeed.roundToInt()),
+                    pressure = Pressure(daily.pressure),
+                    humidity = daily.humidity,
                     imageId = getIconLightSurface(
                         daily.weather[0].id,
                         daily.weather[0].icon.last()

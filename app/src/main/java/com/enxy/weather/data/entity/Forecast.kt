@@ -1,5 +1,6 @@
 package com.enxy.weather.data.entity
 
+import androidx.annotation.Keep
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -10,6 +11,7 @@ import com.enxy.weather.utils.TemperatureUnit
 import com.enxy.weather.utils.WindUnit
 import java.util.*
 
+@Keep
 @Entity(tableName = "forecast")
 data class Forecast(
     @PrimaryKey(autoGenerate = true)
@@ -61,9 +63,9 @@ data class Forecast(
      */
     fun updatePressureUnit(unit: PressureUnit) {
         currentForecast.pressure.updateUnit(unit)
-//        dayForecastList.forEach {
-//            it.pressure.updateUnit(type)
-//        }
+        dayForecastList.forEach {
+            it.pressure.updateUnit(unit)
+        }
     }
 
     /**
@@ -71,8 +73,8 @@ data class Forecast(
      */
     fun updateWindUnit(unit: WindUnit) {
         currentForecast.wind.updateUnit(unit)
-//        dayForecastList.forEach {
-//            it.wind.updateUnit(type)
-//        }
+        dayForecastList.forEach {
+            it.wind.updateUnit(unit)
+        }
     }
 }

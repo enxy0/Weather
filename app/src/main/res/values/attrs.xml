@@ -13,7 +13,6 @@
     </declare-styleable>
 
     <declare-styleable name="ForecastDetailsCard">
-        <attr name="detIcon" format="reference" />
         <attr name="detUnit" format="string" />
         <attr name="detValue" format="string" />
         <attr name="detDescription" format="string" />

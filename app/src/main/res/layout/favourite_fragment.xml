@@ -25,6 +25,7 @@
             style="@style/CustomStyle.Icon.Clickable"
             android:layout_gravity="center"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:visibility="gone"
             android:src="@drawable/ic_moon" />
 
         <ImageView

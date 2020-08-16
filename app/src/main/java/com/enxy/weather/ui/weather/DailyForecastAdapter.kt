@@ -12,13 +12,19 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.enxy.weather.R
 import com.enxy.weather.data.entity.DayForecast
+import com.enxy.weather.utils.PressureUnit.HECTO_PASCALS
+import com.enxy.weather.utils.PressureUnit.MILLIMETERS_OF_MERCURY
+import com.enxy.weather.utils.WindUnit.KILOMETERS_PER_HOUR
+import com.enxy.weather.utils.WindUnit.METERS_PER_SECOND
 import com.enxy.weather.utils.extension.dp
-import com.enxy.weather.utils.extension.withSign
+import kotlinx.android.synthetic.main.detailed_temp_card_view.view.*
 import kotlinx.android.synthetic.main.item_day.view.*
 
-class DayAdapter : ListAdapter<DayForecast, DayAdapter.DayHolder>(DayForecastDiffCallback()) {
+class DailyForecastAdapter :
+    ListAdapter<DayForecast, DailyForecastAdapter.DayHolder>(DayForecastDiffCallback()) {
     companion object {
-        private val EXPANDED_HEIGHT = 90.dp
+        private val EXPANDED_HEIGHT = 68.dp
+        private const val DURATION = 200L
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayHolder {
@@ -60,35 +66,76 @@ class DayAdapter : ListAdapter<DayForecast, DayAdapter.DayHolder>(DayForecastDif
                 newAlpha = 1f
             }
         }
+
         val heightAnim = ValueAnimator.ofInt(currentHeight, newHeight).apply {
-            duration = 200L
+            duration = DURATION
+            interpolator = AccelerateDecelerateInterpolator()
             addUpdateListener {
                 view.layoutParams.height = it.animatedValue as Int
                 view.requestLayout()
             }
         }
+
         val alphaAnim = ObjectAnimator.ofFloat(view, View.ALPHA, currentAlpha, newAlpha).apply {
-            duration = 200L
-        }
-        AnimatorSet().apply {
+            duration = DURATION
             interpolator = AccelerateDecelerateInterpolator()
-            playTogether(alphaAnim, heightAnim)
-            start()
         }
+
+        val set = AnimatorSet()
+        set.playTogether(alphaAnim, heightAnim)
+        set.start()
+    }
+
+    private fun rotate(view: View) {
+        val angle = if (view.rotation == 0f) 180f else 0f
+
+        view.animate()
+            .rotation(angle)
+            .setDuration(DURATION)
+            .start()
     }
 
     inner class DayHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(dayForecast: DayForecast) = with(itemView) {
-            temperature.text = context.getString(
+            highestTemperature.text = context.getString(
                 R.string.day_forecast_temperature,
-                dayForecast.highestTemp.value.withSign(),
-                dayForecast.lowestTemp.value.withSign()
+                dayForecast.highestTemp.toString()
             )
-            date.text = context.getString(R.string.day_forecast_date, dayForecast.date)
+            lowestTemperature.text = context.getString(
+                R.string.day_forecast_temperature,
+                dayForecast.lowestTemp.toString()
+            )
+            date.text = dayForecast.date
             day.text = dayForecast.day
             weatherIcon.setImageResource(dayForecast.imageId)
+            expandButton.setOnClickListener {
+                animateState(detailsLayout)
+                rotate(expandButton)
+            }
             previewLayout.setOnClickListener {
                 animateState(detailsLayout)
+                rotate(expandButton)
+            }
+
+            // Humidity
+            humidityCard.value.text = dayForecast.humidity.toString()
+
+            // Wind
+            windCard.value.text = dayForecast.wind.toString()
+            when(dayForecast.wind.unit) {
+                METERS_PER_SECOND ->
+                    windCard.unit.text = context.getString(R.string.wind_value_meters_per_second)
+                KILOMETERS_PER_HOUR ->
+                    windCard.unit.text = context.getString(R.string.wind_value_kilometers_per_hour)
+            }
+
+            // Pressure
+            pressureCard.value.text = dayForecast.pressure.toString()
+            when(dayForecast.pressure.unit) {
+                MILLIMETERS_OF_MERCURY ->
+                    pressureCard.unit.text = context.getString(R.string.pressure_value_millimeters)
+                HECTO_PASCALS ->
+                    pressureCard.unit.text = context.getString(R.string.pressure_value_pascals)
             }
         }
     }
