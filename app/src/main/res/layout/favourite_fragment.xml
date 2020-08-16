@@ -12,8 +12,15 @@
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginBottom="@dimen/favourite_horizontal_margin">
 
+        <ImageView
+            android:id="@+id/close"
+            style="@style/CustomStyle.Icon.Clickable"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_close" />
+
         <TextView
             android:id="@+id/favouriteTitle"
+            android:textAlignment="center"
             style="@style/CustomStyle.Text.Section"
             android:layout_gravity="center"
             android:layout_weight="1"
