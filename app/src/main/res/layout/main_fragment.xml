@@ -34,11 +34,12 @@
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/locationName"
-                        style="@style/CustomStyle.Text.Header"
+                        style="@style/CustomStyle.Text.Section"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
@@ -63,17 +64,27 @@
 
                 <ImageView
                     android:id="@+id/currentDescriptionImage"
-                    style="@style/CustomStyle.ImageView.CurrentWeather"
+                    android:layout_width="170dp"
+                    android:layout_height="170dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
                     android:layout_marginBottom="@dimen/activity_vertical_margin"
                     tools:src="@drawable/weather_clear_day" />
+
+                <TextView
+                    android:id="@+id/currentDescription"
+                    style="@style/CustomStyle.Text.Header"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    tools:text="Sunny" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
                     android:orientation="horizontal">
 
@@ -81,7 +92,7 @@
                         android:id="@+id/currentTemperature"
                         style="@style/CustomStyle.Text.Header"
                         android:textSize="45sp"
-                        tools:text="+1" />
+                        tools:text="+15" />
 
                     <TextView
                         style="@style/CustomStyle.Text.Header"
@@ -93,7 +104,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin"
                     android:orientation="horizontal">
 
                     <TextView
@@ -117,31 +128,23 @@
                         android:textSize="16sp" />
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/currentDescription"
-                    style="@style/CustomStyle.Text.Primary"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                    tools:text="Sunny" />
-
                 <LinearLayout
                     android:id="@+id/precipitationsLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/section_vertical_margin"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
                     android:orientation="horizontal"
                     android:paddingStart="@dimen/details_layout_padding"
-                    android:paddingEnd="@dimen/details_layout_padding">
+                    android:paddingEnd="@dimen/details_layout_padding"
+                    android:paddingBottom="4dp">
 
                     <com.enxy.weather.views.PrecipitationCard
                         android:id="@+id/humidityCard"
                         style="@style/CustomStyle.CardView"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="4dp"
                         android:layout_weight="1"
                         app:cardBackgroundColor="@color/humidityTileColor"
                         app:prepIcon="@drawable/ic_humidity"
@@ -155,8 +158,8 @@
                         style="@style/CustomStyle.CardView"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="4dp"
                         android:layout_weight="1"
                         app:cardBackgroundColor="@color/windTileColor"
                         app:prepIcon="@drawable/ic_wind"
@@ -170,8 +173,8 @@
                         style="@style/CustomStyle.CardView"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="4dp"
                         android:layout_weight="1"
                         app:cardBackgroundColor="@color/pressureTileColor"
                         app:prepIcon="@drawable/ic_pressure"
@@ -181,11 +184,15 @@
                         app:prepValue="766" />
                 </LinearLayout>
 
+                <View
+                    style="@style/CustomStyle.Divider.Thick.Horizontal"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin" />
+
                 <TextView
                     android:id="@+id/hourTitle"
-                    style="@style/CustomStyle.Text.Header"
+                    style="@style/CustomStyle.Text.Section"
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="@dimen/section_vertical_margin"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
                     android:text="@string/section_next_hours" />
 
@@ -195,27 +202,32 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clipToPadding="false"
-                    android:paddingStart="6dp"
-                    android:paddingTop="@dimen/section_content_top_padding"
+                    android:paddingStart="10dp"
+                    android:paddingTop="@dimen/activity_vertical_margin"
                     android:paddingEnd="6dp"
+                    android:paddingBottom="4dp"
                     tools:itemCount="9"
                     tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_hour"
                     tools:orientation="horizontal" />
 
+                <View
+                    style="@style/CustomStyle.Divider.Thick.Horizontal"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin" />
+
                 <TextView
-                    style="@style/CustomStyle.Text.Header"
+                    style="@style/CustomStyle.Text.Section"
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="@dimen/section_vertical_margin"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
                     android:text="@string/section_next_days" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:paddingTop="6dp"
                     android:id="@+id/dayList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clipToPadding="false"
+                    android:paddingTop="6dp"
                     tools:itemCount="7"
                     tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_day"

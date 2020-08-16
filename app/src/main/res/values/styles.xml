@@ -51,10 +51,6 @@
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>
 
-    <style name="CustomStyle.Text.Primary.Title" parent="CustomStyle.Text.Primary">
-        <item name="android:textSize">18sp</item>
-    </style>
-
     <style name="CustomStyle.Clickable">
         <item name="android:background">?attr/selectableItemBackground</item>
         <item name="android:clickable">true</item>
@@ -78,6 +74,11 @@
         <item name="android:letterSpacing">0.06</item>
     </style>
 
+    <style name="CustomStyle.Text.Section" parent="CustomStyle.Text.Primary">
+        <item name="android:textSize">20sp</item>
+        <item name="fontFamily">@font/open_sans_bold</item>
+    </style>
+
     <style name="CustomStyle.ImageView">
         <item name="android:layout_height">50dp</item>
         <item name="android:layout_width">50dp</item>
@@ -85,7 +86,8 @@
 
     <style name="CustomStyle.ImageView.CurrentWeather" parent="CustomStyle.ImageView">
         <item name="android:layout_height">200dp</item>
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
     </style>
 
     <style name="CustomStyle.Icon">

@@ -40,7 +40,6 @@
                 android:id="@+id/day"
                 style="@style/CustomStyle.Text.Primary"
                 android:layout_gravity="start"
-                android:textSize="17sp"
                 tools:text="Sunday" />
 
             <TextView
@@ -79,7 +78,7 @@
             android:id="@+id/expandButton"
             style="@style/CustomStyle.Icon.Clickable"
             android:layout_gravity="center"
-            android:layout_marginEnd="@dimen/day_margin"
+            android:layout_marginEnd="6dp"
             android:src="@drawable/ic_arrow_down"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
