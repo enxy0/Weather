@@ -9,7 +9,7 @@ object Versions {
     const val VERSION_NAME = "1.0.0-beta-1"
 
     // Kotlin
-    const val KOTLIN = "1.3.72"
+    const val KOTLIN = "1.4.0"
     const val COROUTINES = "1.3.7"
 
     // Libs
