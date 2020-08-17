@@ -17,28 +17,28 @@ val fakeForecast = Forecast(
     isFavourite = false,
     currentForecast = CurrentForecast(
         currentForecastId = 0,
-        temperature = Units.Temperature(21),
+        temperature = Temperature(21),
         description = "Broken clouds",
-        feelsLike = Units.Temperature(18),
-        wind = Units.Wind(5),
-        pressure = Units.Pressure(1022),
+        feelsLike = Temperature(18),
+        wind = Wind(5),
+        pressure = Pressure(1022),
         humidity = 56,
         imageId = 2131230822
     ),
     hourForecastList = arrayListOf(
-        HourForecast(0, Units.Temperature(21), "15:00", 1),
-        HourForecast(1, Units.Temperature(19), "18:00", 2),
-        HourForecast(2, Units.Temperature(16), "21:00", 3),
-        HourForecast(3, Units.Temperature(15), "23:00", 4)
+        HourForecast(0, Temperature(21), "15:00", 1),
+        HourForecast(1, Temperature(19), "18:00", 2),
+        HourForecast(2, Temperature(16), "21:00", 3),
+        HourForecast(3, Temperature(15), "23:00", 4),
     ),
     dayForecastList = arrayListOf(
-        DayForecast(Units.Temperature(21), Units.Temperature(16), "Thursday", "25.06", R.drawable.current_weather_thunderstorm_rain_heavy),
-        DayForecast(Units.Temperature(20), Units.Temperature(15), "Friday", "26.06", R.drawable.current_weather_broken_clouds),
-        DayForecast(Units.Temperature(23), Units.Temperature(17), "Saturday", "27.06", R.drawable.weather_clear_day),
-        DayForecast(Units.Temperature(17), Units.Temperature(9), "Sunday", "28.06", R.drawable.current_weather_snow_middle),
-        DayForecast(Units.Temperature(10), Units.Temperature(3), "Monday", "29.06", R.drawable.current_weather_mist),
-        DayForecast(Units.Temperature(22), Units.Temperature(16), "Tuesday", "30.06", R.drawable.current_weather_scattered_clouds),
-        DayForecast(Units.Temperature(22), Units.Temperature(17), "Wednesday", "01.07", R.drawable.current_weather_rain_light)
+        DayForecast(Temperature(21), Temperature(16), "Thursday", "25.06", Wind(3), Pressure(5), 97, R.drawable.current_weather_thunderstorm_rain_heavy),
+        DayForecast(Temperature(20), Temperature(15), "Friday", "26.06", Wind(3), Pressure(5), 97, R.drawable.current_weather_broken_clouds),
+        DayForecast(Temperature(23), Temperature(17), "Saturday", "27.06", Wind(3), Pressure(5), 97, R.drawable.weather_clear_day),
+        DayForecast(Temperature(17), Temperature(9), "Sunday", "28.06", Wind(3), Pressure(5), 97, R.drawable.current_weather_snow_middle),
+        DayForecast(Temperature(10), Temperature(3), "Monday", "29.06", Wind(3), Pressure(5), 97, R.drawable.current_weather_mist),
+        DayForecast(Temperature(22), Temperature(16), "Tuesday", "30.06", Wind(3), Pressure(5), 97, R.drawable.current_weather_scattered_clouds),
+        DayForecast(Temperature(22), Temperature(17), "Wednesday", "01.07", Wind(3), Pressure(5), 97, R.drawable.current_weather_rain_light)
     )
 )
 
