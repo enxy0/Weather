@@ -65,7 +65,6 @@
     </style>
 
     <style name="CustomStyle.Text.Secondary" parent="CustomStyle.Text">
-        <item name="android:textSize">14sp</item>
         <item name="android:textColor">?android:textColorSecondary</item>
     </style>
 

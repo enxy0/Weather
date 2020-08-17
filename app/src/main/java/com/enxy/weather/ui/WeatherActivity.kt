@@ -2,6 +2,7 @@ package com.enxy.weather.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.commitNow
 import com.enxy.weather.R
 import com.enxy.weather.base.BaseFragment
 import com.enxy.weather.ui.search.SearchFragment
@@ -24,15 +25,14 @@ class WeatherActivity : AppCompatActivity() {
      *
      * If not - opens [WeatherFragment].
      */
-    private fun showNextScreen(isAppFirstLaunched: Boolean?) {
-        isAppFirstLaunched?.let {
-            val fragment: BaseFragment = if (isAppFirstLaunched)
-                SearchFragment.newInstance()
-            else
-                WeatherFragment.newInstance()
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.mainContainer, fragment)
-                .commitNow()
+    private fun showNextScreen(isAppFirstLaunched: Boolean) {
+        val fragment: BaseFragment = if (isAppFirstLaunched) {
+            SearchFragment.newInstance()
+        } else {
+            WeatherFragment.newInstance()
+        }
+        supportFragmentManager.commitNow {
+            replace(R.id.mainContainer, fragment)
         }
     }
 }

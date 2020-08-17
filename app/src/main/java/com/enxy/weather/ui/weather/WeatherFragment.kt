@@ -50,10 +50,49 @@ class WeatherFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpBottomAppBar()
-        setUpSwipeRefreshLayout()
-        setUpRecyclerView()
         setHasOptionsMenu(true)
+
+        // Set up SwipeRefreshLayout
+        swipeRefreshLayout.run {
+            setProgressViewOffset(true, 0, 55.dp)
+            setOnRefreshListener { viewModel.updateForecast() }
+        }
+
+        // Set up BottomAppBar
+        (activity as WeatherActivity).setSupportActionBar(bottomAppBar)
+        bottomAppBar.run {
+            setNavigationOnClickListener {
+                FavouriteFragment
+                    .newInstance()
+                    .show(parentFragmentManager, FavouriteFragment.TAG)
+            }
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.menu_search_action -> {
+                        parentFragmentManager.commit {
+                            replace(R.id.mainContainer, SearchFragment.newInstance())
+                            addToBackStack(SearchFragment.TAG)
+                        }
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }
+
+        // List configurations
+        hourList.run {
+            adapter = hourlyForecastAdapter
+            layoutManager = LinearLayoutManager(requireContext(), HORIZONTAL, false)
+            isNestedScrollingEnabled = false
+        }
+        dayList.run {
+            adapter = dailyForecastAdapter
+            layoutManager = LinearLayoutManager(requireContext(), VERTICAL, false)
+            isNestedScrollingEnabled = false
+        }
+
+        // Add to favourite button (star)
         favouriteToggle.setOnClickListener {
             viewModel.changeForecastFavouriteStatus(favouriteToggle.isChecked)
         }
@@ -147,50 +186,8 @@ class WeatherFragment : BaseFragment() {
         swipeRefreshLayout.isRefreshing = isLoading
     }
 
-    private fun setUpBottomAppBar() {
-        (activity as WeatherActivity).setSupportActionBar(bottomAppBar)
-
-        bottomAppBar.setNavigationOnClickListener {
-            val fragment = FavouriteFragment.newInstance()
-            fragment.show(parentFragmentManager, FavouriteFragment.TAG)
-        }
-
-        bottomAppBar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.menu_search_action -> {
-                    parentFragmentManager.commit {
-                        replace(R.id.mainContainer, SearchFragment.newInstance())
-                        addToBackStack(SearchFragment.TAG)
-                    }
-                    true
-                }
-                else -> false
-            }
-        }
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.main_menu, menu)
-    }
-
-    private fun setUpSwipeRefreshLayout() {
-        swipeRefreshLayout.setProgressViewOffset(true, 0, 55.dp)
-        swipeRefreshLayout.setOnRefreshListener {
-            viewModel.updateForecast()
-        }
-    }
-
-    private fun setUpRecyclerView() {
-        hourRecyclerView.run {
-            adapter = hourlyForecastAdapter
-            layoutManager = LinearLayoutManager(context, HORIZONTAL, false)
-            isNestedScrollingEnabled = false
-        }
-        dayList.run {
-            adapter = dailyForecastAdapter
-            layoutManager = LinearLayoutManager(context, VERTICAL, false)
-            isNestedScrollingEnabled = false
-        }
     }
 }

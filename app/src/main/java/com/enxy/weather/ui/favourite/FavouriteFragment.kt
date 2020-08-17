@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import com.enxy.weather.R
@@ -44,12 +45,34 @@ class FavouriteFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpListeners()
-        favouriteList.apply {
+
+        // Set up list configurations
+        favouriteList.run {
             adapter = favouriteAdapter
             layoutManager = LinearLayoutManager(requireContext(), VERTICAL, false)
             setHasFixedSize(true)
         }
+
+        // Set up settings button
+        settings.setOnClickListener {
+            dismiss(ICON_RIPPLE_DELAY) {
+                parentFragmentManager.commit {
+                    setCustomAnimations(
+                        R.anim.slide_in,
+                        R.anim.fade_out,
+                        R.anim.fade_in,
+                        R.anim.slide_out)
+                    replace(R.id.mainContainer, SettingsFragment.newInstance())
+                    addToBackStack(SettingsFragment.TAG)
+                }
+            }
+        }
+
+        // Set up close button
+        close.setOnClickListener {
+            dismiss(delay = ICON_RIPPLE_DELAY)
+        }
+
         with(viewModel) {
             observe(favouriteLocations, ::renderData)
             observe(failure, ::handleFailure)
@@ -62,21 +85,6 @@ class FavouriteFragment : BottomSheetDialogFragment() {
 
     private fun handleFailure(failure: Exception) {
         // TODO: Add image for error or when there is no data
-    }
-
-    private fun setUpListeners() {
-        settings.setOnClickListener {
-            dismiss(ICON_RIPPLE_DELAY) {
-                parentFragmentManager.beginTransaction()
-                    .setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)
-                    .replace(R.id.mainContainer, SettingsFragment.newInstance())
-                    .addToBackStack(SettingsFragment.TAG)
-                    .commit()
-            }
-        }
-        close.setOnClickListener {
-            dismiss(delay = ICON_RIPPLE_DELAY)
-        }
     }
 
     /**

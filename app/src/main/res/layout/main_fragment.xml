@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
                     android:orientation="horizontal">
 
@@ -104,28 +104,28 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"
+                    android:layout_marginBottom="20dp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/currentFeelsLikeValue"
-                        style="@style/CustomStyle.Text.Secondary"
-                        android:text="@string/feels_like"
-                        android:textSize="16sp" />
+                        style="@style/CustomStyle.Text.Header"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:text="@string/feels_like" />
 
                     <TextView
                         android:id="@+id/currentFeelsLike"
-                        style="@style/CustomStyle.Text.Secondary"
+                        style="@style/CustomStyle.Text.Header"
+                        android:textColor="?android:attr/textColorSecondary"
                         android:layout_marginStart="@dimen/text_space_margin"
-                        android:textSize="16sp"
                         tools:text="+13" />
 
                     <TextView
-                        style="@style/CustomStyle.Text.Secondary"
+                        style="@style/CustomStyle.Text.Header"
                         android:layout_width="wrap_content"
+                        android:textColor="?android:attr/textColorSecondary"
                         android:layout_height="wrap_content"
-                        android:text="@string/sign_degree"
-                        android:textSize="16sp" />
+                        android:text="@string/sign_degree" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -184,21 +184,17 @@
                         app:prepValue="766" />
                 </LinearLayout>
 
-                <View
-                    style="@style/CustomStyle.Divider.Thick.Horizontal"
-                    android:layout_marginTop="@dimen/activity_vertical_margin"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin" />
-
                 <TextView
                     android:id="@+id/hourTitle"
                     style="@style/CustomStyle.Text.Section"
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
                     android:text="@string/section_next_hours" />
 
                 <!-- TODO: Rename id-->
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/hourRecyclerView"
+                    android:id="@+id/hourList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clipToPadding="false"
@@ -211,14 +207,10 @@
                     tools:listitem="@layout/item_hour"
                     tools:orientation="horizontal" />
 
-                <View
-                    style="@style/CustomStyle.Divider.Thick.Horizontal"
-                    android:layout_marginTop="@dimen/activity_vertical_margin"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin" />
-
                 <TextView
                     style="@style/CustomStyle.Text.Section"
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
                     android:text="@string/section_next_days" />
 
