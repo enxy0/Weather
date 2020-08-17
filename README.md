@@ -14,9 +14,9 @@ Minimalistic and light design makes it easy to see only the necessary data.
 -   [x] Add tests for UI and code 🛠️
 -   [x] Show 7-day forecast ⛅
 -   [x] Provide documentation 📚
+-   [x] Add animations 🔥
 -   [ ] Display weather forecast based on user location 📍
 -   [ ] Add dark theme 🌙
--   [ ] Add animations 🔥
 
 ## Screenshots
 <img  src="https://raw.githubusercontent.com/enxy0/Weather/development/screenshots/main.jpg?raw=true"  width=23% /> <img  src="https://raw.githubusercontent.com/enxy0/Weather/development/screenshots/favourite.jpg?raw=true"  width=23% /> <img  src="https://raw.githubusercontent.com/enxy0/Weather/development/screenshots/search.jpg?raw=true"  width=23% /> <img  src="https://raw.githubusercontent.com/enxy0/Weather/development/screenshots/settings.jpg?raw=true"  width=23% />
