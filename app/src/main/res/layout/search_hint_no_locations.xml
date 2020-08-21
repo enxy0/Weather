@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/noLocationsHint"
+    style="@style/CustomStyle.SearchHint">
+
+    <TextView
+        style="@style/CustomStyle.Text.Secondary"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/hint_text_margin"
+        android:text="@string/hint_icon_sad"
+        android:textSize="80sp" />
+
+    <TextView
+        style="@style/CustomStyle.Text.Header"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/hint_text_margin"
+        android:text="@string/hint_title_no_locations" />
+
+    <TextView
+        style="@style/CustomStyle.Text.Secondary"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/hint_text_margin"
+        android:layout_marginEnd="@dimen/hint_text_margin"
+        android:layout_marginBottom="@dimen/hint_text_margin"
+        android:text="@string/hint_description_no_locations"
+        android:textAlignment="center" />
+</LinearLayout>

@@ -22,6 +22,9 @@ import com.enxy.weather.utils.extension.observe
 import com.enxy.weather.utils.extension.show
 import com.enxy.weather.utils.extension.snackbarShort
 import kotlinx.android.synthetic.main.search_fragment.*
+import kotlinx.android.synthetic.main.search_hint_enter_text.*
+import kotlinx.android.synthetic.main.search_hint_no_internet.*
+import kotlinx.android.synthetic.main.search_hint_no_locations.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.core.parameter.parametersOf
@@ -51,7 +54,7 @@ class SearchFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerView()
         setFocusOnInput()
-        showHint(enterHint)
+        showHint(enterTextHint)
         searchCityEditText.doOnTextChanged { text, _, _, _ ->
             if (text != null && text.length > 1)
                 viewModel.getLocationsByName(text.toString())
