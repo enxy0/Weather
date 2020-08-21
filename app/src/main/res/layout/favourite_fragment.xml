@@ -20,20 +20,20 @@
 
         <TextView
             android:id="@+id/favouriteTitle"
-            android:textAlignment="center"
             style="@style/CustomStyle.Text.Section"
+            android:layout_width="0dp"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:text="@string/header_favourite_locations"
-            android:layout_width="0dp" />
+            android:textAlignment="center" />
 
         <ImageView
             android:id="@+id/theme"
             style="@style/CustomStyle.Icon.Clickable"
             android:layout_gravity="center"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:visibility="gone"
-            android:src="@drawable/ic_moon" />
+            android:src="@drawable/ic_moon"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/settings"
@@ -44,13 +44,18 @@
 
     <View style="@style/CustomStyle.Divider.Thin.Horizontal" />
 
+    <include
+        layout="@layout/favourite_hint_no_data"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/favouriteList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="12dp"
         android:layout_weight="1"
         android:scrollbars="vertical"
         tools:itemCount="2"
-        android:layout_marginBottom="12dp"
         tools:listitem="@layout/item_favourite" />
 </LinearLayout>

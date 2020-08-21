@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
@@ -11,10 +12,14 @@ import com.enxy.weather.R
 import com.enxy.weather.data.entity.MiniForecast
 import com.enxy.weather.ui.WeatherViewModel
 import com.enxy.weather.ui.settings.SettingsFragment
+import com.enxy.weather.utils.exception.DataNotFound
 import com.enxy.weather.utils.extension.dismiss
+import com.enxy.weather.utils.extension.hide
 import com.enxy.weather.utils.extension.observe
+import com.enxy.weather.utils.extension.show
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.favourite_fragment.*
+import kotlinx.android.synthetic.main.favourite_hint_no_data.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.core.parameter.parametersOf
@@ -80,11 +85,18 @@ class FavouriteFragment : BottomSheetDialogFragment() {
     }
 
     private fun renderData(favouriteLocations: List<MiniForecast>) {
+        if (noDataHint.isVisible) {
+            noDataHint.hide()
+            favouriteList.show()
+        }
         favouriteAdapter.updateData(favouriteLocations)
     }
 
     private fun handleFailure(failure: Exception) {
-        // TODO: Add image for error or when there is no data
+        if (failure == DataNotFound) {
+            noDataHint.show()
+            favouriteList.hide()
+        }
     }
 
     /**
