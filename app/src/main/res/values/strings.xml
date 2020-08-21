@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Weather</string>
+    <string name="app_name">Nice Weather</string>
     <string name="section_five_day_forecast">Forecast</string>
     <string name="feels_like">Feels like:</string>
     <string name="humidity">Humidity</string>
