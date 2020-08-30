@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class WeatherViewModel(
     private val weatherRepository: WeatherRepository,
-    val appSettings: AppSettings
+    private val appSettings: AppSettings
 ) : ViewModel() {
 
     /**

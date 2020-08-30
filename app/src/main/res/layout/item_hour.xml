@@ -24,7 +24,7 @@
             style="@style/CustomStyle.Text.Primary"
             android:layout_gravity="center"
             android:letterSpacing="0.08"
-            android:textColor="@color/nextHoursTextColor"
+            android:textColor="?attr/nextHoursTextColor"
             tools:text="23:00" />
 
         <ImageView
@@ -45,13 +45,13 @@
             <TextView
                 android:id="@+id/temperature"
                 style="@style/CustomStyle.Text.Primary"
-                android:textColor="@color/nextHoursTextColor"
+                android:textColor="?attr/nextHoursTextColor"
                 tools:text="-10" />
 
             <TextView
                 style="@style/CustomStyle.Text.Primary"
                 android:text="@string/sign_degree"
-                android:textColor="@color/nextHoursTextColor" />
+                android:textColor="?attr/nextHoursTextColor" />
         </LinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

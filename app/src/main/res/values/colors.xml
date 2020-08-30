@@ -1,27 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Light Theme -->
     <color name="colorPrimary">#4CAF50</color>
     <color name="colorPrimaryDark">#4CAF50</color>
     <color name="colorAccent">#4CAF50</color>
     <color name="windowBackgroundColor">#FFFFFF</color>
-    <color name="windowBackgroundColorNight">#202020</color>
     <color name="cardViewBackgroundColor">#EFEFEF</color>
-    <color name="cardViewBackgroundColorDark">#2B2B2B</color>
-    <color name="iconColorNight">#AEAEAE</color>
     <color name="iconColor">#FFFFFF</color>
-    <color name="dividerColor">#E8E8E8</color>
-    <color name="dividerColorNight">#151515</color>
+    <color name="dividerColor">#1F000000</color>
     <color name="colorTextPrimary">#000000</color>
-    <color name="colorTextSecondary">#808080</color>
+    <color name="colorTextSecondary">#666666</color>
     <color name="settingsHeaderColor">#8899AA</color>
 
-<!-- Forecast tiles colors -->
+    <!-- Night Theme -->
+    <color name="colorPrimaryNight">#4CAF50</color>
+    <color name="colorPrimaryDarkNight">#4CAF50</color>
+    <color name="colorAccentNight">#4CAF50</color>
+    <color name="windowBackgroundColorNight">#202020</color>
+    <color name="cardViewBackgroundColorNight">#2B2B2B</color>
+    <color name="iconColorNight">#AEAEAE</color>
+    <color name="dividerColorNight">#1FFFFFFF</color>
+    <color name="colorTextPrimaryNight">#FFFFFFFF</color>
+    <color name="colorTextSecondaryNight">#999999</color>
+    <color name="settingsHeaderColorNight">#8899AA</color>
+
+    <!-- Forecast Tile Colors -->
     <color name="humidityTileColor">#4D29B6F6</color>
-    <color name="humidityTextColor">#1C7FAC</color>
     <color name="windTileColor">#4D66BB6A</color>
-    <color name="windTextColor">#47824A</color>
     <color name="pressureTileColor">#4DFFA726</color>
-    <color name="pressureTextColor">#B2741A</color>
     <color name="nextHoursTileColor">#4D7E57C2</color>
+
+    <!-- Light Forecast Text Colors -->
+    <color name="windTextColor">#47824A</color>
+    <color name="humidityTextColor">#1C7FAC</color>
+    <color name="pressureTextColor">#B2741A</color>
     <color name="nextHoursTextColor">#583c87</color>
+
+    <!-- Night Forecast Text Colors -->
+    <color name="humidityTextColorNight">#60BEEA</color>
+    <color name="windTextColorNight">#74D579</color>
+    <color name="pressureTextColorNight">#E8AE5A</color>
+    <color name="nextHoursTextColorNight">#A77DED</color>
 </resources>

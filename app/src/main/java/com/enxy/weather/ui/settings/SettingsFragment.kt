@@ -8,10 +8,6 @@ import com.enxy.weather.BuildConfig
 import com.enxy.weather.R
 import com.enxy.weather.base.BaseFragment
 import com.enxy.weather.ui.WeatherViewModel
-import com.enxy.weather.utils.PressureUnit
-import com.enxy.weather.utils.TemperatureUnit
-import com.enxy.weather.utils.WindUnit
-import com.enxy.weather.utils.extension.observe
 import com.enxy.weather.utils.extension.openLink
 import kotlinx.android.synthetic.main.settings_fragment.*
 import org.koin.android.ext.android.inject
@@ -29,66 +25,70 @@ class SettingsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUpAppearanceSection()
+        setUpUnitsSection()
         setUpAboutSection()
-        with(viewModel) {
-            // Units selected by user (or by default)
-            observe(selectedTemperature, { temperature.text = it?.displayedName })
-            observe(selectedWind, { wind.text = it?.displayedName })
-            observe(selectedPressure, { pressure.text = it?.displayedName })
-            // Lists of all available units
-            observe(availableTemperatureUnits, ::setAvailableTemperatureUnits)
-            observe(availableWindUnits, ::setAvailableWindUnits)
-            observe(availablePressureUnits, ::setAvailablePressureUnits)
+    }
+
+    private fun setUpAppearanceSection() {
+        theme.text = viewModel.theme
+        appearanceLayout.setOnClickListener {
+            MaterialDialog(requireContext()).show {
+                title(R.string.theme_title)
+                listItems(items = viewModel.availableThemes) { _, index, text ->
+                    this@SettingsFragment.theme.text = text
+                    viewModel.updateTheme(index)
+                    activityViewModel.applyNewUnits()
+                }
+            }
         }
     }
 
-    private fun setAvailableTemperatureUnits(temperatureUnits: Array<TemperatureUnit>) {
+    private fun setUpUnitsSection() {
+        // Temperature
+        temperature.text = viewModel.temperature
         temperatureLayout.setOnClickListener {
             MaterialDialog(requireContext()).show {
                 title(R.string.temperature_title)
-                listItems(items = temperatureUnits.map { it.displayedName }) { _, index, text ->
+                listItems(items = viewModel.availableTemperatureUnits) { _, index, text ->
                     this@SettingsFragment.temperature.text = text
-                    viewModel.updateTemperatureUnit(temperatureUnits[index])
+                    viewModel.updateTemperatureUnit(index)
                     activityViewModel.applyNewUnits()
                 }
             }
         }
-    }
 
-    private fun setAvailableWindUnits(windUnits: Array<WindUnit>) {
+        // Wind
+        wind.text = viewModel.wind
         windLayout.setOnClickListener {
             MaterialDialog(requireContext()).show {
                 title(R.string.wind_title)
-                listItems(items = windUnits.map { it.displayedName }) { _, index, text ->
+                listItems(items = viewModel.availableWindUnits) { _, index, text ->
                     this@SettingsFragment.wind.text = text
-                    viewModel.updateWindUnit(windUnits[index])
+                    viewModel.updateWindUnit(index)
                     activityViewModel.applyNewUnits()
                 }
             }
         }
-    }
 
-    private fun setAvailablePressureUnits(pressureUnits: Array<PressureUnit>) {
+        // Pressure
+        pressure.text = viewModel.pressure
         pressureLayout.setOnClickListener {
             MaterialDialog(requireContext()).show {
                 title(R.string.pressure_title)
-                listItems(items = pressureUnits.map { it.displayedName }) { _, index, text ->
+                listItems(items = viewModel.availablePressureUnits) { _, index, text ->
                     this@SettingsFragment.pressure.text = text
-                    viewModel.updatePressureUnit(pressureUnits[index])
+                    viewModel.updatePressureUnit(index)
                     activityViewModel.applyNewUnits()
                 }
             }
         }
     }
 
+
     private fun setUpAboutSection() {
-        // About section
-        githubLayout.setOnClickListener {
-            openLink(R.string.settings_summary_github)
-        }
-        authorLayout.setOnClickListener {
-            openLink(R.string.settings_vk_link)
-        }
+        githubLayout.setOnClickListener { openLink(R.string.settings_summary_github) }
+        authorLayout.setOnClickListener { openLink(R.string.settings_vk_link) }
         appVersion.text = BuildConfig.VERSION_NAME
         buildNumber.text = BuildConfig.VERSION_CODE.toString()
     }

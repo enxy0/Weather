@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="cardViewBackgroundColor">@color/cardViewBackgroundColor</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -18,21 +16,9 @@
         <item name="android:textColorPrimary">@color/colorTextPrimary</item>
         <item name="bottomSheetDialogTheme">@style/CustomStyle.BottomSheetDialog</item>
         <item name="md_corner_radius">@dimen/card_radius</item>
+        <item name="humidityTextColor">@color/humidityTextColor</item>
+        <item name="windTextColor">@color/windTextColor</item>
+        <item name="pressureTextColor">@color/pressureTextColor</item>
+        <item name="nextHoursTextColor">@color/nextHoursTextColor</item>
     </style>
-
-    <!--    <style name="AppTheme.Dark" parent="Theme.MaterialComponents.DayNight.NoActionBar">-->
-    <!--        &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
-    <!--        <item name="cardViewBackgroundColor">@color/cardViewBackgroundColorDark</item>-->
-    <!--        <item name="colorPrimary">@color/colorPrimary</item>-->
-    <!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
-    <!--        <item name="colorAccent">@color/colorAccent</item>-->
-    <!--        <item name="iconColor">@color/iconColorNight</item>-->
-    <!--        <item name="dividerColor">@color/dividerColorNight</item>-->
-    <!--        <item name="sectionDividerColor">@color/sectionDividerColorNight</item>-->
-    <!--        <item name="android:windowLightStatusBar">false</item>-->
-    <!--        <item name="colorSurface">@color/windowBackgroundColorNight</item>-->
-    <!--        <item name="android:windowBackground">@color/windowBackgroundColorNight</item>-->
-    <!--        <item name="android:statusBarColor">@color/windowBackgroundColorNight</item>-->
-    <!--        <item name="android:windowAnimationStyle">@null</item>-->
-    <!--    </style>-->
 </resources>

@@ -18,7 +18,7 @@ enum class PressureUnit(val displayedName: String) {
 
 enum class Theme(val displayedName: String) {
     LIGHT("Light"),
-    DARK("Dark")
+    NIGHT("Night")
 }
 
 const val OPEN_WEATHER_MAP_URL = "https://api.openweathermap.org"

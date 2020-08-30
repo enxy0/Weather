@@ -5,7 +5,7 @@
 **Weather** — Android App written in Kotlin with MVVM architecture. In this project I tried to write clean and readable code.  
 Minimalistic and light design makes it easy to see only the necessary data.
 
-**Status:** In development *(1.0.0-beta-1)* ⚙️
+**Status:** In development *(1.0.1-release)* ⚙️
 
 ## Goals
 -   [x] Display weather forecasts for different locations ☁️
@@ -15,8 +15,8 @@ Minimalistic and light design makes it easy to see only the necessary data.
 -   [x] Show 7-day forecast ⛅
 -   [x] Provide documentation 📚
 -   [x] Add animations 🔥
+-   [x] Support night theme 🌙
 -   [ ] Display weather forecast based on user location 📍
--   [ ] Add dark theme 🌙
 
 ## Screenshots
 <img  src="https://raw.githubusercontent.com/enxy0/Weather/development/screenshots/main.jpg?raw=true"  width=23% /> <img  src="https://raw.githubusercontent.com/enxy0/Weather/development/screenshots/favourite.jpg?raw=true"  width=23% /> <img  src="https://raw.githubusercontent.com/enxy0/Weather/development/screenshots/search.jpg?raw=true"  width=23% /> <img  src="https://raw.githubusercontent.com/enxy0/Weather/development/screenshots/settings.jpg?raw=true"  width=23% />

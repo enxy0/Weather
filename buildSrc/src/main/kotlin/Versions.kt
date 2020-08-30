@@ -5,8 +5,8 @@ object Versions {
     const val MIN_SDK = 23
 
     // App version
-    const val VERSION_CODE = 163
-    const val VERSION_NAME = "1.0.0-release"
+    const val VERSION_CODE = 184 // number of commits
+    const val VERSION_NAME = "1.0.1-release"
 
     // Kotlin
     const val KOTLIN = "1.4.0"

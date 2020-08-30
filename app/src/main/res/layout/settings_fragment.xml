@@ -21,6 +21,50 @@
                 android:layout_marginTop="@dimen/settings_header_vertical_margin"
                 android:layout_marginEnd="@dimen/settings_header_horizontal_margin"
                 android:layout_marginBottom="@dimen/settings_text_vertical_margin"
+                android:text="@string/settings_header_appearance" />
+
+            <LinearLayout
+                android:id="@+id/appearanceLayout"
+                style="@style/CustomStyle.Clickable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    style="@style/CustomStyle.Settings.Icon"
+                    android:layout_marginStart="@dimen/settings_icon_margin"
+                    android:layout_marginEnd="@dimen/settings_icon_margin"
+                    android:src="@drawable/ic_tshirt" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/settings_layout_vertical_padding"
+                    android:paddingBottom="@dimen/settings_layout_vertical_padding">
+
+                    <TextView
+                        style="@style/CustomStyle.Settings.Title"
+                        android:layout_marginEnd="@dimen/settings_text_horizontal_margin"
+                        android:text="@string/settings_title_theme" />
+
+                    <TextView
+                        android:id="@+id/theme"
+                        style="@style/CustomStyle.Settings.Summary"
+                        android:layout_marginEnd="@dimen/settings_text_horizontal_margin"
+                        tools:text="Light" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View style="@style/CustomStyle.Divider.Thin.Horizontal" />
+
+            <TextView
+                style="@style/CustomStyle.Settings.Header"
+                android:layout_marginStart="@dimen/settings_header_horizontal_margin"
+                android:layout_marginTop="@dimen/settings_header_vertical_margin"
+                android:layout_marginEnd="@dimen/settings_header_horizontal_margin"
+                android:layout_marginBottom="@dimen/settings_text_vertical_margin"
                 android:text="@string/settings_header_units" />
 
             <LinearLayout

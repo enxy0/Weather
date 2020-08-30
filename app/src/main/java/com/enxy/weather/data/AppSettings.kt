@@ -2,10 +2,7 @@ package com.enxy.weather.data
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
-import com.enxy.weather.utils.PressureUnit
-import com.enxy.weather.utils.TemperatureUnit
-import com.enxy.weather.utils.Theme
-import com.enxy.weather.utils.WindUnit
+import com.enxy.weather.utils.*
 import android.content.SharedPreferences as SharedPreferences1
 
 /**
@@ -15,7 +12,7 @@ interface AppSettings {
     var temperatureUnit: TemperatureUnit
     var windUnit: WindUnit
     var pressureUnit: PressureUnit
-    var selectedTheme: Theme
+    var theme: Theme
 }
 
 /**
@@ -71,10 +68,11 @@ class AppSettingsImpl(context: Context) : AppSettings {
      * Theme of the app
      * Default theme - Light
      */
-    override var selectedTheme: Theme = Theme.LIGHT
+    override var theme: Theme = Theme.LIGHT
         get() = Theme.valueOf(getString(PREF_DARK_MODE_ENABLED, Theme.LIGHT.name))
         set(value) {
             field = value
+            ThemeUtils.setAppTheme(value)
             saveString(PREF_DARK_MODE_ENABLED, value.name)
         }
 

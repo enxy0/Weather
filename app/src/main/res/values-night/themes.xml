@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="cardViewBackgroundColor">@color/cardViewBackgroundColorNight</item>
+        <item name="colorPrimary">@color/colorPrimaryNight</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkNight</item>
+        <item name="colorAccent">@color/colorAccentNight</item>
+        <item name="iconColor">@color/iconColorNight</item>
+        <item name="dividerColor">@color/dividerColorNight</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="colorSurface">@color/windowBackgroundColorNight</item>
+        <item name="android:windowBackground">@color/windowBackgroundColorNight</item>
+        <item name="android:statusBarColor">@color/windowBackgroundColorNight</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:textColorSecondary">@color/colorTextSecondaryNight</item>
+        <item name="android:textColorPrimary">@color/colorTextPrimaryNight</item>
+        <item name="bottomSheetDialogTheme">@style/CustomStyle.BottomSheetDialog</item>
+        <item name="md_corner_radius">@dimen/card_radius</item>
+        <item name="humidityTextColor">@color/humidityTextColorNight</item>
+        <item name="windTextColor">@color/windTextColorNight</item>
+        <item name="pressureTextColor">@color/pressureTextColorNight</item>
+        <item name="nextHoursTextColor">@color/nextHoursTextColorNight</item>
+    </style>
+</resources>

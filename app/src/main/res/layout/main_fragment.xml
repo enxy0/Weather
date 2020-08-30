@@ -148,7 +148,7 @@
                         android:layout_weight="1"
                         app:cardBackgroundColor="@color/humidityTileColor"
                         app:prepIcon="@drawable/ic_humidity"
-                        app:prepTextColor="@color/humidityTextColor"
+                        app:prepTextColor="?attr/humidityTextColor"
                         app:prepTitle="@string/humidity"
                         app:prepUnit="%"
                         app:prepValue="70" />
@@ -163,7 +163,7 @@
                         android:layout_weight="1"
                         app:cardBackgroundColor="@color/windTileColor"
                         app:prepIcon="@drawable/ic_wind"
-                        app:prepTextColor="@color/windTextColor"
+                        app:prepTextColor="?attr/windTextColor"
                         app:prepTitle="@string/wind"
                         app:prepUnit="@string/wind_value_meters_per_second"
                         app:prepValue="4" />
@@ -178,7 +178,7 @@
                         android:layout_weight="1"
                         app:cardBackgroundColor="@color/pressureTileColor"
                         app:prepIcon="@drawable/ic_pressure"
-                        app:prepTextColor="@color/pressureTextColor"
+                        app:prepTextColor="?attr/pressureTextColor"
                         app:prepTitle="@string/pressure"
                         app:prepUnit="@string/pressure_value_millimeters"
                         app:prepValue="766" />
