@@ -25,7 +25,7 @@ class HourlyForecastAdapter :
         holder.bind(getItem(position))
     }
 
-    inner class HourHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class HourHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(hourForecastList: HourForecast) {
             with(itemView) {
                 temperature.text = hourForecastList.temperature.toString()
@@ -38,7 +38,7 @@ class HourlyForecastAdapter :
 
 class HourForecastDiffCallback : DiffUtil.ItemCallback<HourForecast>() {
     override fun areItemsTheSame(oldItem: HourForecast, newItem: HourForecast): Boolean {
-        return oldItem.time == newItem.time
+        return oldItem == newItem
     }
 
     override fun areContentsTheSame(oldItem: HourForecast, newItem: HourForecast): Boolean {
