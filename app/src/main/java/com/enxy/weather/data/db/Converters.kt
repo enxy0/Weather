@@ -13,14 +13,14 @@ import java.util.*
 class Converters {
     val gson = Gson()
 
-    @TypeConverter fun stringToHourList(value: String): ArrayList<HourForecast> {
+    @TypeConverter fun stringToHourList(value: String): List<HourForecast> {
         val listType: Type = object : TypeToken<List<HourForecast>>() {}.type
-        return gson.fromJson<ArrayList<HourForecast>>(value, listType)
+        return gson.fromJson<List<HourForecast>>(value, listType)
     }
 
-    @TypeConverter fun stringToDayList(value: String): ArrayList<DayForecast> {
+    @TypeConverter fun stringToDayList(value: String): List<DayForecast> {
         val listType: Type = object : TypeToken<List<DayForecast>>() {}.type
-        return gson.fromJson<ArrayList<DayForecast>>(value, listType)
+        return gson.fromJson<List<DayForecast>>(value, listType)
     }
 
     @TypeConverter fun hourListToString(hourForecastList: List<HourForecast>): String {

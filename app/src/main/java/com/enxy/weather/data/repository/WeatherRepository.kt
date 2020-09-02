@@ -2,6 +2,7 @@ package com.enxy.weather.data.repository
 
 import com.enxy.weather.BuildConfig
 import com.enxy.weather.base.NetworkRepository
+import com.enxy.weather.data.AppSettings
 import com.enxy.weather.data.db.AppDataBase
 import com.enxy.weather.data.entity.*
 import com.enxy.weather.data.network.WeatherApi
@@ -12,26 +13,23 @@ import com.enxy.weather.utils.Result
 import com.enxy.weather.utils.Result.Error
 import com.enxy.weather.utils.Result.Success
 import com.enxy.weather.utils.exception.DataNotFound
-import com.enxy.weather.utils.extension.formatTo
-import com.enxy.weather.utils.extension.toLocation
-import com.enxy.weather.utils.extension.toMiniForecast
+import com.enxy.weather.utils.extension.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.*
 import kotlin.math.roundToInt
 
 class WeatherRepository(
     private val weatherApi: WeatherApi,
-    private val database: AppDataBase
+    private val database: AppDataBase,
+    private val settings: AppSettings
 ) : NetworkRepository {
     companion object {
         // OpenWeatherMap API default constants
         const val OPEN_WEATHER_MAP_APPID = BuildConfig.API_KEY_OPEN_WEATHER_MAP
-        const val DEFAULT_LANGUAGE = "ENG"
         const val DEFAULT_UNITS = "metric"
         const val HOURLY_COUNT = 24
         const val DAILY_COUNT = 7
@@ -170,7 +168,7 @@ class WeatherRepository(
                     longitude = location.longitude,
                     latitude = location.latitude,
                     APPID = OPEN_WEATHER_MAP_APPID,
-                    language = DEFAULT_LANGUAGE,
+                    language = settings.locale.language,
                     units = DEFAULT_UNITS
                 )
             },
@@ -202,21 +200,21 @@ class WeatherRepository(
             .map { hourly ->
                 HourForecast(
                     temperature = Temperature(hourly.temperature.roundToInt()),
-                    time = hourly.timestamp formatTo "HH:mm",
+                    time = hourly.timestamp.toHourMinutes(settings.locale),
                     imageId = getIconDarkSurface(
                         hourly.weather[0].id,
                         hourly.weather[0].icon.last()
                     )
                 )
-            } as ArrayList,
+            },
         dayForecastList = response.daily
             .take(DAILY_COUNT)
             .map { daily ->
                 DayForecast(
                     highestTemp = Temperature(daily.temperature.max.roundToInt()),
                     lowestTemp = Temperature(daily.temperature.min.roundToInt()),
-                    day = (daily.timestamp formatTo "EEEE").capitalize(),
-                    date = daily.timestamp formatTo "dd.MM",
+                    day = daily.timestamp.toCapitalizedDay(settings.locale),
+                    date = daily.timestamp.toDayMonth(settings.locale),
                     wind = Wind(daily.windSpeed.roundToInt()),
                     pressure = Pressure(daily.pressure),
                     humidity = daily.humidity,
@@ -225,6 +223,6 @@ class WeatherRepository(
                         daily.weather[0].icon.last()
                     )
                 )
-            } as ArrayList
+            }
     )
 }

@@ -104,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
                 android:layout_weight="1"
-                app:detDescription="Humidity"
+                app:detDescription="@string/humidity"
                 app:detUnit="%"
                 app:detValue="70" />
 
@@ -118,7 +118,7 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
                 android:layout_weight="1"
-                app:detDescription="Wind"
+                app:detDescription="@string/wind"
                 app:detUnit="m/s"
                 app:detValue="4" />
 
@@ -131,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_weight="1"
-                app:detDescription="Pressure"
+                app:detDescription="@string/pressure"
                 app:detUnit="hPa"
                 app:detValue="1023" />
         </LinearLayout>

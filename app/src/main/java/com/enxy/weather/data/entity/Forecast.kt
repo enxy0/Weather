@@ -26,9 +26,9 @@ data class Forecast(
     @Embedded
     val currentForecast: CurrentForecast,
     @TypeConverters(Converters::class)
-    val hourForecastList: ArrayList<HourForecast>,
+    val hourForecastList: List<HourForecast>,
     @TypeConverters(Converters::class)
-    val dayForecastList: ArrayList<DayForecast>
+    val dayForecastList: List<DayForecast>
 ) {
     /**
      * Checks if data is outdated or not.

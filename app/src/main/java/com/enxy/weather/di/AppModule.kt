@@ -20,7 +20,7 @@ val appModule = module {
     viewModel { SettingsViewModel(get()) }
     viewModel { FavouriteViewModel(get()) }
     viewModel { SearchViewModel(get()) }
-    single { WeatherRepository(get(), get()) }
+    single { WeatherRepository(get(), get(), get()) }
     single { LocationRepository(get()) }
     single {
         Room.databaseBuilder(androidApplication(), AppDataBase::class.java, DATABASE_NAME)

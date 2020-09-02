@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Погода</string>
+    <string name="feels_like">Ощущается как:</string>
+    <string name="humidity">Влажность</string>
+    <string name="wind">Ветер</string>
+    <string name="pressure">Давление</string>
+    <string name="pressure_value_pascals">гПа</string>
+    <string name="pressure_value_millimeters">мм.рт.ст.</string>
+    <string name="wind_value_meters_per_second">м/с</string>
+    <string name="wind_value_kilometers_per_hour">км/ч</string>
+    <string name="theme_title">Тема</string>
+    <string name="temperature_title">Температура</string>
+    <string name="pressure_title">Давление</string>
+    <string name="wind_title">Ветер</string>
+    <string name="other_header">Другое</string>
+    <string name="section_next_hours">Следующие 24 часа</string>
+    <string name="menu_navigation_description">Меню</string>
+    <string name="menu_search_description">Поиск</string>
+    <string name="input_enter_city">Город или место</string>
+    <string name="header_favourite_locations">Избранные места</string>
+    <string name="search_hint">Введите название города или места</string>
+    <string name="settings_title_temperature">Температура</string>
+    <string name="settings_title_theme">Тема</string>
+    <string name="settings_header_about">О приложении</string>
+    <string name="settings_title_app_version">Версия приложения</string>
+    <string name="settings_title_build_number">Версия сборки</string>
+    <string name="settings_title_author">Автор</string>
+    <string name="settings_name">Настройки</string>
+    <string name="settings_header_units">Единицы измерения</string>
+    <string name="settings_header_appearance">Внешний вид</string>
+    <string name="settings_title_wind">Ветер</string>
+    <string name="settings_title_pressure">Давление</string>
+    <string name="failure_connection_error">Не удалось загрузить данные. Пожалуйста, проверьте соединение с интернетом!</string>
+    <string name="failure_server_error">К сожалению, в данный момент сервер не отвечает!</string>
+    <string name="button_try_again">Еще раз</string>
+    <string name="hint_title_no_locations">Не удалось найти место</string>
+    <string name="hint_description_no_locations">По вашему запросу не было найдено ни одного места</string>
+    <string name="hint_title_no_internet">Не удалось загрузить данные</string>
+    <string name="hint_description_no_internet">Проверьте соединение с интернетом и попробуйте еще раз.</string>
+    <string name="hint_title_no_favourite_locations">Не удалось ничего найти</string>
+    <string name="hint_description_no_favourite_locations">Добавьте новые места через иконку поиска на главном экране</string>
+    <string name="section_next_days">Следующие 7 дней</string>
+</resources>
