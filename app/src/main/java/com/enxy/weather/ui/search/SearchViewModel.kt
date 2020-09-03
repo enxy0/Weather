@@ -5,13 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.enxy.weather.data.entity.Location
-import com.enxy.weather.data.repository.LocationRepository
+import com.enxy.weather.data.location.LocationRepository
 import kotlinx.coroutines.launch
 
 class SearchViewModel(private val locationRepository: LocationRepository) : ViewModel() {
 
-    private val _searchedLocations = MutableLiveData<ArrayList<Location>>()
-    val searchedLocations: LiveData<ArrayList<Location>>
+    private val _searchedLocations = MutableLiveData<List<Location>>()
+    val searchedLocations: LiveData<List<Location>>
         get() = _searchedLocations
 
     private val _failure = MutableLiveData<Exception>()

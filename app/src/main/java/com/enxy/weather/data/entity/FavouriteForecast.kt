@@ -2,7 +2,7 @@ package com.enxy.weather.data.entity
 
 import androidx.annotation.DrawableRes
 
-data class MiniForecast (
+data class FavouriteForecast (
     val id: Int,
     val temperature: Temperature,
     val description: String,

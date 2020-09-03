@@ -2,17 +2,17 @@ package com.enxy.weather.ui
 
 import androidx.lifecycle.*
 import com.enxy.weather.data.AppSettings
+import com.enxy.weather.data.entity.FavouriteForecast
 import com.enxy.weather.data.entity.Forecast
 import com.enxy.weather.data.entity.Location
-import com.enxy.weather.data.entity.MiniForecast
-import com.enxy.weather.data.repository.WeatherRepository
+import com.enxy.weather.data.weather.WeatherRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class WeatherViewModel(
     private val weatherRepository: WeatherRepository,
-    private val appSettings: AppSettings
+    internal val settings: AppSettings
 ) : ViewModel() {
 
     /**
@@ -33,7 +33,7 @@ class WeatherViewModel(
     /**
      * Holds data loading status
      */
-    private val _isLoading = MutableLiveData<Boolean>(false)
+    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
@@ -42,7 +42,7 @@ class WeatherViewModel(
      * Holds information about app launch
      */
     val isAppFirstLaunched: LiveData<Boolean> = liveData {
-        emit(weatherRepository.isDatabaseEmpty())
+        emit(weatherRepository.isEmpty())
     }
 
     init {
@@ -76,12 +76,12 @@ class WeatherViewModel(
     }
 
     /**
-     * Loads forecast by given [miniForecast]
+     * Loads forecast by given [favouriteForecast]
      */
-    fun fetchForecast(miniForecast: MiniForecast) {
+    fun fetchForecast(favouriteForecast: FavouriteForecast) {
         viewModelScope.launch {
             notifyLoadingStart()
-            weatherRepository.getForecastById(miniForecast.id).fold(
+            weatherRepository.getForecastById(favouriteForecast.id).fold(
                 onSuccess = ::handleFetchSuccess,
                 onFailure = ::handleFetchFailure
             )
@@ -108,7 +108,7 @@ class WeatherViewModel(
         viewModelScope.launch {
             forecast.value?.let {
                 it.isFavourite = isFavourite
-                weatherRepository.changeForecastFavouriteStatus(it, isFavourite)
+                weatherRepository.starEvent(it, isFavourite)
             }
         }
     }
@@ -121,9 +121,9 @@ class WeatherViewModel(
     fun applyNewUnits(forecast: Forecast? = _forecast.value) {
         viewModelScope.launch(Dispatchers.Default) {
             _forecast.postValue(forecast?.apply {
-                updateTemperatureUnit(appSettings.temperatureUnit)
-                updateWindUnit(appSettings.windUnit)
-                updatePressureUnit(appSettings.pressureUnit)
+                updateTemperatureUnit(settings.temperatureUnit)
+                updateWindUnit(settings.windUnit)
+                updatePressureUnit(settings.pressureUnit)
             })
         }
     }

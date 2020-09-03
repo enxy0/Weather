@@ -64,7 +64,7 @@ class SearchFragment : BaseFragment() {
     /**
      * Displays found locations
      */
-    private fun renderData(locations: ArrayList<Location>) {
+    private fun renderData(locations: List<Location>) {
         if (locations.isEmpty()) {
             handleFailure(LocationsNotFound)
         } else {

@@ -9,7 +9,7 @@ import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import com.enxy.weather.R
-import com.enxy.weather.data.entity.MiniForecast
+import com.enxy.weather.data.entity.FavouriteForecast
 import com.enxy.weather.ui.WeatherViewModel
 import com.enxy.weather.ui.settings.SettingsFragment
 import com.enxy.weather.utils.exception.DataNotFound
@@ -84,7 +84,7 @@ class FavouriteFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun renderData(favouriteLocations: List<MiniForecast>) {
+    private fun renderData(favouriteLocations: List<FavouriteForecast>) {
         if (noDataHint.isVisible) {
             noDataHint.hide()
             favouriteList.show()
@@ -102,8 +102,8 @@ class FavouriteFragment : BottomSheetDialogFragment() {
     /**
      * Changes displayed (current) forecast and closes BottomSheet
      */
-    private fun onForecastChange(miniForecast: MiniForecast) {
-        activityViewModel.fetchForecast(miniForecast)
+    private fun onForecastChange(favouriteForecast: FavouriteForecast) {
+        activityViewModel.fetchForecast(favouriteForecast)
         // Delay changing screen to show ripple effect
         dismiss(delay = FORECAST_RIPPLE_DELAY)
     }

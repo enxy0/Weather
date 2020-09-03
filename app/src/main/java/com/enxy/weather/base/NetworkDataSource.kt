@@ -10,18 +10,19 @@ import kotlinx.coroutines.withContext
 import retrofit2.Response
 import java.io.IOException
 
-interface NetworkRepository {
-    suspend fun <JSON, MODEL> safeApiCall(
-        call: suspend () -> Response<JSON>,
-        transform: (JSON) -> MODEL
-    ): Result<MODEL> {
+interface NetworkDataSource {
+    suspend fun <T, R, P> safeApiCall(
+        call: suspend () -> Response<T>,
+        params: P,
+        transform: (T, P) -> R
+    ): Result<R> {
         try {
             val response = withContext(Dispatchers.IO) { call.invoke() }
             return if (response.isSuccessful) {
                 val body = response.body()
                 if (body != null) {
                     withContext(Dispatchers.Default) {
-                        Success(transform(body))
+                        Success(transform(body, params))
                     }
                 } else {
                     Error(BadServerResponse)
