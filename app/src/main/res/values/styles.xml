@@ -13,7 +13,7 @@
         <item name="android:layout_width">30dp</item>
     </style>
 
-    <style name="CustomStyle.Settings.Name" parent="CustomStyle.Text.Header" />
+    <style name="CustomStyle.Settings.Name" parent="CustomStyle.Text.Section" />
 
     <style name="CustomStyle.Settings.Title" parent="CustomStyle.Text.Primary">
         <item name="android:textSize">18sp</item>

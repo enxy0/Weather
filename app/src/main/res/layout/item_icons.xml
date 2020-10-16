@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/CustomStyle.CardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_smaller"
+    tools:layout_width="250dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/iconPackName"
+            style="@style/CustomStyle.Settings.Header"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            tools:text="Flaticon pack" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/sunIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="@dimen/margin_smallest"
+                tools:ignore="ContentDescription"
+                tools:src="@drawable/weather_clear_day" />
+
+            <ImageView
+                android:id="@+id/moonIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="@dimen/margin_smallest"
+                tools:ignore="ContentDescription"
+                tools:src="@drawable/weather_clear_night" />
+
+            <ImageView
+                android:id="@+id/rainIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="@dimen/margin_smallest"
+                tools:ignore="ContentDescription"
+                tools:src="@drawable/current_weather_rain_heavy" />
+
+            <ImageView
+                android:id="@+id/snowIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="@dimen/margin_smallest"
+                tools:ignore="ContentDescription"
+                tools:src="@drawable/current_weather_snow_heavy" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

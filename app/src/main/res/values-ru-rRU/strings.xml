@@ -41,4 +41,5 @@
     <string name="hint_title_no_favourite_locations">Не удалось ничего найти</string>
     <string name="hint_description_no_favourite_locations">Добавьте новые места через иконку поиска на главном экране</string>
     <string name="section_next_days">Следующие 7 дней</string>
+    <string name="icons_title">Выберите иконки</string>
 </resources>

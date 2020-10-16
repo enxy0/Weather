@@ -50,4 +50,5 @@
     <string name="hint_description_no_favourite_locations">Add new locations through the search icon on the main screen and try again</string>
     <string name="day_forecast_temperature" translatable="false">%1$s°</string>
     <string name="section_next_days">Next 7 days</string>
+    <string name="icons_title">Choose Icons</string>
 </resources>
