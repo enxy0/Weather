@@ -136,6 +136,11 @@
         <item name="cardCornerRadius">@dimen/card_radius</item>
     </style>
 
+    <style name="CustomStyle.CardView.Outlined">
+        <item name="strokeColor">?attr/dividerColor</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
     <style name="CustomStyle.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
