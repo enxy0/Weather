@@ -1,10 +1,8 @@
 package com.enxy.weather.di
 
-import androidx.room.Room
 import com.enxy.weather.data.AppSettings
 import com.enxy.weather.data.AppSettingsImpl
-import com.enxy.weather.data.db.AppDataBase
-import com.enxy.weather.data.db.AppDataBase.Companion.DATABASE_NAME
+import com.enxy.weather.data.db.DatabaseFactory
 import com.enxy.weather.data.location.LocationDataSource
 import com.enxy.weather.data.location.LocationRepository
 import com.enxy.weather.data.location.OpenCageDataSource
@@ -31,7 +29,5 @@ val appModule = module {
     single<WeatherDataSource> { OpenWeatherMapDataSource(get()) }
     single<WeatherRepository> { OpenWeatherMapRepository(get(), get(), get()) }
     single<AppSettings> { AppSettingsImpl(androidApplication()) }
-    single {
-        Room.databaseBuilder(androidApplication(), AppDataBase::class.java, DATABASE_NAME).build()
-    }
+    single { DatabaseFactory.create(androidApplication()) }
 }
