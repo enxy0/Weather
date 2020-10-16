@@ -9,8 +9,8 @@ object Versions {
     const val VERSION_NAME = "1.0.2-release"
 
     // Kotlin
-    const val KOTLIN = "1.4.0"
-    const val COROUTINES = "1.3.7"
+    const val KOTLIN = "1.4.10"
+    const val COROUTINES = "1.4.0-M1"
 
     // Libs
     const val RETROFIT2 = "2.9.0"
@@ -18,8 +18,8 @@ object Versions {
     const val GSON = "2.8.6"
     const val ROOM = "2.2.5"
     const val MATERIAL_DIALOGS = "3.3.0"
-    const val KOIN = "2.1.5"
-    const val KTX_CORE = "1.3.1"
+    const val KOIN = "2.2.0-rc-2"
+    const val KTX_CORE = "1.3.2"
     const val KTX_FRAGMENT = "1.2.5"
     const val KTX_PREFERENCES = "1.1.1"
     const val KTX_LIFECYCLE = "2.2.0"
@@ -27,12 +27,12 @@ object Versions {
     const val ARCH_TESTING = "2.1.0"
     const val TEST_RUNNER = "1.2.0"
     const val ESPRESSO = "3.2.0"
-    const val MATERIAL = "1.3.0-alpha02"
+    const val MATERIAL = "1.3.0-alpha03"
     const val ANDROID_SUPPORT = "1.0.0"
     const val RECYCLERVIEW = "1.1.0"
     const val APPCOMPAT = "1.1.0"
     const val SWIPEREFRESH_LAYOUT = "1.1.0"
-    const val CONSTRAINT_LAYOUT = "1.1.3"
+    const val CONSTRAINT_LAYOUT = "2.0.2"
     const val INTERPOLATORS = "1.0.0"
 }
 
