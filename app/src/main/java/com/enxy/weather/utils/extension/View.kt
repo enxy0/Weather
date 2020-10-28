@@ -1,6 +1,8 @@
 package com.enxy.weather.utils.extension
 
+import android.util.TypedValue
 import android.view.View
+import androidx.annotation.AttrRes
 
 fun View.hide() {
     this.visibility = View.GONE
@@ -24,3 +26,11 @@ fun View.fadeIn(duration: Long = 500L) {
         .alpha(1f)
         .start()
 }
+
+fun View.addRipple(@AttrRes attr: Int = android.R.attr.selectableItemBackground) =
+    TypedValue().run {
+        context.theme.resolveAttribute(attr, this, true)
+        setBackgroundResource(resourceId)
+    }
+
+fun View.addCircleRipple() = addRipple(android.R.attr.selectableItemBackgroundBorderless)

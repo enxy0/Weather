@@ -51,4 +51,6 @@
     <string name="day_forecast_temperature" translatable="false">%1$s°</string>
     <string name="section_next_days">Next 7 days</string>
     <string name="icons_title">Choose Icons</string>
+    <string name="settings_title_icons_pack">Icons Pack</string>
+    <string name="settings_summary_icons_pack">Choose icons pack for the weather forecast</string>
 </resources>

@@ -121,9 +121,9 @@ class WeatherViewModel(
     fun applyNewUnits(forecast: Forecast? = _forecast.value) {
         viewModelScope.launch(Dispatchers.Default) {
             _forecast.postValue(forecast?.apply {
-                updateTemperatureUnit(settings.temperatureUnit)
-                updateWindUnit(settings.windUnit)
-                updatePressureUnit(settings.pressureUnit)
+                updateTemperatureUnit(settings.temperature)
+                updateWindUnit(settings.wind)
+                updatePressureUnit(settings.pressure)
             })
         }
     }

@@ -1,24 +1,32 @@
 package com.enxy.weather.utils
 
 
-enum class TemperatureUnit(val displayedName: String) {
+enum class Temperature(val displayedName: String) {
     CELSIUS("C°"),
-    FAHRENHEIT("F°")
+    FAHRENHEIT("F°");
+
+    override fun toString(): String = displayedName
 }
 
-enum class WindUnit(val displayedName: String) {
+enum class Wind(val displayedName: String) {
     METERS_PER_SECOND("m/s"),
-    KILOMETERS_PER_HOUR("km/h")
+    KILOMETERS_PER_HOUR("km/h");
+
+    override fun toString(): String = displayedName
 }
 
-enum class PressureUnit(val displayedName: String) {
+enum class Pressure(val displayedName: String) {
     MILLIMETERS_OF_MERCURY("mmHg"),
-    HECTO_PASCALS("hPa")
+    HECTO_PASCALS("hPa");
+
+    override fun toString(): String = displayedName
 }
 
 enum class Theme(val displayedName: String) {
     LIGHT("Light"),
-    NIGHT("Night")
+    NIGHT("Night");
+
+    override fun toString(): String = displayedName
 }
 
 const val OPEN_WEATHER_MAP_URL = "https://api.openweathermap.org"

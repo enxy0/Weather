@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -22,39 +22,20 @@
                 android:layout_marginBottom="@dimen/settings_text_vertical_margin"
                 android:text="@string/settings_header_appearance" />
 
-            <LinearLayout
-                android:id="@+id/appearanceLayout"
-                style="@style/CustomStyle.Clickable"
+            <com.enxy.weather.views.SettingsItem
+                android:id="@+id/themes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                app:siIcon="@drawable/ic_tshirt"
+                app:siTitle="@string/theme_title"
+                app:siValue="Light" />
 
-                <ImageView
-                    style="@style/CustomStyle.Settings.Icon"
-                    android:layout_marginStart="@dimen/settings_icon_margin"
-                    android:layout_marginEnd="@dimen/settings_icon_margin"
-                    android:src="@drawable/ic_tshirt" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="vertical"
-                    android:paddingTop="@dimen/settings_layout_vertical_padding"
-                    android:paddingBottom="@dimen/settings_layout_vertical_padding">
-
-                    <TextView
-                        style="@style/CustomStyle.Settings.Title"
-                        android:layout_marginEnd="@dimen/settings_text_horizontal_margin"
-                        android:text="@string/settings_title_theme" />
-
-                    <TextView
-                        android:id="@+id/theme"
-                        style="@style/CustomStyle.Settings.Summary"
-                        android:layout_marginEnd="@dimen/settings_text_horizontal_margin"
-                        tools:text="Light" />
-                </LinearLayout>
-            </LinearLayout>
+            <com.enxy.weather.views.SettingsItem
+                android:id="@+id/iconsPack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:siTitle="@string/settings_title_icons_pack"
+                app:siValue="@string/settings_summary_icons_pack" />
 
             <View style="@style/CustomStyle.Divider.Thin.Horizontal" />
 
@@ -66,107 +47,29 @@
                 android:layout_marginBottom="@dimen/settings_text_vertical_margin"
                 android:text="@string/settings_header_units" />
 
-            <LinearLayout
-                android:id="@+id/temperatureLayout"
-                style="@style/CustomStyle.Clickable"
+            <com.enxy.weather.views.SettingsItem
+                android:id="@+id/temperature"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                app:siIcon="@drawable/ic_temperature"
+                app:siTitle="@string/settings_title_temperature"
+                app:siValue="C°" />
 
-                <ImageView
-                    style="@style/CustomStyle.Settings.Icon"
-                    android:layout_marginStart="@dimen/settings_icon_margin"
-                    android:layout_marginEnd="@dimen/settings_icon_margin"
-                    android:src="@drawable/ic_temperature" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="vertical"
-                    android:paddingTop="@dimen/settings_layout_vertical_padding"
-                    android:paddingBottom="@dimen/settings_layout_vertical_padding">
-
-                    <TextView
-                        style="@style/CustomStyle.Settings.Title"
-                        android:layout_marginEnd="@dimen/settings_text_horizontal_margin"
-                        android:text="@string/settings_title_temperature" />
-
-                    <TextView
-                        android:id="@+id/temperature"
-                        style="@style/CustomStyle.Settings.Summary"
-                        android:layout_marginEnd="@dimen/settings_text_horizontal_margin"
-                        tools:text="C°" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/windLayout"
-                style="@style/CustomStyle.Clickable"
+            <com.enxy.weather.views.SettingsItem
+                android:id="@+id/wind"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                app:siIcon="@drawable/ic_wind"
+                app:siTitle="@string/settings_title_wind"
+                app:siValue="@string/wind_value_meters_per_second" />
 
-                <ImageView
-                    style="@style/CustomStyle.Settings.Icon"
-                    android:layout_marginStart="@dimen/settings_icon_margin"
-                    android:layout_marginEnd="@dimen/settings_icon_margin"
-                    android:src="@drawable/ic_wind" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="vertical"
-                    android:paddingTop="@dimen/settings_layout_vertical_padding"
-                    android:paddingBottom="@dimen/settings_layout_vertical_padding">
-
-                    <TextView
-                        style="@style/CustomStyle.Settings.Title"
-                        android:layout_marginEnd="@dimen/settings_text_horizontal_margin"
-                        android:text="@string/settings_title_wind" />
-
-                    <TextView
-                        android:id="@+id/wind"
-                        style="@style/CustomStyle.Settings.Summary"
-                        android:layout_marginEnd="@dimen/settings_text_horizontal_margin"
-                        tools:text="@string/wind_value_meters_per_second" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/pressureLayout"
-                style="@style/CustomStyle.Clickable"
+            <com.enxy.weather.views.SettingsItem
+                android:id="@+id/pressure"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    style="@style/CustomStyle.Settings.Icon"
-                    android:layout_marginStart="@dimen/settings_icon_margin"
-                    android:layout_marginEnd="@dimen/settings_icon_margin"
-                    android:src="@drawable/ic_pressure" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="vertical"
-                    android:paddingTop="@dimen/settings_layout_vertical_padding"
-                    android:paddingBottom="@dimen/settings_layout_vertical_padding">
-
-                    <TextView
-                        style="@style/CustomStyle.Settings.Title"
-                        android:layout_marginEnd="@dimen/settings_text_horizontal_margin"
-                        android:text="@string/settings_title_pressure" />
-
-                    <TextView
-                        android:id="@+id/pressure"
-                        style="@style/CustomStyle.Settings.Summary"
-                        android:layout_marginEnd="@dimen/settings_text_horizontal_margin"
-                        tools:text="@string/pressure_value_pascals" />
-                </LinearLayout>
-            </LinearLayout>
+                app:siIcon="@drawable/ic_pressure"
+                app:siTitle="@string/settings_title_pressure"
+                app:siValue="@string/pressure_value_pascals" />
 
             <View style="@style/CustomStyle.Divider.Thin.Horizontal" />
 
@@ -178,127 +81,48 @@
                 android:layout_marginBottom="@dimen/settings_text_vertical_margin"
                 android:text="@string/settings_header_about" />
 
-            <LinearLayout
-                android:id="@+id/githubLayout"
-                style="@style/CustomStyle.Clickable"
+            <com.enxy.weather.views.SettingsItem
+                android:id="@+id/github"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                app:siIcon="@drawable/ic_github"
+                app:siTitle="@string/settings_title_github"
+                app:siValue="@string/settings_summary_github" />
 
-                <ImageView
-                    style="@style/CustomStyle.Settings.Icon"
-                    android:layout_marginStart="@dimen/settings_icon_margin"
-                    android:layout_marginEnd="@dimen/settings_icon_margin"
-                    android:src="@drawable/ic_github" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="vertical"
-                    android:paddingTop="@dimen/settings_layout_vertical_padding"
-                    android:paddingBottom="@dimen/settings_layout_vertical_padding">
-
-                    <TextView
-                        style="@style/CustomStyle.Settings.Title"
-                        android:layout_marginEnd="@dimen/settings_text_horizontal_margin"
-                        android:text="@string/settings_title_github" />
-
-                    <TextView
-                        style="@style/CustomStyle.Settings.Summary"
-                        android:layout_marginEnd="@dimen/settings_text_horizontal_margin"
-                        android:text="@string/settings_summary_github" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/authorLayout"
-                style="@style/CustomStyle.Clickable"
+            <com.enxy.weather.views.SettingsItem
+                android:id="@+id/author"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                app:siIcon="@drawable/ic_vk"
+                app:siTitle="@string/settings_title_author"
+                app:siValue="@string/settings_summary_author" />
 
-                <ImageView
-                    style="@style/CustomStyle.Settings.Icon"
-                    android:layout_marginStart="@dimen/settings_icon_margin"
-                    android:layout_marginEnd="@dimen/settings_icon_margin"
-                    android:src="@drawable/ic_vk" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="vertical"
-                    android:paddingTop="@dimen/settings_layout_vertical_padding"
-                    android:paddingBottom="@dimen/settings_layout_vertical_padding">
-
-                    <TextView
-                        style="@style/CustomStyle.Settings.Title"
-                        android:layout_marginEnd="@dimen/settings_text_no_icon_horizontal_margin"
-                        android:text="@string/settings_title_author" />
-
-                    <TextView
-                        style="@style/CustomStyle.Settings.Summary"
-                        android:layout_marginEnd="@dimen/settings_text_no_icon_horizontal_margin"
-                        android:text="@string/settings_summary_author" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/CustomStyle.Clickable"
+            <com.enxy.weather.views.SettingsItem
+                android:id="@+id/appVersion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/settings_layout_vertical_padding"
-                android:paddingBottom="@dimen/settings_layout_vertical_padding">
+                app:siTitle="@string/settings_title_app_version"
+                app:siValue="X.X.X" />
 
-                <TextView
-                    style="@style/CustomStyle.Settings.Title"
-                    android:layout_marginStart="@dimen/settings_text_no_icon_horizontal_margin"
-                    android:layout_marginEnd="@dimen/settings_text_no_icon_horizontal_margin"
-                    android:text="@string/settings_title_app_version" />
-
-                <TextView
-                    android:id="@+id/appVersion"
-                    style="@style/CustomStyle.Settings.Summary"
-                    android:layout_marginStart="@dimen/settings_text_no_icon_horizontal_margin"
-                    android:layout_marginEnd="@dimen/settings_text_no_icon_horizontal_margin"
-                    tools:text="X.X.X" />
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/CustomStyle.Clickable"
+            <com.enxy.weather.views.SettingsItem
+                android:id="@+id/buildNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/settings_layout_vertical_padding"
-                android:paddingBottom="@dimen/settings_layout_vertical_padding">
-
-                <TextView
-                    style="@style/CustomStyle.Settings.Title"
-                    android:layout_marginStart="@dimen/settings_text_no_icon_horizontal_margin"
-                    android:layout_marginEnd="@dimen/settings_text_no_icon_horizontal_margin"
-                    android:text="@string/settings_title_build_number" />
-
-                <TextView
-                    android:id="@+id/buildNumber"
-                    style="@style/CustomStyle.Settings.Summary"
-                    android:layout_marginStart="@dimen/settings_text_no_icon_horizontal_margin"
-                    android:layout_marginEnd="@dimen/settings_text_no_icon_horizontal_margin"
-                    tools:text="XXXX" />
-            </LinearLayout>
+                app:siTitle="@string/settings_title_build_number"
+                app:siValue="XXX" />
         </LinearLayout>
     </ScrollView>
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/windowBackground">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:layout_width="match_parent"
-            android:background="?android:attr/windowBackground"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="?android:attr/windowBackground">
 
             <TextView
                 style="@style/CustomStyle.Settings.Name"

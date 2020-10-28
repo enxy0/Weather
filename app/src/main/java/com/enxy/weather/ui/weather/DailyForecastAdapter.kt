@@ -12,10 +12,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.enxy.weather.R
 import com.enxy.weather.data.entity.DayForecast
-import com.enxy.weather.utils.PressureUnit.HECTO_PASCALS
-import com.enxy.weather.utils.PressureUnit.MILLIMETERS_OF_MERCURY
-import com.enxy.weather.utils.WindUnit.KILOMETERS_PER_HOUR
-import com.enxy.weather.utils.WindUnit.METERS_PER_SECOND
+import com.enxy.weather.utils.Pressure.HECTO_PASCALS
+import com.enxy.weather.utils.Pressure.MILLIMETERS_OF_MERCURY
+import com.enxy.weather.utils.Wind.KILOMETERS_PER_HOUR
+import com.enxy.weather.utils.Wind.METERS_PER_SECOND
 import com.enxy.weather.utils.extension.dp
 import kotlinx.android.synthetic.main.detailed_temp_card_view.view.*
 import kotlinx.android.synthetic.main.item_day.view.*

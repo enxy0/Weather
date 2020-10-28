@@ -42,4 +42,6 @@
     <string name="hint_description_no_favourite_locations">Добавьте новые места через иконку поиска на главном экране</string>
     <string name="section_next_days">Следующие 7 дней</string>
     <string name="icons_title">Выберите иконки</string>
+    <string name="settings_title_icons_pack">Набор иконок</string>
+    <string name="settings_summary_icons_pack">Выберите набор иконок для прогноза погоды</string>
 </resources>

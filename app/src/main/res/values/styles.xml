@@ -53,7 +53,7 @@
     </style>
 
     <style name="CustomStyle.Clickable">
-        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
     </style>
@@ -132,6 +132,8 @@
     </style>
 
     <style name="CustomStyle.CardView" parent="Widget.MaterialComponents.CardView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="cardElevation">@dimen/card_elevation</item>
         <item name="cardCornerRadius">@dimen/card_radius</item>
     </style>

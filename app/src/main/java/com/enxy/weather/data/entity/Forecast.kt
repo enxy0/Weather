@@ -6,9 +6,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.enxy.weather.data.db.Converters
-import com.enxy.weather.utils.PressureUnit
-import com.enxy.weather.utils.TemperatureUnit
-import com.enxy.weather.utils.WindUnit
+import com.enxy.weather.utils.Pressure
+import com.enxy.weather.utils.Temperature
+import com.enxy.weather.utils.Wind
 import java.util.*
 
 @Keep
@@ -46,7 +46,7 @@ data class Forecast(
     /**
      * Updates all temperature units in [Forecast] according to new [unit]
      */
-    fun updateTemperatureUnit(unit: TemperatureUnit) {
+    fun updateTemperatureUnit(unit: Temperature) {
         currentForecast.temperature.updateUnit(unit)
         currentForecast.feelsLike.updateUnit(unit)
         hourForecastList.forEach {
@@ -61,7 +61,7 @@ data class Forecast(
     /**
      * Updates all pressure units in [Forecast] according to new [unit]
      */
-    fun updatePressureUnit(unit: PressureUnit) {
+    fun updatePressureUnit(unit: Pressure) {
         currentForecast.pressure.updateUnit(unit)
         dayForecastList.forEach {
             it.pressure.updateUnit(unit)
@@ -71,7 +71,7 @@ data class Forecast(
     /**
      * Updates all wind units in [Forecast] according to new [unit]
      */
-    fun updateWindUnit(unit: WindUnit) {
+    fun updateWindUnit(unit: Wind) {
         currentForecast.wind.updateUnit(unit)
         dayForecastList.forEach {
             it.wind.updateUnit(unit)

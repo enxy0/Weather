@@ -21,4 +21,10 @@
         <attr name="detValue" format="string" />
         <attr name="detDescription" format="string" />
     </declare-styleable>
+
+    <declare-styleable name="SettingsItem">
+        <attr name="siIcon" format="reference" />
+        <attr name="siTitle" format="string" />
+        <attr name="siValue" format="string" />
+    </declare-styleable>
 </resources>

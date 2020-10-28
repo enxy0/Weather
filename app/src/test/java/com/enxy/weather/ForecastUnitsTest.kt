@@ -1,11 +1,11 @@
 package com.enxy.weather
 
-import com.enxy.weather.utils.PressureUnit.HECTO_PASCALS
-import com.enxy.weather.utils.PressureUnit.MILLIMETERS_OF_MERCURY
-import com.enxy.weather.utils.TemperatureUnit.CELSIUS
-import com.enxy.weather.utils.TemperatureUnit.FAHRENHEIT
-import com.enxy.weather.utils.WindUnit.KILOMETERS_PER_HOUR
-import com.enxy.weather.utils.WindUnit.METERS_PER_SECOND
+import com.enxy.weather.utils.Pressure.HECTO_PASCALS
+import com.enxy.weather.utils.Pressure.MILLIMETERS_OF_MERCURY
+import com.enxy.weather.utils.Temperature.CELSIUS
+import com.enxy.weather.utils.Temperature.FAHRENHEIT
+import com.enxy.weather.utils.Wind.KILOMETERS_PER_HOUR
+import com.enxy.weather.utils.Wind.METERS_PER_SECOND
 import com.enxy.weather.utils.forecast
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse

@@ -1,14 +1,14 @@
 package com.enxy.weather.data.entity
 
-import com.enxy.weather.utils.PressureUnit
-import com.enxy.weather.utils.PressureUnit.HECTO_PASCALS
-import com.enxy.weather.utils.PressureUnit.MILLIMETERS_OF_MERCURY
-import com.enxy.weather.utils.TemperatureUnit
-import com.enxy.weather.utils.TemperatureUnit.CELSIUS
-import com.enxy.weather.utils.TemperatureUnit.FAHRENHEIT
-import com.enxy.weather.utils.WindUnit
-import com.enxy.weather.utils.WindUnit.KILOMETERS_PER_HOUR
-import com.enxy.weather.utils.WindUnit.METERS_PER_SECOND
+import com.enxy.weather.utils.Pressure
+import com.enxy.weather.utils.Pressure.HECTO_PASCALS
+import com.enxy.weather.utils.Pressure.MILLIMETERS_OF_MERCURY
+import com.enxy.weather.utils.Temperature
+import com.enxy.weather.utils.Temperature.CELSIUS
+import com.enxy.weather.utils.Temperature.FAHRENHEIT
+import com.enxy.weather.utils.Wind
+import com.enxy.weather.utils.Wind.KILOMETERS_PER_HOUR
+import com.enxy.weather.utils.Wind.METERS_PER_SECOND
 import kotlin.math.roundToInt
 
 
@@ -26,11 +26,11 @@ abstract class Units(val raw: Int) {
 
 class Temperature(raw: Int) : Units(raw) {
 
-    var unit: TemperatureUnit = CELSIUS
+    var unit: Temperature = CELSIUS
 
     override var value: Int = raw
 
-    fun updateUnit(type: TemperatureUnit) {
+    fun updateUnit(type: Temperature) {
         this.unit = type
         this.value = when (type) {
             CELSIUS -> raw
@@ -48,11 +48,11 @@ class Temperature(raw: Int) : Units(raw) {
 
 class Wind(raw: Int) : Units(raw) {
 
-    var unit: WindUnit = METERS_PER_SECOND
+    var unit: Wind = METERS_PER_SECOND
 
     override var value: Int = raw
 
-    fun updateUnit(type: WindUnit) {
+    fun updateUnit(type: Wind) {
         this.unit = type
         this.value = when (type) {
             METERS_PER_SECOND -> raw
@@ -69,11 +69,11 @@ class Wind(raw: Int) : Units(raw) {
 
 class Pressure(raw: Int) : Units(raw) {
 
-    var unit: PressureUnit = HECTO_PASCALS
+    var unit: Pressure = HECTO_PASCALS
 
     override var value: Int = raw
 
-    fun updateUnit(type: PressureUnit) {
+    fun updateUnit(type: Pressure) {
         this.unit = type
         this.value = when (type) {
             HECTO_PASCALS -> raw

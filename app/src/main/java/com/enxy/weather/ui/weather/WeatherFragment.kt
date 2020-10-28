@@ -17,10 +17,10 @@ import com.enxy.weather.ui.WeatherActivity
 import com.enxy.weather.ui.WeatherViewModel
 import com.enxy.weather.ui.favourite.FavouriteFragment
 import com.enxy.weather.ui.search.SearchFragment
-import com.enxy.weather.utils.PressureUnit.HECTO_PASCALS
-import com.enxy.weather.utils.PressureUnit.MILLIMETERS_OF_MERCURY
-import com.enxy.weather.utils.WindUnit.KILOMETERS_PER_HOUR
-import com.enxy.weather.utils.WindUnit.METERS_PER_SECOND
+import com.enxy.weather.utils.Pressure.HECTO_PASCALS
+import com.enxy.weather.utils.Pressure.MILLIMETERS_OF_MERCURY
+import com.enxy.weather.utils.Wind.KILOMETERS_PER_HOUR
+import com.enxy.weather.utils.Wind.METERS_PER_SECOND
 import com.enxy.weather.utils.exception.BadServerResponse
 import com.enxy.weather.utils.exception.NoConnection
 import com.enxy.weather.utils.extension.*

@@ -10,9 +10,9 @@ import android.content.SharedPreferences as SharedPreferences1
  * Storage for app and user preferences.
  */
 interface AppSettings {
-    var temperatureUnit: TemperatureUnit
-    var windUnit: WindUnit
-    var pressureUnit: PressureUnit
+    var temperature: Temperature
+    var wind: Wind
+    var pressure: Pressure
     var theme: Theme
     var locale: Locale
 }
@@ -38,8 +38,8 @@ class AppSettingsImpl(context: Context) : AppSettings {
      * Unit of measurement of temperature.
      * Default unit - celsius
      */
-    override var temperatureUnit: TemperatureUnit = TemperatureUnit.CELSIUS
-        get() = TemperatureUnit.valueOf(getString(PREF_TEMPERATURE_UNIT, TemperatureUnit.CELSIUS.name))
+    override var temperature: Temperature = Temperature.CELSIUS
+        get() = Temperature.valueOf(getString(PREF_TEMPERATURE_UNIT, Temperature.CELSIUS.name))
         set(value) {
             field = value
             saveString(PREF_TEMPERATURE_UNIT, value.name)
@@ -49,8 +49,8 @@ class AppSettingsImpl(context: Context) : AppSettings {
      * Unit of measurement of wind
      * Default unit - meters per second (m/s)
      */
-    override var windUnit: WindUnit = WindUnit.METERS_PER_SECOND
-        get() = WindUnit.valueOf(getString(PREF_WIND_UNIT, WindUnit.METERS_PER_SECOND.name))
+    override var wind: Wind = Wind.METERS_PER_SECOND
+        get() = Wind.valueOf(getString(PREF_WIND_UNIT, Wind.METERS_PER_SECOND.name))
         set(value) {
             field = value
             saveString(PREF_WIND_UNIT, value.name)
@@ -60,8 +60,13 @@ class AppSettingsImpl(context: Context) : AppSettings {
      * Unit of measurement of pressure
      * Default unit - mmHg
      */
-    override var pressureUnit: PressureUnit = PressureUnit.MILLIMETERS_OF_MERCURY
-        get() = PressureUnit.valueOf(getString(PREF_PRESSURE_UNIT, PressureUnit.MILLIMETERS_OF_MERCURY.name))
+    override var pressure: Pressure = Pressure.MILLIMETERS_OF_MERCURY
+        get() = Pressure.valueOf(
+            getString(
+                PREF_PRESSURE_UNIT,
+                Pressure.MILLIMETERS_OF_MERCURY.name
+            )
+        )
         set(value) {
             field = value
             saveString(PREF_PRESSURE_UNIT, value.name)
